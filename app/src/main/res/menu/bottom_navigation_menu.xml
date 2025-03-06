@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_bottom_nav_home"
+        android:title="Home"
+        android:contentDescription="Food"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_food"
+        android:icon="@drawable/ic_bottom_nav_food"
+        android:title="Food"
+        android:contentDescription="Instamart"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_cart"
+        android:icon="@drawable/ic_bottom_nav_cart"
+        android:title="Cart"
+        android:contentDescription="Dineout"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/ic_bottom_nav_profile"
+        android:title="Profile"
+        android:contentDescription="Genie"
+        app:showAsAction="ifRoom" />
+
+</menu>
