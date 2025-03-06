@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         val etPassword=binding.etPassword
         val etPasswordL=binding.etPasswordL
 
-//login activity
+//login activity test
 
         binding.tvForgetPwd.setOnClickListener {
             startActivity(Intent(this,ForgetPasswordActivity::class.java))
