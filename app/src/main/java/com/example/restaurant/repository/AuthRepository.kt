@@ -3,8 +3,11 @@ package com.example.restaurant.repository
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import com.example.restaurant.activities.LoginActivity
+import com.example.restaurant.activities.MainActivity
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.ApiResponse
 import com.example.restaurant.model.LoginResponse
@@ -19,12 +22,14 @@ import retrofit2.Response
 
 class AuthRepository {
     fun registerUser(
+        context: Context,
         name: String,
         email: String,
         phone: String,
         password: String,
         callback: (ApiResponse?) -> Unit
     ) {
+
         val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "register")
         val nameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
         val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
@@ -40,7 +45,22 @@ class AuthRepository {
                     if (response.isSuccessful && jsonResponse != null) {
                         val apiResponse = Gson().fromJson(jsonResponse, ApiResponse::class.java)
                         callback(apiResponse)
+
+                        // Assuming apiResponse contains a field "userId"
+                        if (apiResponse.success) {
+                            val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+
+                            val editor = sharedPreferences.edit()
+                            editor.putString("user_id", apiResponse.userData?.userId.toString()) // Update this based on actual response field
+                            editor.apply()
+                        }
+
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        context.startActivity(intent)
                     }
+
+
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -50,7 +70,11 @@ class AuthRepository {
             })
     }
 
-    fun loginUser(email: String, password: String,  callback: (ApiResponse?) -> Unit) {
+
+
+
+
+    fun loginUser(context: Context,email: String, password: String,  callback: (ApiResponse?) -> Unit) {
         val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "login")
         val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
         val passwordBody = RequestBody.create("text/plain".toMediaTypeOrNull(), password)
@@ -62,9 +86,20 @@ class AuthRepository {
                         val loginResponse = response.body()
 
                         if (loginResponse?.status == 200) {
+
+                            // Assuming apiResponse contains a field "userId"
+                            val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("user_id", loginResponse.userData?.userId.toString())
+                            editor.apply()
+
                             // Successful login
                             callback(ApiResponse(true, loginResponse.message))
                             Log.d("LOGIN_SUCCESS", "User logged in: ${loginResponse.userData}")
+
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            context.startActivity(intent)
 
                         } else {
                             // Login failed

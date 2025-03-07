@@ -26,5 +26,14 @@ interface ApiService {
         @Part("method") method: RequestBody,
         @Part("user_identifier") email: RequestBody,
         @Part("user_password") password: RequestBody
-    ): Call<LoginResponse>  // Using ResponseBody for flexible handling
+    ): Call<LoginResponse>
+
+    @Multipart
+    @POST("api/profile.php")
+    fun getProfile(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody
+    ): Call<LoginResponse>
+
+
 }
