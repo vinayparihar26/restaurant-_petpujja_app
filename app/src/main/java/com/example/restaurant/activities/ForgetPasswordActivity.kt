@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import com.example.restaurant.databinding.ActivityForgetPasswordBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -26,7 +27,9 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
         // Button Click Listener
         binding.btnSetPassword.setOnClickListener {
-            if (validateEmail(etEmailL, etEmail)) {
+            if(etEmailL.isEmpty()){
+                Toast.makeText(this, "Enter Email", Toast.LENGTH_SHORT).show()
+            }else if (validateEmail(etEmailL, etEmail)) {
                 sendForgotPasswordRequest(etEmail.text.toString().trim())
             }
         }
