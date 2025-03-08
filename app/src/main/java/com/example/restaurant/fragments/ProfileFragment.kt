@@ -1,5 +1,6 @@
 package com.example.restaurant.fragments
 
+
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class ProfileFragment : Fragment() {
@@ -34,7 +37,6 @@ class ProfileFragment : Fragment() {
         tvUserPhone = view.findViewById(R.id.tvUserPhone)
 
         loadUserData() // Fetch user data from SharedPreferences
-
         return view
     }
 
@@ -42,6 +44,7 @@ class ProfileFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val userId = sharedPreferences.getString("user_id", null)
         val token = sharedPreferences.getString("token", null)
+        Log.d("ProfileFragment", "User ID: $userId")
 
         if (userId != null) {
             fetchUserProfile(userId, token)
@@ -50,16 +53,21 @@ class ProfileFragment : Fragment() {
         }
     }
 
+
     private fun fetchUserProfile(userId: String, token: String?) {
-        RetrofitClient.apiService.getProfile("profile", userId)
+        val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "profile")
+        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
+
+        RetrofitClient.apiService.getProfile(methodBody, userIdBody)
             .enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if (response.isSuccessful) {
                         val profileResponse = response.body()
-                        Log.d("profileResponse", "onResponse: $profileResponse.userData")
+                        Log.d("profileResponse", "onResponse: $profileResponse")
 
                         if (profileResponse?.status == 200) {
                             updateUI(profileResponse.userData)
+
                         } else {
                             Toast.makeText(requireContext(), "Failed to fetch profile", Toast.LENGTH_SHORT).show()
                         }
@@ -84,3 +92,5 @@ class ProfileFragment : Fragment() {
         }
     }
 }
+
+

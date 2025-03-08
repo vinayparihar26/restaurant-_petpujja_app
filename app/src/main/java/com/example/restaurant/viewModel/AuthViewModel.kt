@@ -13,14 +13,15 @@ class AuthViewModel : ViewModel() {
     private val _authResponse = MutableLiveData<ApiResponse>()
     val authResponse: LiveData<ApiResponse> get() = _authResponse
 
-    fun registerUser(name: String, email: String, phone: String, password: String) {
-        authRepository.registerUser(name, email,phone, password) {
+    fun registerUser(context: Context,name: String, email: String, phone: String, password: String) {
+        authRepository.registerUser(context,name, email,phone, password) {
             _authResponse.postValue(it)
+
         }
     }
 
-    fun loginUser(email: String, password: String) {
-        authRepository.loginUser(email, password) {
+    fun loginUser(context: Context,email: String, password: String) {
+        authRepository.loginUser(context,email, password) {
             _authResponse.postValue(it)
         }
     }

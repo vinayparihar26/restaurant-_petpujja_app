@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiResponse(
     val success: Boolean,
-    val message: String
+    val message: String,
+    val userData: UserData?=null
 )
 
 data class LoginResponse(
@@ -31,4 +32,6 @@ data class UserData(
     @SerializedName("user_phone")
     val userPhone: Long
 )
+
+
 
