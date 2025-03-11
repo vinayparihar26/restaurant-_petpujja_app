@@ -59,9 +59,8 @@ class AuthRepository {
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         context.startActivity(intent)
                     }
-
-
                 }
+
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.e("RegisterError", "onFailure: ${t.message}")
