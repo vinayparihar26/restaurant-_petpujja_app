@@ -1,19 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".fragments.HomeFragment">
-
-
-
-<TextView
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="HIII"
-    android:textColor="@color/white"/>
+    android:orientation="vertical"
+    tools:context=".fragments.HomeFragment">
+    <!--  <ScrollView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              > -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp">
 
-</FrameLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/_80sdp"
+                android:paddingEnd="@dimen/_80sdp" />
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="Sourav, what’s on your mind?"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewForCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="1"
+            tools:listitem="@layout/items_category" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="Top rated near you"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+        <!--     <com.example.restaurant.utils.HeartView -->
+        <!--         android:id="@+id/imgHeart" -->
+        <!--         android:layout_width="@dimen/_40sdp" -->
+        <!--         android:layout_gravity="center_horizontal" -->
+        <!--         android:layout_height="@dimen/_40sdp" -->
+        <!--         /> -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewForRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_restaurant" />
+
+        <ImageView
+            android:id="@+id/imgShareDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ios_share_24dp_e8eaed_fill0_wght400_grad0_opsz24" />
+
+        <TextView
+            android:id="@+id/tvRequestLocationPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="requestLocationPermission"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/showLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnGetLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Location" />
+        <!--       </ScrollView> -->
+    </LinearLayout>
+</LinearLayout>
