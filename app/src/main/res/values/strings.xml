@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Restaurant</string>
+
+    <string-array name="gender">
+        <item>Select</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

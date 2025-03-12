@@ -2,18 +2,23 @@ package com.example.restaurant.fragments
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.restaurant.R
+import com.example.restaurant.activities.UpdateProfileActivity
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.UserData
+import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -22,9 +27,11 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
+    private lateinit var ivUserProfile: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserPhone: TextView
+    private lateinit var updateProfile:MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +42,11 @@ class ProfileFragment : Fragment() {
         tvUserName = view.findViewById(R.id.tvUserName)
         tvUserEmail = view.findViewById(R.id.tvUserEmail)
         tvUserPhone = view.findViewById(R.id.tvUserPhone)
+        ivUserProfile = view.findViewById(R.id.ivUserProfile)
+        updateProfile =view.findViewById(R.id.updateProfile)
 
-        loadUserData() // Fetch user data from SharedPreferences
+
+        loadUserData()
         return view
     }
 
@@ -67,6 +77,12 @@ class ProfileFragment : Fragment() {
 
                         if (profileResponse?.status == 200) {
                             updateUI(profileResponse.userData)
+                            updateProfile.setOnClickListener {
+                                val intent =Intent(requireContext(),UpdateProfileActivity::class.java)
+                                intent.putExtra("user_id",userId)
+                                startActivity(intent)
+                            }
+
 
                         } else {
                             Toast.makeText(requireContext(), "Failed to fetch profile", Toast.LENGTH_SHORT).show()
@@ -89,6 +105,12 @@ class ProfileFragment : Fragment() {
             tvUserName.text = "Name: ${it.userName}"
             tvUserEmail.text = "Email: ${it.userEmail}"
             tvUserPhone.text = "Phone: ${it.userPhone}"
+
+            Glide.with(this)
+                .load(it.userImg) // URL from API
+                .placeholder(R.drawable.ic_launcher_foreground) // Default image if URL is empty
+                .error(R.drawable.ic_launcher_foreground) // If image fails to load
+                .into(ivUserProfile)
         }
     }
 }

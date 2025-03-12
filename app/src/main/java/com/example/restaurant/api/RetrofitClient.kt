@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 
 object RetrofitClient {
+//    private const val BASE_URL = "http://localhost/Mutli-Restaurant-Food-Order/"
     private const val BASE_URL = "http://192.168.37.31/Mutli-Restaurant-Food-Order/"
 
     private val logging = HttpLoggingInterceptor().apply {

@@ -1,102 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".activities.MainActivity">
 
-    <!-- Search Bar Section -->
-    <LinearLayout
-        android:id="@+id/llSearch"
+    <!-- Toolbar with Menu Button -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/Header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="10dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#FFCA96">
 
-        <RelativeLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="PetPuja"
+            android:gravity="center_vertical"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textAllCaps="true"/>
+
+        <ImageView
+            android:id="@+id/slideMenu"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_three_line"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Right Drawer (Slide-in Menu) -->
+    <LinearLayout
+        android:id="@+id/right_drawer"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:elevation="10dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Close Button -->
+        <ImageView
+            android:id="@+id/btnCloseDrawer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:padding="8dp"
+            android:src="@drawable/ic_close" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_radius_search"
-            android:backgroundTint="@color/lightGrey"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:background="#C1C0C0"
+            android:padding="10dp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/searchText"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/drawerRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="35dp"
-                android:hint="Search for restaurants, dishes..."
-                android:textColorHint="@color/black"
-                android:maxLength="30"
-                android:padding="8dp"
-                android:background="@color/lightGrey"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:layout_marginTop="10dp"
+                tools:listitem="@layout/item_view_drawer"
+                android:scrollbars="none"/>
 
-            <!-- Search Icon -->
-            <ImageView
-                android:id="@+id/icSearch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_search"
-                android:visibility="visible"
-                app:tint="@color/black" />
+        </LinearLayout>
 
-            <!-- Voice Search -->
-            <ImageView
-                android:id="@+id/microphone"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_search_mic" />
-
-            <!-- Clear Search -->
-            <ImageView
-                android:id="@+id/icClose"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/ic_search_close"
-                android:visibility="gone"
-                app:tint="@color/black" />
-
-        </RelativeLayout>
 
     </LinearLayout>
 
-    <!-- Fragment Navigation -->
-    <fragment
-        android:id="@+id/fragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/app_nav"
-        android:layout_width="match_parent"
+
+
+
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/llSearch"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintTop_toBottomOf="@+id/Header"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/bottomNav">
+    </FrameLayout>
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />

@@ -44,7 +44,7 @@ class SignActivity : AppCompatActivity() {
                 val phone = binding.etPhone.text.toString()
                 val password = binding.etPassword.text.toString()
 
-                authViewModel.registerUser(name, email, phone, password)
+                authViewModel.registerUser(this,name, email, phone, password)
             }
         }
 

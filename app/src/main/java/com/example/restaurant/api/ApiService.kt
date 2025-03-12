@@ -1,6 +1,10 @@
 package com.example.restaurant.api
 
+import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.LoginResponse
+import com.example.restaurant.model.OrderedMenuItemResponse
+import com.example.restaurant.model.WishlistResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -34,6 +38,73 @@ interface ApiService {
         @Part("method") method: RequestBody,
         @Part("user_id") userId: RequestBody
     ): Call<LoginResponse>
+
+    @Multipart
+    @POST("api/user_update_api.php")
+    fun updateProfile(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody,
+        @Part("user_name") name: RequestBody,
+        @Part("user_email") email: RequestBody,
+        @Part("user_phone") phone: RequestBody,
+        @Part("user_gender") gender: RequestBody,
+        @Part("user_address") address: RequestBody,
+        @Part user_img: MultipartBody.Part?
+    ): Call<ResponseBody>
+
+    @Multipart
+    @POST("api/fetch_cart_api.php")
+    fun fetchCart(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody
+    ): Call<CartResponse>
+
+    @Multipart
+    @POST("api/cart_api.php")
+    fun removeCart(
+        @Part("method") method: RequestBody,
+        @Part("cart_id") cartId: RequestBody
+    ): Call<CartResponse>
+
+    @Multipart
+    @POST("api/get_favorites.php")
+    fun getWishlist(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody
+    ): Call<WishlistResponse>
+
+    @Multipart
+    @POST("api/menage_favorites.php")
+    fun manageWishlist(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody,
+        @Part("menu_id") menuId: RequestBody
+    ): Call<WishlistResponse>
+
+    @Multipart
+    @POST("api/order_histoey.php")
+    fun getOrderHistory(
+        @Part("method") method: RequestBody,
+        @Part("user_id") userId: RequestBody
+    ): Call<OrderedMenuItemResponse>
+
+    @Multipart
+    @POST("restaurant_regrastration.php")
+    fun registerRestaurant(
+        @Part("method") method: RequestBody,
+        @Part("restaurant_name") name: RequestBody,
+        @Part("restaurant_email") email: RequestBody,
+        @Part("restaurant_phone") phone: RequestBody,
+        @Part("restaurant_owner_name") owner: RequestBody,
+        @Part("restaurant_description") description: RequestBody,
+        @Part("restaurant_address") address: RequestBody,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part("restaurant_open_time") openTime: RequestBody,
+        @Part("restaurant_close_time") closeTime: RequestBody,
+        @Part restaurant_img: MultipartBody.Part?,
+        @Part restaurant_img2: MultipartBody.Part?
+    ): Call<ResponseBody>
 
 
 }
