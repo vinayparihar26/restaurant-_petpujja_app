@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 "Orders" -> startActivity(Intent(this,OrderHistoryActivity::class.java))
                 "Wishlist" -> startActivity(Intent(this,WishlistActivity::class.java))
                 "Cart" -> replaceFragment(CartFragment())
-                "Restaurant" -> startActivity(Intent(this,SetRestauranttActivity::class.java))
+                "Restaurant" -> startActivity(Intent(this,RegisterResturantActivity::class.java))
 
                 else ->{}
             }
