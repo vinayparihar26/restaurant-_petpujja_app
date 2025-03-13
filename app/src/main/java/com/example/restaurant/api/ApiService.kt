@@ -3,11 +3,14 @@ package com.example.restaurant.api
 import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.OrderedMenuItemResponse
+import com.example.restaurant.model.RestaurantResponse
 import com.example.restaurant.model.WishlistResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -106,5 +109,12 @@ interface ApiService {
         @Part restaurant_img2: MultipartBody.Part?
     ): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("api/get_restaurants.php")
+    fun getRestaurants(
+        @Field("method") method: String,
+        @Field("latitude") latitude: Double,
+        @Field("longitude") longitude: Double,
+    ): Call<RestaurantResponse>
 
 }

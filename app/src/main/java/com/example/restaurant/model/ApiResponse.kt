@@ -81,10 +81,8 @@ data class OrderedMenuItem(
     @SerializedName("order_createdAt") val orderCreatedAt: String
 )
 
-data class RestaurantResponse(
-    @SerializedName("status") val status: Int,
-    @SerializedName("message") val message: String
-)
+
+
 
 
 
