@@ -1,9 +1,12 @@
 package com.example.restaurant.api
 
 import com.example.restaurant.model.CartResponse
+import com.example.restaurant.model.CategoriesResponse
 import com.example.restaurant.model.LoginResponse
+import com.example.restaurant.model.MenuResponse
 import com.example.restaurant.model.OrderedMenuItemResponse
 import com.example.restaurant.model.RestaurantResponse
+import com.example.restaurant.model.UpdatePasswordResponse
 import com.example.restaurant.model.WishlistResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,6 +37,32 @@ interface ApiService {
         @Part("user_identifier") email: RequestBody,
         @Part("user_password") password: RequestBody
     ): Call<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("api/change_password_api.php")
+    fun updatePassword(
+        @Field("method") method: String,  // This replaces token-based authentication
+        @Field("user_id") userId: Int,
+        @Field("old_password") oldPassword: String,
+        @Field("new_password") newPassword: String,
+        @Field("confirm_password") confirmPassword: String,
+    ): Call<UpdatePasswordResponse>
+
+    @FormUrlEncoded
+    @POST("api/fetch_category.php") // Replace with your actual API endpoint
+    fun getCategoriesItems(
+        @Field("method") method: String,
+    ): Call<CategoriesResponse>
+
+    @FormUrlEncoded
+    @POST("api/get_menu.php")
+    fun getMenuItems(
+        @Field("method") method: String,
+        @Field("category_id") categoryId: String,
+        @Field("latitude") latitude: Double,
+        @Field("longitude") longitude: Double,
+        @Field("menu_type") menuType: String,
+    ): Call<MenuResponse>
 
     @Multipart
     @POST("api/profile.php")
@@ -75,6 +104,14 @@ interface ApiService {
         @Part("method") method: RequestBody,
         @Part("user_id") userId: RequestBody
     ): Call<WishlistResponse>
+
+    @Multipart
+    @POST("api/get_favorites.php")
+    fun addInWishlist(
+        @Part("method") method: String,
+        @Part("user_id") userId: String
+    ): Call<WishlistResponse>
+
 
     @Multipart
     @POST("api/menage_favorites.php")

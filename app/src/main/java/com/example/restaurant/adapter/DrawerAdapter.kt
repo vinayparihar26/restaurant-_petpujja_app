@@ -13,8 +13,8 @@ class DrawerAdapter(private val items: List<drawerModel>, private val onItemClic
     RecyclerView.Adapter<DrawerAdapter.DrawerViewHolder>() {
 
     inner class DrawerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val icon: ImageView = view.findViewById(R.id.drawerItemIcon)
-        val title: TextView = view.findViewById(R.id.drawerItemTitle)
+        private val icon: ImageView = view.findViewById(R.id.drawerItemIcon)
+        private val title: TextView = view.findViewById(R.id.drawerItemTitle)
 
         fun bind(item: drawerModel) {
             icon.setImageResource(item.icon)
