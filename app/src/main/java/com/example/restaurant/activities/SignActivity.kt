@@ -29,8 +29,6 @@ class SignActivity : AppCompatActivity() {
         val etPasswordL = binding.etPasswordL
         val etPassword = binding.etPassword
 
-
-
         binding.btnRegister.setOnClickListener {
 
             val isNameValid = validateName(etNameL, etName)
@@ -96,7 +94,6 @@ class SignActivity : AppCompatActivity() {
             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
         }
     }
-
 
     //    for username
     private fun validateName(

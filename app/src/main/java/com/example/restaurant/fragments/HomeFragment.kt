@@ -3,6 +3,8 @@ package com.example.restaurant.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -10,22 +12,17 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextSwitcher
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.provider.Settings
-import android.widget.ImageView
-
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,19 +40,14 @@ import com.example.restaurant.model.CategoriesResponse
 import com.example.restaurant.model.CategoryModel
 import com.example.restaurant.model.Restaurant
 import com.example.restaurant.model.RestaurantResponse
-import com.example.restaurant.viewModel.CategoryViewModel
-import com.example.restaurant.viewModel.ItemViewModel
-import com.example.restaurant.viewModel.TrendingItemViewModel
+import com.example.restaurant.utils.HeartView
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {
-
-    /*second time for LL*/
     private lateinit var locationManager: LocationManager
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
@@ -67,21 +59,18 @@ class HomeFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var textSwitcher: TextSwitcher
     private val hintStrings = arrayOf("dishes & foods", "favourite restaurants", "home groceries")
-    private var currentHintIndex = 0
-
     private lateinit var layoutManager: LinearLayoutManager
-
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryList = mutableListOf<CategoryModel>()
     private lateinit var recyclerViewForCategories: RecyclerView
-    private val viewModel: CategoryViewModel by viewModels()
+    //private val viewModel: CategoryViewModel by viewModels()
 
     private lateinit var restaurantAdapter: RestaurantAdapter
     private val restaurantList = mutableListOf<Restaurant>()
     private lateinit var recyclerViewForRestaurant: RecyclerView
-    private val viewModelForItems: ItemViewModel by viewModels()
-    private lateinit var trendingRecyclerView: RecyclerView
-    private val trendingItemViewModel: TrendingItemViewModel by viewModels()
+    //  private val viewModelForItems: ItemViewModel by viewModels()
+    // private lateinit var trendingRecyclerView: RecyclerView
+    // private val trendingItemViewModel: TrendingItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,7 +84,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize Location Client
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val imgShareDetails: ImageView = view.findViewById(R.id.imgShareDetails)
         locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -108,9 +97,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-
         // Request Location Permission
-
         binding.tvRequestLocationPermission.setOnClickListener {
             requestLocationPermission()
         }
@@ -134,7 +121,6 @@ class HomeFragment : Fragment() {
         setUpTranFormer()
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
@@ -142,12 +128,12 @@ class HomeFragment : Fragment() {
             }
         })
 
-        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+        //   val imgHeart: HeartView = view.findViewById(R.id.imgHeart)
 
 // Use GridLayoutManager with 2 rows and horizontal scrolling for the entire RecyclerView
+        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2) // 2 rows
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL // Scroll horizontally
-
         recyclerViewForCategories.layoutManager = gridLayoutManager
 
         categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
@@ -158,7 +144,6 @@ class HomeFragment : Fragment() {
         }
 
         recyclerViewForCategories.adapter = categoryAdapter
-
         recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
         //recyclerViewForCategories.layoutManager = GridLayoutManager(requireContext(), 4)
         Log.d("HomeFragment", "onViewCreated called")
@@ -166,6 +151,23 @@ class HomeFragment : Fragment() {
         recyclerViewForCategories.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+       /* recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+        recyclerViewForCategories.layoutManager = gridLayoutManager
+        categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
+            val intent = Intent(requireContext(), MenuItemsActivity::class.java)
+            intent.putExtra("categoryId", category.categoryId)
+            Log.d("categoryId", category.categoryId)
+            startActivity(intent)
+        }
+        recyclerViewForCategories.adapter = categoryAdapter*/
+
+
+        //recyclerViewForCategories.layoutManager = GridLayoutManager(requireContext(), 4)
+        Log.d("HomeFragment", "onViewCreated called")
+
+        /*  recyclerViewForCategories.layoutManager =
+              LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+  */
         Log.d("HomeFragment", "onViewCreated called2")
         recyclerViewForRestaurant = view.findViewById(R.id.recyclerViewForRestaurant)
         recyclerViewForRestaurant.layoutManager = LinearLayoutManager(requireContext())
@@ -173,7 +175,7 @@ class HomeFragment : Fragment() {
             restaurantList = restaurantList
         )
 
-        recyclerViewForRestaurant.adapter=restaurantAdapter
+        recyclerViewForRestaurant.adapter = restaurantAdapter
         /*
 
                   categoryAdapter = CategoryAdapter(requireContext(), emptyList()) { category ->
@@ -234,12 +236,11 @@ class HomeFragment : Fragment() {
             } else {
                 Log.d("HomeFragment", "Categories fetched successfully: $items")
             }
-            viewModel.fetchCategoriesItems()
+         //   viewModel.fetchCategoriesItems()
         })
 
         Log.d("HomeFragment", "Categories fetched successfully")
 *//*
-
                 recyclerViewForItems = view.findViewById(R.id.recyclerViewForItems)
                 recyclerViewForItems.layoutManager = GridLayoutManager(requireContext(), 2)
 
@@ -261,6 +262,7 @@ class HomeFragment : Fragment() {
 
     }
 
+
     private fun fetchResturantItems() {
         val (latitude, longitude) = getStoredLocation()
         val call = RetrofitClient.apiService.getRestaurants(
@@ -274,11 +276,11 @@ class HomeFragment : Fragment() {
                 call: Call<RestaurantResponse>,
                 response: Response<RestaurantResponse>,
             ) {
-                if(isAdded){
+                if (isAdded) {
                     if (response.isSuccessful && response.body() != null) {
                         val restaurantResponse = response.body()!!
                         Log.d("API_RESPONSE", "Response: $restaurantResponse")
-                        if (restaurantResponse.status.toString() == "200" && restaurantResponse.data.isNotEmpty()) {
+                        if (restaurantResponse.status == 200 && restaurantResponse.data.isNotEmpty()) {
                             restaurantList.clear()
                             Log.d("resturant1", restaurantList.toString())
                             restaurantList.addAll(restaurantResponse.data)
@@ -288,29 +290,33 @@ class HomeFragment : Fragment() {
                         } else {
                             restaurantList.clear()
                             restaurantAdapter.notifyDataSetChanged()
-                            Toast.makeText(requireContext(), "No Restaurants Found", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                requireContext(),
+                                "No Restaurants Found",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                         Log.d("resturant2", "Response: $restaurantResponse")
                     }
-                }
-                else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to load items",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                } else {
+                    Log.d("Failed to load items", "Error: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<RestaurantResponse>, p1: Throwable) {
                 if (isAdded) {  // Check if fragment is attached before showing error
                     Log.e("API_ERROR", "Error: ${p1.message}")
-                    Toast.makeText(requireContext(), "Error fetching restaurants", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Error fetching restaurants",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
     }
+
 
     private fun getStoredLocation(): Pair<Double, Double> {
         val sharedPreferences =
@@ -379,6 +385,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
         _binding = null
     }
 

@@ -41,7 +41,7 @@ class MenuItemAdapter(
         val restaurantNameTextView: TextView = view.findViewById(R.id.restaurant_name)
         val restaurantAddressTextView: TextView = view.findViewById(R.id.restaurant_address)
         val restaurantImageView: ImageView = view.findViewById(R.id.restaurant_image)
-        val imageHeart:HeartView=view.findViewById(R.id.imgHeart)
+        val imageHeart:HeartView=view.findViewById(R.id.imgHeart1)
         val imgShareDetails:ImageView=view.findViewById(R.id.imgShareDetails)
         val distance: TextView=view.findViewById(R.id.tvDistance)
     }

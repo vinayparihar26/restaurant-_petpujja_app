@@ -1,6 +1,7 @@
 package com.example.restaurant.fragments
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -100,6 +101,7 @@ class ProfileFragment : Fragment() {
             })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI(userData: UserData?) {
         userData?.let {
             tvUserName.text = "Name: ${it.userName}"

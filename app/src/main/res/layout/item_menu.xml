@@ -89,7 +89,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.example.restaurant.utils.HeartView
-                android:id="@+id/imgHeart"
+                android:id="@+id/imgHeart1"
                 android:layout_width="25dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"

@@ -51,19 +51,22 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation( "com.google.code.gson:gson:2.8.9")
-    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
-    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.3")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation( "com.google.code.gson:gson:2.11.0")
+    implementation (libs.converter.scalars)
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 
+        implementation (libs.play.services.location)
+
+    implementation ("com.google.android.material:material:1.4.0") //jetp
 
 }
