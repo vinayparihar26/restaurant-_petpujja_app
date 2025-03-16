@@ -1,27 +1,31 @@
 package com.example.restaurant.activities
 
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.restaurant.R
+import com.example.restaurant.adapter.DrawerAdapter
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.fragments.CartFragment
 import com.example.restaurant.fragments.FoodFragment
 import com.example.restaurant.fragments.HomeFragment
 import com.example.restaurant.fragments.ProfileFragment
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.content.Intent
-import android.util.Log
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.restaurant.adapter.DrawerAdapter
 import com.example.restaurant.model.drawerModel
 
+object Constants {
+    const val SCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+}
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -29,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = Constants.SCREEN_ORIENTATION
         binding = ActivityMainBinding.inflate(layoutInflater)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(binding.root)
 
         replaceFragment(HomeFragment()) // Set default fragment
@@ -57,34 +63,34 @@ class MainActivity : AppCompatActivity() {
             closeDrawer()
         }
 
-
-
         val drawerItems = listOf(
             drawerModel(R.drawable.ic_bottom_nav_home, "Your Profile"),
             drawerModel(R.drawable.ic_bottom_nav_food, "Orders"),
-            drawerModel(R.drawable.ic_bottom_nav_profile, "Wishlist"),
+            drawerModel(R.drawable.ic_bottom_nav_food, "Wishlist"),
             drawerModel(R.drawable.ic_bottom_nav_home, "Cart"),
             drawerModel(R.drawable.ic_bottom_nav_home, "Restaurant"),
             drawerModel(R.drawable.ic_bottom_nav_food, "LogOut"),
-
         )
 
         binding.drawerRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.drawerRecyclerView.adapter = DrawerAdapter(drawerItems) { item ->
             when (item.title) {
                 "Your Profile" -> replaceFragment(ProfileFragment())
-                "Orders" -> startActivity(Intent(this,OrderHistoryActivity::class.java))
-                "Wishlist" -> startActivity(Intent(this,WishlistActivity::class.java))
+                "Orders" -> startActivity(Intent(this, OrderHistoryActivity::class.java))
+                "Wishlist" -> startActivity(Intent(this, WishlistActivity::class.java))
                 "Cart" -> replaceFragment(CartFragment())
-                "Restaurant" -> startActivity(Intent(this,RegisterResturantActivity::class.java))
+                "Restaurant" -> startActivity(Intent(this, RegisterResturantActivity::class.java))
 
-                else ->{}
+                else -> {}
             }
         }
-
     }
 
-
+    private fun loadFragment(fragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(com.example.restaurant.R.id.bottomNav, fragment)
+        transaction.commit()
+    }
 
     private fun toggleDrawer() {
         if (isDrawerOpen) {
@@ -120,13 +126,13 @@ class MainActivity : AppCompatActivity() {
         isDrawerOpen = false
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame, fragment)
-            .commit()
+     private fun replaceFragment(fragment: Fragment) {
+         supportFragmentManager.beginTransaction()
+             .replace(R.id.frame, fragment)
+             .commit()
 
-        if (isDrawerOpen) {
-            closeDrawer()
-        }
-    }
+         if (isDrawerOpen) {
+             closeDrawer()
+         }
+     }
 }

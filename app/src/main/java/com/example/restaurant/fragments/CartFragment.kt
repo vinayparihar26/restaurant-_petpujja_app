@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.R
-import com.example.restaurant.adapters.CartAdapter
+import com.example.restaurant.adapter.CartAdapter
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.CartItem

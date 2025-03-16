@@ -1,5 +1,6 @@
-package com.example.restaurant.adapters
+package com.example.restaurant.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +28,8 @@ class WishlistAdapter(
     class WishlistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val menuName: TextView = view.findViewById(R.id.menuName)
         val menuPrice: TextView = view.findViewById(R.id.menuPrice)
-        val menuImg: ImageView = view.findViewById(R.id.menuImg)
-        val removeIcon: ImageView = view.findViewById(R.id.removeWishlist)
+        val menuImg: ImageView = view.findViewById(R.id.img)
+        val removeIcon: ImageView = view.findViewById(R.id.closeButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {
@@ -37,6 +38,7 @@ class WishlistAdapter(
         return WishlistViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
         val item = wishlist[position]
 
@@ -80,8 +82,6 @@ class WishlistAdapter(
                         ).show()
                     }
                 }
-
-
 
                 override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
                     Toast.makeText(

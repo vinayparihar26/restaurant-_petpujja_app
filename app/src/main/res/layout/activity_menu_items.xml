@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_16sdp"
+    tools:context=".activities.MenuItemsActivity">
+
+    <include
+        layout="@layout/item_menu"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvRequestLocationPermission1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click For Nearby" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 km from you place" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="VEG MODE"
+        android:textSize="@dimen/_10sdp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/toggleVegNonVeg"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_gravity="end"
+        android:backgroundTint="@color/grey"
+        android:checked="true"
+        android:textOff="Non-Veg"
+        android:textOn="Veg" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewForMenuItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_menu" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

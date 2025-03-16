@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.R
-import com.example.restaurant.adapters.WishlistAdapter
+import com.example.restaurant.adapter.WishlistAdapter
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.WishlistItem
 import com.example.restaurant.model.WishlistResponse
