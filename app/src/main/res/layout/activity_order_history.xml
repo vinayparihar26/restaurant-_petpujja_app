@@ -7,23 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".activities.OrderHistoryActivity">
 
+
+    <LinearLayout
+        android:id="@+id/emptyOrderHistoryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:src="@drawable/ic_no_cart_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/orange"
+            android:text="No Order Placed"/>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orderHistoryRecyclerView"
+        android:id="@+id/orderHistoryRecycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/emptyOrderHistoryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No orders found"
-        android:textSize="18sp"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
