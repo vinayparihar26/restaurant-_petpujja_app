@@ -8,17 +8,21 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.restaurant.R
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.databinding.ActivityRegisterResturantBinding
+import com.google.android.material.button.MaterialButton
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -40,14 +44,14 @@ class RegisterResturantActivity : AppCompatActivity() {
     private lateinit var restaurantOwner: EditText
     private lateinit var restaurantDescription: EditText
     private lateinit var restaurantAddress: EditText
-    private lateinit var restaurantOpenTime: Button
-    private lateinit var restaurantCloseTime: Button
+    private lateinit var restaurantOpenTime: MaterialButton
+    private lateinit var restaurantCloseTime: MaterialButton
     private lateinit var restaurantLatitude: EditText
     private lateinit var restaurantLongitude: EditText
-    private lateinit var imagePicker1: Button
-    private lateinit var imagePicker2: Button
-    private lateinit var registerButton: Button
-    private lateinit var resultTextView: TextView
+    private lateinit var imagePicker1: MaterialButton
+    private lateinit var imagePicker2: MaterialButton
+    private lateinit var registerButton: AppCompatButton
+
     private lateinit var imagePreview1: ImageView
     private lateinit var imagePreview2: ImageView
 
@@ -75,7 +79,6 @@ class RegisterResturantActivity : AppCompatActivity() {
         imagePicker1 = findViewById(R.id.imagePicker1)
         imagePicker2 = findViewById(R.id.imagePicker2)
         registerButton = findViewById(R.id.registerButton)
-        resultTextView = findViewById(R.id.resultTextView)
         imagePreview1 = findViewById(R.id.imagePreview1)
         imagePreview2 = findViewById(R.id.imagePreview2)
 
@@ -105,12 +108,14 @@ class RegisterResturantActivity : AppCompatActivity() {
                     101 -> {
                         selectedImageUri1 = it
                         imagePreview1.setImageURI(it)
+                        imagePreview1.visibility = View.VISIBLE
                         imageFile1 = getFileFromUri(it)
                     }
 
                     102 -> {
                         selectedImageUri2 = it
                         imagePreview2.setImageURI(it)
+                        imagePreview2.visibility = View.VISIBLE
                         imageFile2 = getFileFromUri(it)
                     }
                 }
@@ -140,18 +145,16 @@ class RegisterResturantActivity : AppCompatActivity() {
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    resultTextView.text = "Restaurant Registered Successfully!"
+                    Toast.makeText(this@RegisterResturantActivity, "Successful", Toast.LENGTH_SHORT).show()
                     Log.d("register success", "onResponse: ${response.message()}")
 
                 } else {
-                    resultTextView.text = "Registration failed: ${response.errorBody()?.string()}"
                     Log.d("register failed1", "onResponse: ${response.message()}")
                     Log.d("register failed", "onResponse: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                resultTextView.text = "Error: ${t.message}"
             }
         })
     }

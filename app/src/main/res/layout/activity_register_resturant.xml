@@ -5,163 +5,210 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.RegisterResturantActivity">
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:padding="16dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_25sdp"
+            android:gravity="center_horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="Register Restaurant"
+                android:textAlignment="center"
+                android:textSize="@dimen/_22sdp"
+                android:textStyle="bold" />
 
-                <!-- Restaurant Name -->
-                <EditText
-                    android:id="@+id/restaurantName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Restaurant Name"
-                    android:inputType="text" />
+            <!-- Restaurant Name -->
+            <EditText
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Restaurant Name"
+                android:textColor="@color/black"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_16sdp"
+                android:background="@drawable/border_gender"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:inputType="text" />
 
-                <!-- Email -->
-                <EditText
-                    android:id="@+id/restaurantEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
+            <!-- Email -->
+            <EditText
+                android:id="@+id/restaurantEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/border_gender"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:inputType="textEmailAddress" />
 
-                <!-- Phone -->
-                <EditText
-                    android:id="@+id/restaurantPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone Number"
-                    android:inputType="phone" />
+            <!-- Phone -->
+            <EditText
+                android:id="@+id/restaurantPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/border_gender"
+                android:inputType="phone" />
 
-                <!-- Owner Name -->
-                <EditText
-                    android:id="@+id/restaurantOwner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Owner Name"
-                    android:inputType="text" />
+            <!-- Owner Name -->
+            <EditText
+                android:id="@+id/restaurantOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="Owner Name"
+                android:textSize="@dimen/_16sdp"
+                android:background="@drawable/border_gender"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:padding="@dimen/_10sdp"
+                android:inputType="text" />
 
-                <!-- Description -->
-                <EditText
-                    android:id="@+id/restaurantDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Restaurant Description"
-                    android:inputType="textMultiLine"
-                    android:minHeight="100dp"/>
+            <!-- Description -->
+            <EditText
+                android:id="@+id/restaurantDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textColor="@color/black"
+                android:background="@drawable/border_gender"
+                android:hint="Restaurant Description"
+                android:inputType="textMultiLine"
+                />
 
-                <!-- Address -->
-                <EditText
-                    android:id="@+id/restaurantAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address"
-                    android:inputType="text" />
+            <!-- Address -->
+            <EditText
+                android:id="@+id/restaurantAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textColor="@color/black"
+                android:background="@drawable/border_gender"
+                android:inputType="text" />
 
-                <!-- Latitude -->
-                <EditText
-                    android:id="@+id/restaurantLatitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Latitude"
-                    android:inputType="numberDecimal" />
+            <!-- Latitude -->
+            <EditText
+                android:id="@+id/restaurantLatitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Latitude"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textColor="@color/black"
+                android:background="@drawable/border_gender"
+                android:inputType="numberDecimal" />
 
-                <!-- Longitude -->
-                <EditText
-                    android:id="@+id/restaurantLongitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Longitude"
-                    android:inputType="numberDecimal" />
-                <!-- Open Time -->
-                <Button
-                    android:id="@+id/openTimeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Opening Time" />
+            <!-- Longitude -->
+            <EditText
+                android:id="@+id/restaurantLongitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Longitude"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textColor="@color/black"
+                android:background="@drawable/border_gender"
+                android:inputType="numberDecimal" />
 
-                <!-- Close Time -->
-                <Button
-                    android:id="@+id/closeTimeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Closing Time" />
+            <!-- Open Time -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/openTimeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightestOrange"
+                android:text="Select Opening Time"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cornerRadius="0dp" />
+
+            <!-- Close Time -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeTimeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightestOrange"
+                android:text="Select Closing Time"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cornerRadius="0dp" />
+            <!-- Image 1 Selection -->
+
+            <ImageView
+                android:id="@+id/imagePreview1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="@android:color/darker_gray" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/imagePicker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightestOrange"
+                android:text="Select Restaurant Image 1"
+                android:textColor="@color/black"
+                app:cornerRadius="0dp" />
+
+            <ImageView
+                android:id="@+id/imagePreview2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="@android:color/darker_gray" />
 
 
-                <!-- Image 1 Selection -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant Image 1"
-                    android:textStyle="bold"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/imagePicker2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightestOrange"
+                android:text="Select Restaurant Image 2 "
+                android:textColor="@color/black"
+                app:cornerRadius="0dp" />
 
-                <ImageView
-                    android:id="@+id/imagePreview1"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:background="@android:color/darker_gray" />
+            <!-- Register Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/orange"
+                android:text="Register Restaurant"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp" />
 
-                <Button
-                    android:id="@+id/imagePicker1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Image 1" />
 
-                <!-- Image 2 Selection -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant Image 2"
-                    android:textStyle="bold"/>
-
-                <ImageView
-                    android:id="@+id/imagePreview2"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:background="@android:color/darker_gray" />
-
-                <Button
-                    android:id="@+id/imagePicker2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Image 2" />
-
-                <!-- Register Button -->
-                <Button
-                    android:id="@+id/registerButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Register Restaurant"
-                    android:backgroundTint="@android:color/holo_blue_dark"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="16dp"/>
-
-                <!-- Result TextView -->
-                <TextView
-                    android:id="@+id/resultTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:gravity="center"
-                    android:paddingTop="10dp"/>
-
-            </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
 
 
