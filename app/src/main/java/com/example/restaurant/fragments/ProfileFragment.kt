@@ -162,21 +162,21 @@ class ProfileFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun updateUI(userData: UserData?) {
         userData?.let {
-            tvUserName.text = "Name: ${it.userName}"
-            tvUserEmail.text = "Email: ${it.userEmail}"
+            tvUserName.text = "${it.userName}"
+            tvUserEmail.text = "${it.userEmail}"
 
             //added
             val sharedPreferences =
                 requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()//added vinay
+            val editor = sharedPreferences.edit()
             editor.putString("user_name", it.userName)
             editor.apply()
 
 
             Glide.with(this)
-                .load(it.userImg) // URL from API
-                .placeholder(R.drawable.ic_launcher_foreground) // Default image if URL is empty
-                .error(R.drawable.ic_launcher_foreground) // If image fails to load
+                .load(it.userImg)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
                 .into(ivUserProfile)
         }
     }
