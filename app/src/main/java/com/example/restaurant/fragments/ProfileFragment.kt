@@ -18,7 +18,7 @@ import com.example.restaurant.R
 import com.example.restaurant.activities.LoginActivity
 import com.example.restaurant.activities.UpdateProfileActivity
 import com.example.restaurant.api.RetrofitClient
-import com.example.restaurant.auth.UpdatePasswordActivity
+import com.example.restaurant.activities.UpdatePasswordActivity
 import com.example.restaurant.databinding.FragmentProfileBinding
 import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.UserData

@@ -1,4 +1,4 @@
-package com.example.restaurant.auth
+package com.example.restaurant.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -7,10 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.databinding.ActivityUpdatePasswordBinding
-import com.example.restaurant.model.UpdatePasswordRequest
 import com.example.restaurant.model.UpdatePasswordResponse
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

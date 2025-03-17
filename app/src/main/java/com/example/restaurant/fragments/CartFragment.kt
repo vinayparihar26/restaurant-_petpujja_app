@@ -26,7 +26,7 @@ class CartFragment : Fragment() {
 
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
-    private lateinit var emptyCartTextView: TextView  // Added TextView
+    private lateinit var emptyCartTextView: View  // Added TextView
     private var cartItems: MutableList<CartItem> = mutableListOf()
 
     override fun onCreateView(
