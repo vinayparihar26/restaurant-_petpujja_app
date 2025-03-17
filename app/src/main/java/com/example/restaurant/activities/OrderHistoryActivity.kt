@@ -25,7 +25,7 @@ class OrderHistoryActivity : AppCompatActivity() {
 
     private lateinit var orderHistoryRecyclerView: RecyclerView
     private lateinit var orderHistoryAdapter: OrderHistoryAdapter
-    private lateinit var emptyOrderHistoryTextView: TextView
+    private lateinit var emptyOrderHistoryTextView: View
     private var orderedItems: MutableList<OrderedMenuItem> = mutableListOf()
     private var userId: String? = null
 
