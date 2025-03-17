@@ -26,10 +26,10 @@ class WishlistAdapter(
 ) : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
     class WishlistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val menuName: TextView = view.findViewById(R.id.menuName)
-        val menuPrice: TextView = view.findViewById(R.id.menuPrice)
-        val menuImg: ImageView = view.findViewById(R.id.img)
-        val removeIcon: ImageView = view.findViewById(R.id.closeButton)
+        val menuName: TextView = view.findViewById(R.id.wishListMenuName)
+        val menuPrice: TextView = view.findViewById(R.id.wishListMenuPrice)
+        val menuImg: ImageView = view.findViewById(R.id.wishListMenuImg)
+        val removeIcon: ImageView = view.findViewById(R.id.wishListRemove)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {

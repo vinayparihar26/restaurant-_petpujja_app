@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -28,11 +29,12 @@ class OrderHistoryActivity : AppCompatActivity() {
     private var orderedItems: MutableList<OrderedMenuItem> = mutableListOf()
     private var userId: String? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_history)
 
-        orderHistoryRecyclerView = findViewById(R.id.orderHistoryRecyclerView)
+        orderHistoryRecyclerView = findViewById(R.id.orderHistoryRecycleView)
         emptyOrderHistoryTextView = findViewById(R.id.emptyOrderHistoryTextView)
 
         orderHistoryRecyclerView.layoutManager = LinearLayoutManager(this)

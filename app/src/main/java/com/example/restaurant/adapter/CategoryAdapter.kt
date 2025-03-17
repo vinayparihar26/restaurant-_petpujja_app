@@ -23,13 +23,13 @@ class CategoryAdapter(
 ) : RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.img)
-        val textView: TextView = view.findViewById(R.id.tvItemName)
+        val imageView: ImageView = view.findViewById(R.id.categoryImage)
+        val textView: TextView = view.findViewById(R.id.categoryName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.items_category, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_view_category, parent, false)
         return ItemViewHolder(view)
     }
 

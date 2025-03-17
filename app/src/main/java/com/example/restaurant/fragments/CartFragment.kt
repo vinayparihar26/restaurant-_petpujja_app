@@ -35,7 +35,7 @@ class CartFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
-        emptyCartTextView = view.findViewById(R.id.emptyCartTextView) // Initialize TextView
+        emptyCartTextView = view.findViewById(R.id.NoItem) // Initialize TextView
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         fetchCartItems()

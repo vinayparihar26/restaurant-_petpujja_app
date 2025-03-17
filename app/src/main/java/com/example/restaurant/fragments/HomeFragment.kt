@@ -59,7 +59,6 @@ class HomeFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var textSwitcher: TextSwitcher
     private val hintStrings = arrayOf("dishes & foods", "favourite restaurants", "home groceries")
-    private lateinit var layoutManager: LinearLayoutManager
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryList = mutableListOf<CategoryModel>()
     private lateinit var recyclerViewForCategories: RecyclerView
@@ -85,30 +84,27 @@ class HomeFragment : Fragment() {
 
         // Initialize Location Client
         //fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        val imgShareDetails: ImageView = view.findViewById(R.id.imgShareDetails)
-        locationManager =
-            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        val imgShareDetails: ImageView = view.findViewById(R.id.imgShareDetails)
+//        locationManager =
+//            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        binding.btnGetLocation.setOnClickListener {
-            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                showEnableGPSDialog()
-            } else {
-                requestLocationPermission()
-            }
-        }
-
-        // Request Location Permission
-        binding.tvRequestLocationPermission.setOnClickListener {
-            requestLocationPermission()
-        }
+//        binding.btnGetLocation.setOnClickListener {
+//            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                showEnableGPSDialog()
+//            } else {
+//                requestLocationPermission()
+//            }
+//        }
+//
+//        // Request Location Permission
+//        binding.tvRequestLocationPermission.setOnClickListener {
+//            requestLocationPermission()
+//        }
         val viewPager2 = binding.viewpager2
         handler = Handler(Looper.myLooper()!!)
         imageList = arrayListOf(
-            R.drawable.homeslide1,
-            R.drawable.homeslide2,
-            R.drawable.homeslide3,
-            R.drawable.homeslide4,
-            R.drawable.homeslide5
+            R.drawable.img_slider1,
+            R.drawable.img_slider2,
         )
 
         slideAdapter = ImageSlideAdapter(imageList, viewPager2)
@@ -169,7 +165,7 @@ class HomeFragment : Fragment() {
               LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
   */
         Log.d("HomeFragment", "onViewCreated called2")
-        recyclerViewForRestaurant = view.findViewById(R.id.recyclerViewForRestaurant)
+        recyclerViewForRestaurant = view.findViewById(R.id.restaurantRecycleView)
         recyclerViewForRestaurant.layoutManager = LinearLayoutManager(requireContext())
         restaurantAdapter = RestaurantAdapter(
             restaurantList = restaurantList
@@ -450,51 +446,51 @@ class HomeFragment : Fragment() {
 
     /*second time try*/
 
-    private fun requestLocationPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                getLocation()
-            }
-
-            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                showPermissionRationale()
-            }
-
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-        }
-    }
+//    private fun requestLocationPermission() {
+//        when {
+//            ContextCompat.checkSelfPermission(
+//                requireContext(),
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED -> {
+//                getLocation()
+//            }
+//
+//            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
+//                showPermissionRationale()
+//            }
+//
+//            else -> {
+//                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+//            }
+//        }
+//    }
 
     /**
      * Handles the result of the permission request.
      */
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            getLocation()
-        } else {
-            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private val requestPermissionLauncher = registerForActivityResult(
+//        ActivityResultContracts.RequestPermission()
+//    ) { isGranted: Boolean ->
+//        if (isGranted) {
+//            getLocation()
+//        } else {
+//            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     /**
      * Shows an alert dialog explaining why location permission is needed.
      */
-    private fun showPermissionRationale() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Location Permission Required")
-            .setMessage("This app needs location access to show your current position.")
-            .setPositiveButton("OK") { _, _ ->
-                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
+//    private fun showPermissionRationale() {
+//        AlertDialog.Builder(requireContext())
+//            .setTitle("Location Permission Required")
+//            .setMessage("This app needs location access to show your current position.")
+//            .setPositiveButton("OK") { _, _ ->
+//                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .show()
+//    }
 
     /**
      * Shows an alert dialog prompting the user to enable GPS.
@@ -515,28 +511,28 @@ class HomeFragment : Fragment() {
     /**
      * Retrieves the user's last known location.
      */
-    private fun getLocation() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestLocationPermission()
-            return
-        }
-
-        val locationGPS: Location? =
-            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        if (locationGPS != null) {
-            val latitude = locationGPS.latitude
-            val longitude = locationGPS.longitude
-            Log.d("LocationFragment", "Lat: $latitude, Lng: $longitude")
-
-            binding.showLocation.text = "Your Location:\nLatitude: $latitude\nLongitude: $longitude"
-        } else {
-            Toast.makeText(requireContext(), "Unable to find location.", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun getLocation() {
+//        if (ContextCompat.checkSelfPermission(
+//                requireContext(),
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestLocationPermission()
+//            return
+//        }
+//
+//        val locationGPS: Location? =
+//            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//        if (locationGPS != null) {
+//            val latitude = locationGPS.latitude
+//            val longitude = locationGPS.longitude
+//            Log.d("LocationFragment", "Lat: $latitude, Lng: $longitude")
+//
+//            binding.showLocation.text = "Your Location:\nLatitude: $latitude\nLongitude: $longitude"
+//        } else {
+//            Toast.makeText(requireContext(), "Unable to find location.", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
 
 }

@@ -18,6 +18,7 @@ import com.example.restaurant.R
 import com.example.restaurant.adapter.DrawerAdapter
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.fragments.CartFragment
+import com.example.restaurant.fragments.FavoriteFragment
 import com.example.restaurant.fragments.FoodFragment
 import com.example.restaurant.fragments.HomeFragment
 import com.example.restaurant.fragments.ProfileFragment
@@ -38,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(binding.root)
 
-        replaceFragment(HomeFragment()) // Set default fragment
+        replaceFragment(HomeFragment())
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_home -> replaceFragment(HomeFragment())
-                R.id.bottom_food -> replaceFragment(FoodFragment())
+                R.id.bottom_fav -> replaceFragment(FavoriteFragment())
                 R.id.bottom_cart -> replaceFragment(CartFragment())
                 R.id.bottom_profile -> replaceFragment(ProfileFragment())
             }
@@ -58,29 +59,27 @@ class MainActivity : AppCompatActivity() {
             toggleDrawer()
         }
 
-        // Close Drawer when close button is clicked
+
         binding.btnCloseDrawer.setOnClickListener {
             closeDrawer()
         }
 
         val drawerItems = listOf(
-            drawerModel(R.drawable.ic_bottom_nav_home, "Your Profile"),
-            drawerModel(R.drawable.ic_bottom_nav_food, "Orders"),
-            drawerModel(R.drawable.ic_bottom_nav_food, "Wishlist"),
-            drawerModel(R.drawable.ic_bottom_nav_home, "Cart"),
-            drawerModel(R.drawable.ic_bottom_nav_home, "Restaurant"),
-            drawerModel(R.drawable.ic_bottom_nav_food, "LogOut"),
+            drawerModel(R.drawable.ic_profile_drawer, "Your Profile"),
+            drawerModel(R.drawable.ic_heart_drawer, "Favorite"),
+            drawerModel(R.drawable.ic_spoon_drawer , "Your Order"),
+            drawerModel(R.drawable.ic_cart_drawer , "Your Cart"),
+            drawerModel(R.drawable.ic_restaurant_drawer , "Register Restaurant"),
         )
 
         binding.drawerRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.drawerRecyclerView.adapter = DrawerAdapter(drawerItems) { item ->
             when (item.title) {
                 "Your Profile" -> replaceFragment(ProfileFragment())
-                "Orders" -> startActivity(Intent(this, OrderHistoryActivity::class.java))
-                "Wishlist" -> startActivity(Intent(this, WishlistActivity::class.java))
-                "Cart" -> replaceFragment(CartFragment())
-                "Restaurant" -> startActivity(Intent(this, RegisterResturantActivity::class.java))
-
+                "Favorite" -> replaceFragment(FavoriteFragment())
+                "Your Order" -> startActivity(Intent(this, OrderHistoryActivity::class.java))
+                "Your Cart" -> replaceFragment(CartFragment())
+                "Register Restaurant" -> startActivity(Intent(this, RegisterResturantActivity::class.java))
                 else -> {}
             }
         }

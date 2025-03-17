@@ -15,14 +15,14 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) :
     RecyclerView.Adapter<RestaurantAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val restaurantImageView: ImageView = view.findViewById(R.id.imgRestaurant)
-        val restaurantName: TextView = view.findViewById(R.id.tvRestaurantName)
-        val restaurantPhone: TextView = view.findViewById(R.id.tvRestaurantPhone)
-        val restaurantAddress: TextView = view.findViewById(R.id.tvRestaurantAddress)
+        val restaurantImageView: ImageView = view.findViewById(R.id.image_restaurant)
+        val restaurantName: TextView = view.findViewById(R.id.name_restaurant)
+        val restaurantPhone: TextView = view.findViewById(R.id.number_restaurant)
+        val restaurantAddress: TextView = view.findViewById(R.id.address_restaurant)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurant, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_restaurant, parent, false)
         return ItemViewHolder(view)
     }
 

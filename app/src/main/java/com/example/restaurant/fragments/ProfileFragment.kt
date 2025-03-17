@@ -18,6 +18,8 @@ import com.example.restaurant.R
 import com.example.restaurant.activities.LoginActivity
 import com.example.restaurant.activities.UpdateProfileActivity
 import com.example.restaurant.api.RetrofitClient
+import com.example.restaurant.auth.UpdatePasswordActivity
+import com.example.restaurant.databinding.FragmentProfileBinding
 import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.UserData
 import com.google.android.material.button.MaterialButton
@@ -29,11 +31,13 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
+    private var _binding: FragmentProfileBinding?=null
+    private val binding get()= _binding!!
     private lateinit var ivUserProfile: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
-    private lateinit var tvUserPhone: TextView
     private lateinit var updateProfile: MaterialButton
+    private lateinit var updatePassword:MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +47,11 @@ class ProfileFragment : Fragment() {
 
         tvUserName = view.findViewById(R.id.tvUserName)
         tvUserEmail = view.findViewById(R.id.tvUserEmail)
-        tvUserPhone = view.findViewById(R.id.tvUserPhone)
         ivUserProfile = view.findViewById(R.id.ivUserProfile)
         updateProfile = view.findViewById(R.id.updateProfile)
-        val btnLogout = view.findViewById<MaterialButton>(R.id.btnLogout)
+        updatePassword = view.findViewById(R.id.updatePassword)
+
+        val btnLogout = view.findViewById<MaterialButton>(R.id.logout)
 
         btnLogout.setOnClickListener {
             logout()
@@ -54,6 +59,18 @@ class ProfileFragment : Fragment() {
 
         loadUserData()
         return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateProfile.setOnClickListener {
+            startActivity(Intent(requireContext(), UpdatePasswordActivity::class.java))
+        }
+
+        updatePassword.setOnClickListener {
+            startActivity(Intent(requireContext(), UpdatePasswordActivity::class.java))
+        }
+
     }
 
     private fun logout() {
@@ -147,7 +164,6 @@ class ProfileFragment : Fragment() {
         userData?.let {
             tvUserName.text = "Name: ${it.userName}"
             tvUserEmail.text = "Email: ${it.userEmail}"
-            tvUserPhone.text = "Phone: ${it.userPhone}"
 
             //added
             val sharedPreferences =

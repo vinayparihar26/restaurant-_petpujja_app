@@ -8,101 +8,109 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <!-- Toolbar with Menu Button -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/lightestOrange"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="#FFCA96">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="PetPuja"
             android:gravity="center_vertical"
-            android:textSize="20dp"
+            android:text="PetPuja"
+            android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textAllCaps="true"/>
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/slideMenu"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="end"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_three_line"/>
+            android:src="@drawable/ic_three_line" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Right Drawer (Slide-in Menu) -->
     <LinearLayout
         android:id="@+id/right_drawer"
         android:layout_width="250dp"
         android:layout_height="0dp"
         android:background="@android:color/white"
+        android:elevation="10dp"
         android:orientation="vertical"
         android:padding="16dp"
-        android:elevation="10dp"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Close Button -->
         <ImageView
             android:id="@+id/btnCloseDrawer"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
             android:layout_gravity="end"
             android:padding="8dp"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_cross" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#C1C0C0"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/drawerRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                tools:listitem="@layout/item_view_drawer"
-                android:scrollbars="none"/>
-
+                android:scrollbars="none"
+                tools:listitem="@layout/item_view_drawer" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="logout"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:textColor="@color/orange"
+                android:background="@drawable/border_gender"/>
+        </LinearLayout>
 
     </LinearLayout>
-
-
-
-
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/Header"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav">
-    </FrameLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Header"></FrameLayout>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="@color/lightOrange"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemRippleColor="@null"
+        app:itemTextColor="@color/bottom_nav_item_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame"
         app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

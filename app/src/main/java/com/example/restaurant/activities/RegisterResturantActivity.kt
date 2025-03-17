@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -39,8 +40,8 @@ class RegisterResturantActivity : AppCompatActivity() {
     private lateinit var restaurantOwner: EditText
     private lateinit var restaurantDescription: EditText
     private lateinit var restaurantAddress: EditText
-    private lateinit var restaurantOpenTime: EditText
-    private lateinit var restaurantCloseTime: EditText
+    private lateinit var restaurantOpenTime: Button
+    private lateinit var restaurantCloseTime: Button
     private lateinit var restaurantLatitude: EditText
     private lateinit var restaurantLongitude: EditText
     private lateinit var imagePicker1: Button
@@ -82,10 +83,13 @@ class RegisterResturantActivity : AppCompatActivity() {
         restaurantOpenTime.setOnClickListener { showTimePickerDialog(restaurantOpenTime) }
         restaurantCloseTime.setOnClickListener { showTimePickerDialog(restaurantCloseTime) }
 
+        imagePicker1.setOnClickListener{pickImage(101)}
+        imagePicker2.setOnClickListener{pickImage(102)}
+
         registerButton.setOnClickListener { registerRestaurant() }
     }
 
-    // 📌 Built-in Image Picker (Replaces External Library)
+
     private fun pickImage(requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
@@ -137,8 +141,12 @@ class RegisterResturantActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     resultTextView.text = "Restaurant Registered Successfully!"
+                    Log.d("register success", "onResponse: ${response.message()}")
+
                 } else {
                     resultTextView.text = "Registration failed: ${response.errorBody()?.string()}"
+                    Log.d("register failed1", "onResponse: ${response.message()}")
+                    Log.d("register failed", "onResponse: ${response.errorBody()?.string()}")
                 }
             }
 
@@ -178,7 +186,7 @@ class RegisterResturantActivity : AppCompatActivity() {
         return name
     }
 
-    private fun showTimePickerDialog(editText: EditText) {
+    private fun showTimePickerDialog(editText: Button) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
@@ -190,7 +198,6 @@ class RegisterResturantActivity : AppCompatActivity() {
 
         timePickerDialog.show()
     }
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -51,8 +52,8 @@ class UpdateProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "User ID not found!", Toast.LENGTH_SHORT).show()
         }
 
-        val btnPickImage: Button = findViewById(R.id.btnPickImage)
-        binding.btnLogin.setOnClickListener { updateUserProfile() }
+        val btnPickImage: ImageView = findViewById(R.id.btnPickImage)
+        binding.btnUpdateProfile.setOnClickListener { updateUserProfile() }
         btnPickImage.setOnClickListener { pickImageLauncher.launch("image/*") }
 
         // Use binding.spinnerGender instead of findViewById()

@@ -10,8 +10,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/bottom_food"
-        android:icon="@drawable/ic_bottom_nav_food"
+        android:id="@+id/bottom_fav"
+        android:icon="@drawable/ic_bottom_nav_heart"
         android:title="Food"
         android:contentDescription="Instamart"
         app:showAsAction="ifRoom" />

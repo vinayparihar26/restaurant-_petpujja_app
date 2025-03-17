@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,19 +23,23 @@ class ForgetPasswordActivity : AppCompatActivity() {
         binding = ActivityForgetPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        binding.ivBack.setOnClickListener {
+
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
+
         val etEmail = binding.etEmail
         val etEmailL = binding.etEmailL
 
-        // Button Click Listener
+
         binding.btnSetPassword.setOnClickListener {
-            if(etEmailL.isEmpty()){
-                Toast.makeText(this, "Enter Email", Toast.LENGTH_SHORT).show()
-            }else if (validateEmail(etEmailL, etEmail)) {
+            val isEmailValid = validateEmail(etEmailL, etEmail)
+            if(isEmailValid){
                 sendForgotPasswordRequest(etEmail.text.toString().trim())
             }
         }
 
-        // Email Text Change Listener
         binding.etEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -46,7 +51,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         })
     }
 
-    // Email Validation Function
+
     private fun validateEmail(etEmailL: TextInputLayout, etEmail: TextInputEditText): Boolean {
         val emailPattern = Regex("[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+")
         return when {
@@ -67,7 +72,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         }
     }
 
-    // Send Forgot Password API Request
+
     private fun sendForgotPasswordRequest(email: String) {
         val url = "http://192.168.37.31/Mutli-Restaurant-Food-Order/api/forgot.php"
 

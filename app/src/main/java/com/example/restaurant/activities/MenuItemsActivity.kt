@@ -57,7 +57,7 @@ class MenuItemsActivity : AppCompatActivity() {
             requestLocationPermission()
         }
 
-        val imgHeart: HeartView = findViewById(R.id.imgHeart)
+//        val imgHeart: HeartView = findViewById(R.id.imgHeart)
 
        /* imgHeart.setOnClickListener {
          addToWishList()

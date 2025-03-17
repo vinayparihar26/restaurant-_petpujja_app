@@ -9,7 +9,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,17 +16,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/border_gender">
             <ImageView
                 android:id="@+id/drawerItemIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_cross" />
+                android:src="@drawable/ic_profile_drawer"
+                app:tint="@color/red" />
             <TextView
                 android:id="@+id/drawerItemTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_13sdp"
                 android:text="hii"/>
         </LinearLayout>
 

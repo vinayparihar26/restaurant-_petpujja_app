@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/menuImg"
+            android:id="@+id/wishListMenuImg"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop" />
@@ -25,26 +25,26 @@
             android:paddingStart="8dp">
 
             <TextView
-                android:id="@+id/menuName"
+                android:id="@+id/wishListMenuName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/menuPrice"
+                android:id="@+id/wishListMenuPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/menuQuantity"
+                android:id="@+id/wishListMenuQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
             <ImageView
-                android:id="@+id/removeWishlist"
+                android:id="@+id/wishListRemove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete"/>

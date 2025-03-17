@@ -5,143 +5,143 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.SignActivity">
 
-    <!--    back btn start-->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/llMain"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--    back btn end-->
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llMain"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
-        android:padding="30dp"
+        android:padding="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBack">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!--         SIGN IN title start-->
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="@dimen/_30sdp">
 
-            android:text="SIGN IN "
-            android:textAlignment="center"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:src="@drawable/ic_back_arrow" />
+        </LinearLayout>
 
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etNameL"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Name "
-            app:boxStrokeColor="@color/black"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/black">
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etName"
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:layout_marginBottom="20dp"
+                android:text="SIGN IN "
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-                android:textSize="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etEmailL"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Email "
-            app:boxStrokeColor="@color/black"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/black">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etNameL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Enter Name "
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/black"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-                android:inputType="textEmailAddress"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                android:textSize="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPhoneL"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Phone Number "
-            app:boxStrokeColor="@color/black"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/black">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPhone"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etEmailL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="10"
-                android:textSize="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <!--        for user name end-->
+                android:hint="Enter Email "
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/black"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-        <!--        for  email  start -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!--        for  email end-->
-
-        <!--for password start-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPasswordL"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Password"
-            app:boxStrokeColor="@color/black"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:errorEnabled="true"
-            app:errorIconDrawable="@null"
-            app:hintTextColor="@color/black">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPhoneL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Enter Phone Number "
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/black"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-                android:inputType="textPassword"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textSize="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                android:textSize="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPasswordL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Password"
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/black"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="Register"
-            android:background="#FF5722"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textSize="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/orange"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

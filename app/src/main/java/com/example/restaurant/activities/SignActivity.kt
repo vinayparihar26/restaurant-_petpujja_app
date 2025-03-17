@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,6 +29,10 @@ class SignActivity : AppCompatActivity() {
         val etPhone = binding.etPhone
         val etPasswordL = binding.etPasswordL
         val etPassword = binding.etPassword
+
+        binding.ivBack.setOnClickListener {
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
 
         binding.btnRegister.setOnClickListener {
 
@@ -153,7 +158,10 @@ class SignActivity : AppCompatActivity() {
     }
 
     //    password
-    private fun validatePassword(etPasswordL: TextInputLayout, etPassword: TextInputEditText): Boolean {
+    private fun validatePassword(
+        etPasswordL: TextInputLayout,
+        etPassword: TextInputEditText,
+    ): Boolean {
         val password = etPassword.text.toString().trim()
 
         return when {

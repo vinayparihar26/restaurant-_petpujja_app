@@ -3,9 +3,8 @@
     <style name="Base.Theme.Restaurant" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/orange</item>
-        
         <!--<item name="android:navigationBarColor">@color/navigationBarColor</item>-->
-
+        <item name="fontFamily">@font/font1</item>
         <item name="bottomNavigationStyle">@style/Widget.Material3.BottomNavigationView</item>
     </style>
 
