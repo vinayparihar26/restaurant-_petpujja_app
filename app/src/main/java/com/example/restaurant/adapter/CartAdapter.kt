@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.restaurant.R
 import com.example.restaurant.model.CartItem
+import com.google.android.material.button.MaterialButton
 
 class CartAdapter(
     private val cartItems: List<CartItem>,
@@ -18,23 +19,24 @@ class CartAdapter(
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val menuImage: ImageView = itemView.findViewById(R.id.menuImage)
         val menuName: TextView = itemView.findViewById(R.id.menuName)
-        val menuPrice: TextView = itemView.findViewById(R.id.menuPrice)
+        val menuDescription: TextView = itemView.findViewById(R.id.menuItemDescription)
+        val totalPrice: TextView = itemView.findViewById(R.id.totalMenuPrice)
         val menuQuantity: TextView = itemView.findViewById(R.id.menuQuantity)
-        val deleteCart: ImageView = itemView.findViewById(R.id.deleteCart)
+        val deleteCart: MaterialButton = itemView.findViewById(R.id.deleteCart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_cart, parent, false)
         return CartViewHolder(view)
-
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val item = cartItems[position]
 
         holder.menuName.text = item.menuName
-        holder.menuPrice.text = "₹${item.menuPrice}"
-        holder.menuQuantity.text = "Qty: ${item.quantity}"
+        holder.menuDescription.text=item.menuDescription
+        holder.totalPrice.text = "₹${item.totalPrice}"
+        holder.menuQuantity.text = "Quantity - ${item.quantity}"
 
         Glide.with(holder.itemView.context)
             .load(item.menuImg)

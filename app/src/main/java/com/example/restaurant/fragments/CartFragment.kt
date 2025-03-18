@@ -1,5 +1,6 @@
 package com.example.restaurant.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -29,18 +30,20 @@ class CartFragment : Fragment() {
     private lateinit var emptyCartTextView: View  // Added TextView
     private var cartItems: MutableList<CartItem> = mutableListOf()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
-        emptyCartTextView = view.findViewById(R.id.NoItem) // Initialize TextView
+        emptyCartTextView = view.findViewById(R.id.NoItemCart)
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         fetchCartItems()
         return view
     }
+
 
     private fun fetchCartItems() {
         val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -63,10 +66,10 @@ class CartFragment : Fragment() {
                             cartItems = cartResponse.data.toMutableList()
                             cartAdapter = CartAdapter(cartItems, ::removeCartItem)
                             cartRecyclerView.adapter = cartAdapter
-                            emptyCartTextView.visibility = View.GONE  // Hide message when cart has items
+                            emptyCartTextView.visibility = View.GONE
                             cartRecyclerView.visibility = View.VISIBLE
                         } else {
-                            emptyCartTextView.visibility = View.VISIBLE // Show "Cart is empty"
+                            emptyCartTextView.visibility = View.VISIBLE
                             cartRecyclerView.visibility = View.GONE
                         }
                     } else {
@@ -84,6 +87,8 @@ class CartFragment : Fragment() {
                 }
             })
     }
+
+
 
     private fun removeCartItem(cartId: String, position: Int) {
         val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "remove")
