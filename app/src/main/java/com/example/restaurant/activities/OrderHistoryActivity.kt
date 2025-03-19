@@ -5,13 +5,12 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.R
-import com.example.restaurant.adapters.OrderHistoryAdapter
+import com.example.restaurant.adapter.OrderHistoryAdapter
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.OrderedMenuItem
 import com.example.restaurant.model.OrderedMenuItemResponse

@@ -40,12 +40,8 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val category = categoriesList[position]
         holder.textView.text = category.categoryName
-        Log.d("CategoryAdapter", "Binding item at position $position: $category")
-
-        Log.d("CategoryAdapter", "Loading Image: ${category.categoryImg}")
 
         val imageUrl = category.categoryImg
-        Log.d("GlideDebug", "Image URL: $imageUrl")
 
         Glide.with(context).load(category.categoryImg)
             .placeholder(R.drawable.ic_launcher_background) // Use a placeholder image
@@ -55,14 +51,7 @@ class CategoryAdapter(
 
         holder.itemView.setOnClickListener {
             onCategoryClick(category)
-        }/*   holder.apply {
-               Glide.with(context).load(item.categoryImg).into(holder.imageView)
-               textView.text = item.categoryName*/
-
-        /*        Glide.with(holder.itemView.context)
-        .load(imageUrl)
-        .error(R.drawable.ic_launcher_background)
-        .into(holder.imageView)*/
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

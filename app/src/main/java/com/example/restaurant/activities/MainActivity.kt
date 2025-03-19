@@ -22,11 +22,13 @@ import com.example.restaurant.fragments.FavoriteFragment
 import com.example.restaurant.fragments.FoodFragment
 import com.example.restaurant.fragments.HomeFragment
 import com.example.restaurant.fragments.ProfileFragment
+import com.example.restaurant.fragments.WishlistFragment
 import com.example.restaurant.model.drawerModel
 
 object Constants {
     const val SCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 }
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -34,17 +36,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         requestedOrientation = Constants.SCREEN_ORIENTATION
         binding = ActivityMainBinding.inflate(layoutInflater)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment(), false)
+        }
         replaceFragment(HomeFragment())
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_home -> replaceFragment(HomeFragment())
-                R.id.bottom_fav -> replaceFragment(FavoriteFragment())
+                R.id.bottom_fav -> replaceFragment(WishlistFragment())
                 R.id.bottom_cart -> replaceFragment(CartFragment())
                 R.id.bottom_profile -> replaceFragment(ProfileFragment())
             }
@@ -67,19 +73,25 @@ class MainActivity : AppCompatActivity() {
         val drawerItems = listOf(
             drawerModel(R.drawable.ic_profile_drawer, "Your Profile"),
             drawerModel(R.drawable.ic_heart_drawer, "Favorite"),
-            drawerModel(R.drawable.ic_spoon_drawer , "Your Order"),
-            drawerModel(R.drawable.ic_cart_drawer , "Your Cart"),
-            drawerModel(R.drawable.ic_restaurant_drawer , "Register Restaurant"),
+            drawerModel(R.drawable.ic_spoon_drawer, "Your Order"),
+            drawerModel(R.drawable.ic_cart_drawer, "Your Cart"),
+            drawerModel(R.drawable.ic_restaurant_drawer, "Register Restaurant"),
         )
 
         binding.drawerRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.drawerRecyclerView.adapter = DrawerAdapter(drawerItems) { item ->
             when (item.title) {
                 "Your Profile" -> replaceFragment(ProfileFragment())
-                "Favorite" -> replaceFragment(FavoriteFragment())
+                "Favorite" -> replaceFragment(WishlistFragment())
                 "Your Order" -> startActivity(Intent(this, OrderHistoryActivity::class.java))
                 "Your Cart" -> replaceFragment(CartFragment())
-                "Register Restaurant" -> startActivity(Intent(this, RegisterResturantActivity::class.java))
+                "Register Restaurant" -> startActivity(
+                    Intent(
+                        this,
+                        RegisterResturantActivity::class.java
+                    )
+                )
+
                 else -> {}
             }
         }
@@ -87,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(com.example.restaurant.R.id.bottomNav, fragment)
+        transaction.replace(R.id.bottomNav, fragment)
         transaction.commit()
     }
 
@@ -125,13 +137,29 @@ class MainActivity : AppCompatActivity() {
         isDrawerOpen = false
     }
 
-     private fun replaceFragment(fragment: Fragment) {
-         supportFragmentManager.beginTransaction()
-             .replace(R.id.frame, fragment)
-             .commit()
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+        val transaction = supportFragmentManager.beginTransaction()
+            .replace(R.id.frame, fragment)
 
-         if (isDrawerOpen) {
-             closeDrawer()
-         }
-     }
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commit()
+        if (isDrawerOpen) {
+            closeDrawer()
+        }
+    }
+
+    override fun onBackPressed() {
+        try {
+            if (supportFragmentManager.backStackEntryCount > 1) {
+                supportFragmentManager.popBackStack()
+            } else {
+                finish()
+            }
+        } catch (e: Exception) {
+            super.onBackPressed()
+        }
+    }
 }

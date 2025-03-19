@@ -4,18 +4,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 //    private const val BASE_URL = "http://localhost/Mutli-Restaurant-Food-Order/"
     private const val BASE_URL = "http://192.168.37.31/Mutli-Restaurant-Food-Order/"
+   // private const val BASE_URL = "http://192.168.10.214/Mutli-Restaurant-Food-Order/"
 
     private val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
     private val client = OkHttpClient.Builder()
         .addInterceptor(logging)
+        .addInterceptor(loggingInterceptor)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     val apiService: ApiService by lazy {

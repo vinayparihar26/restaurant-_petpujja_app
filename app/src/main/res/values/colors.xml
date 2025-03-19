@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#6200EE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#A6A6A6</color>
+    <color name="green">#20CE17</color>
     <color name="orange">#D9510D</color>
+    <color name="orangev">#FF9A43</color>
     <color name="lightOrange">#FFB174</color>
     <color name="lightestOrange">#FFCA96</color>
     <color name="red">#FF1200</color>
     <color name="yellow">#FFEB3B</color>
+    <color name="btnSkipOrange">#DD4A01</color>
 </resources>

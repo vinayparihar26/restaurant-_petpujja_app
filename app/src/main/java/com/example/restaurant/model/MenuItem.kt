@@ -17,6 +17,6 @@ data class MenuItem(
     @SerializedName("restaurant_address") val restaurantAddress: String?,
     @SerializedName("restaurant_phone") val restaurantPhone: String?,
     @SerializedName("restaurant_img") val restaurantImage: String?,
-    val distance: String?,
+   // val distance: String?,
 
     )
