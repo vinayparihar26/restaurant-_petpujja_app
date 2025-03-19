@@ -8,6 +8,7 @@
     android:background="@color/lightOrange"
     tools:context=".activities.SplashScreenActivity">
 
+
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
