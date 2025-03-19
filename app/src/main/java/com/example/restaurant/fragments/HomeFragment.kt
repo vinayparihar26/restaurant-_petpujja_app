@@ -1,11 +1,13 @@
 package com.example.restaurant.fragments
 
-
 import android.Manifest
+import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -17,10 +19,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextSwitcher
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity.LOCATION_SERVICE
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,7 +32,6 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.restaurant.R
-import com.example.restaurant.activities.MenuItemsActivity
 import com.example.restaurant.adapter.CategoryAdapter
 import com.example.restaurant.adapter.ImageSlideAdapter
 import com.example.restaurant.adapter.RestaurantAdapter
@@ -40,8 +41,8 @@ import com.example.restaurant.model.CategoriesResponse
 import com.example.restaurant.model.CategoryModel
 import com.example.restaurant.model.Restaurant
 import com.example.restaurant.model.RestaurantResponse
-import com.example.restaurant.utils.HeartView
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,51 +61,57 @@ class HomeFragment : Fragment() {
     private lateinit var textSwitcher: TextSwitcher
     private val hintStrings = arrayOf("dishes & foods", "favourite restaurants", "home groceries")
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var categoryAdapterScroll: CategoryAdapter
+
     private val categoryList = mutableListOf<CategoryModel>()
     private lateinit var recyclerViewForCategories: RecyclerView
-    //private val viewModel: CategoryViewModel by viewModels()
+    private lateinit var recyclerViewForCategoriesScroll: RecyclerView
 
     private lateinit var restaurantAdapter: RestaurantAdapter
     private val restaurantList = mutableListOf<Restaurant>()
     private lateinit var recyclerViewForRestaurant: RecyclerView
-    //  private val viewModelForItems: ItemViewModel by viewModels()
-    // private lateinit var trendingRecyclerView: RecyclerView
-    // private val trendingItemViewModel: TrendingItemViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Initialize Location Client
-        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-//        val imgShareDetails: ImageView = view.findViewById(R.id.imgShareDetails)
-//        locationManager =
-//            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+        recyclerViewForCategoriesScroll = view.findViewById(R.id.recyclerViewForCategoriesScroll)
 
-//        binding.btnGetLocation.setOnClickListener {
-//            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//                showEnableGPSDialog()
-//            } else {
-//                requestLocationPermission()
-//            }
-//        }
-//
-//        // Request Location Permission
-//        binding.tvRequestLocationPermission.setOnClickListener {
-//            requestLocationPermission()
-//        }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        checkAndRequestLocationPermission()
+        // Fetch Last Saved Location (if exists)
+        val sharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("MyLocation", MODE_PRIVATE)
+        val savedLat = sharedPreferences.getString("latitude", "Not Available")
+        val savedLng = sharedPreferences.getString("longitude", "Not Available")
+
+        binding.txtLocation.text = "Saved Location:\nLat: $savedLat, Lng: $savedLng"
+        binding.txtLocation.setOnClickListener {
+            checkAndRequestLocationPermission()
+        }
+        fetchCategory()
+        fetchResturantItems()
+
         val viewPager2 = binding.viewpager2
         handler = Handler(Looper.myLooper()!!)
         imageList = arrayListOf(
             R.drawable.img_slider1,
             R.drawable.img_slider2,
+            R.drawable.d1,
+            R.drawable.d2,
+            R.drawable.delicious,
         )
 
         slideAdapter = ImageSlideAdapter(imageList, viewPager2)
@@ -125,147 +132,181 @@ class HomeFragment : Fragment() {
         })
 
         //   val imgHeart: HeartView = view.findViewById(R.id.imgHeart)
-
 // Use GridLayoutManager with 2 rows and horizontal scrolling for the entire RecyclerView
-        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+        /*recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2) // 2 rows
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL // Scroll horizontally
         recyclerViewForCategories.layoutManager = gridLayoutManager
+*/
+
+
+        val linearLayout = LinearLayoutManager(requireContext())
+        linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewForCategoriesScroll.layoutManager = linearLayout
+
+        categoryAdapterScroll = CategoryAdapter(requireContext(), categoryList) { category ->
+            Log.d("categoryClick", "category clicked: $category")
+            val fragment = MenuItemFragment().apply {
+                arguments = Bundle().apply {
+                    putString("categoryId", category.categoryId)
+                }
+            }
+        }
+        recyclerViewForCategoriesScroll.adapter = categoryAdapterScroll
+
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2) // 2 columns
+        gridLayoutManager.orientation = GridLayoutManager.HORIZONTAL // Horizontal scrolling
+        recyclerViewForCategories.layoutManager = gridLayoutManager
 
         categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
-            val intent = Intent(requireContext(), MenuItemsActivity::class.java)
-            intent.putExtra("categoryId", category.categoryId)
-            Log.d("categoryId", category.categoryId)
-            startActivity(intent)
+            Log.d("categoryClick", "category clicked: $category")
+            val fragment = MenuItemFragment().apply {
+                arguments = Bundle().apply {
+                    putString("categoryId", category.categoryId)
+                }
+            }
+
+            if (isAdded) {
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.frame, fragment)  // Ensure `frame` is correct
+                transaction.addToBackStack(null)
+                transaction.commit()
+            } else Log.e(
+                "FragmentDetached",
+                "Fragment not attached. Skipping fragment transaction."
+            )
         }
 
         recyclerViewForCategories.adapter = categoryAdapter
-        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
-        //recyclerViewForCategories.layoutManager = GridLayoutManager(requireContext(), 4)
-        Log.d("HomeFragment", "onViewCreated called")
 
-        recyclerViewForCategories.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        /*
+                recyclerViewForCategories.adapter = categoryAdapter
+                recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+                Log.d("HomeFragment", "onViewCreated called")
 
-       /* recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
-        recyclerViewForCategories.layoutManager = gridLayoutManager
-        categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
-            val intent = Intent(requireContext(), MenuItemsActivity::class.java)
-            intent.putExtra("categoryId", category.categoryId)
-            Log.d("categoryId", category.categoryId)
-            startActivity(intent)
-        }
-        recyclerViewForCategories.adapter = categoryAdapter*/
+                recyclerViewForCategories.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        */
 
-
-        //recyclerViewForCategories.layoutManager = GridLayoutManager(requireContext(), 4)
-        Log.d("HomeFragment", "onViewCreated called")
-
-        /*  recyclerViewForCategories.layoutManager =
-              LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-  */
-        Log.d("HomeFragment", "onViewCreated called2")
         recyclerViewForRestaurant = view.findViewById(R.id.restaurantRecycleView)
         recyclerViewForRestaurant.layoutManager = LinearLayoutManager(requireContext())
         restaurantAdapter = RestaurantAdapter(
-            restaurantList = restaurantList
+            restaurantList = restaurantList,
+            context = requireContext(),
         )
 
         recyclerViewForRestaurant.adapter = restaurantAdapter
-        /*
 
-                  categoryAdapter = CategoryAdapter(requireContext(), emptyList()) { category ->
-                       val intent = Intent(requireContext(), MenuItemsActivity::class.java)
-                       intent.putExtra("CATEGORY_ID", category.categoryId)
-                       Log.d("HomeFragment", "onViewCreated called3")
-                      // intent.putExtra("CATEGORY_NAME", category.categoryName)
-                       startActivity(intent)
-                   }*/
 
-        /*
+        /*  binding.btnLocation.setOnClickListener {
+              checkAndRequestLocationPermission()
+          }*/
+    }
 
-       categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
-            val intent = android.content.Intent(requireContext(), MenuItemsActivity::class.java)
-            intent.putExtra("categoryId", category.categoryId)
-            startActivity(intent)
-            Log.d("HomeFragment", "onViewCreated called3")
-            Log.d("HomeFragment", "onViewCreated called4")
+    private fun checkAndRequestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission already granted, fetch location
+            getLastLocation()
+        } else {
+            // Request Permission
+            locationPermissionLauncher.launch(ACCESS_FINE_LOCATION)
+        }
+    }
+
+    private val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            getLastLocation()
+        } else {
+            Toast.makeText(requireContext(), "Location Permission Denied!", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        val locationManager =
+            requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
+        val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        if (!isGpsEnabled) {
+            Toast.makeText(requireContext(), "Please enable GPS!", Toast.LENGTH_LONG).show()
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            return
         }
 
-        recyclerViewForCategories.adapter = categoryAdapter
-*/
-        /* viewModel.itemsCategories.observe(viewLifecycleOwner) { categories ->
-             if (categories != null) {
-                 Log.d("HomeFragment", "Categories fetched successfully: $categories")
-                 categoryAdapter.updateData(categories)
-             }else {
-                 Log.d("HomeFragment", "Not Categories fetched")
-             }
-         }*/
-        fetchCategory()
-        val (storedLatitude, storedLongitude) = getStoredLocation()
-        Log.d("StoredLocation", "Latitude: $storedLatitude, Longitude: $storedLongitude")
-        fetchResturantItems()
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (isAdded) {
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
 
-        //categoryAdapter= CategoryAdapter(requireContext(), emptyList())
-        //below old code
-        /*  recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
-          recyclerViewForCategories.layoutManager =
-              GridLayoutManager(requireContext(), 3) // 2 columns grid
+                        // 🟢 Location ko SharedPreferences me Save karna
+                        val sharedPreferences =
+                            requireActivity().getSharedPreferences("MyLocation", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("latitude", latitude.toString())
+                        editor.putString("longitude", longitude.toString())
+                        Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
+                        editor.apply()  // Save changes
 
-          categoryAdapter = CategoryAdapter(requireContext(), emptyList())
-          recyclerViewForCategories.adapter = categoryAdapter
+                        //   binding.txtLocation.text = "Lat: $latitude, Lng: $longitude"
+                        Toast.makeText(requireContext(), "Location Saved!", Toast.LENGTH_SHORT)
+                            .show()
 
-          Log.d("HomeFragment", "Fetching categories...")
-          viewModel.itemsCategories.observe(viewLifecycleOwner, Observer { items ->
-              if (items != null) {
-                  Log.d("HomeFragment", "Categories fetched successfully: $items")
-                  Log.d("items $items", "Categories fetched successfully: $items")
-                 *//* recyclerViewForCategories.adapter = CategoryAdapter(
-                    this.requireContext(),
-                    itemList = items
-                )*//*
-                categoryAdapter.updateData(items)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Location not available. Try again!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
 
-                //recyclerViewForCategories.adapter = categoryAdapter
-
-            } else {
-                Log.d("HomeFragment", "Categories fetched successfully: $items")
             }
-         //   viewModel.fetchCategoriesItems()
-        })
+            .addOnFailureListener {
+                if (isAdded) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to get location",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
 
-        Log.d("HomeFragment", "Categories fetched successfully")
-*//*
-                recyclerViewForItems = view.findViewById(R.id.recyclerViewForItems)
-                recyclerViewForItems.layoutManager = GridLayoutManager(requireContext(), 2)
+                }
+            }
+    }
 
-                viewModelForItems.items.observe(viewLifecycleOwner, Observer { items ->
-                    recyclerView.adapter = ItemAdapter(items)
-                })
-
-                viewModelForItems.fetchItems()
-
-
-                trendingRecyclerView = view.findViewById(R.id.trendingRecyclerView)
-                trendingRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-                trendingItemViewModel.trendingItems.observe(viewLifecycleOwner, Observer { trendingItems ->
-                    trendingRecyclerView.adapter = TrendingItemAdapter(trendingItems)
-                })
-                trendingItemViewModel.fetchTrendingItems()
-        */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
 
     }
 
 
     private fun fetchResturantItems() {
-        val (latitude, longitude) = getStoredLocation()
-        val call = RetrofitClient.apiService.getRestaurants(
-            method = "restaurants",
-            latitude = latitude,
-            longitude = longitude,
-        )
+        //    val (latitude, longitude) = getStoredLocation()
+
+        val call = if (latitude == 0.0 && longitude == 0.0) {
+            RetrofitClient.apiService.getRestaurants(
+                method = "restaurants",
+                latitude = null,
+                longitude = null
+            )
+        } else {
+            RetrofitClient.apiService.getRestaurants(
+                method = "restaurants",
+                latitude = latitude,
+                longitude = longitude,
+            )
+        }
         call.enqueue(object : Callback<RestaurantResponse> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(
@@ -278,25 +319,20 @@ class HomeFragment : Fragment() {
                         Log.d("API_RESPONSE", "Response: $restaurantResponse")
                         if (restaurantResponse.status == 200 && restaurantResponse.data.isNotEmpty()) {
                             restaurantList.clear()
-                            Log.d("resturant1", restaurantList.toString())
                             restaurantList.addAll(restaurantResponse.data)
-                            Log.d("resturant1", restaurantList.toString())
                             restaurantAdapter.notifyDataSetChanged()
                             Log.d("resturant1", restaurantList.toString())
                         } else {
                             restaurantList.clear()
                             restaurantAdapter.notifyDataSetChanged()
                             Toast.makeText(
-                                requireContext(),
-                                "No Restaurants Found",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                                requireContext(), "No Restaurants Found", Toast.LENGTH_SHORT
+                            ).show()
                         }
                         Log.d("resturant2", "Response: $restaurantResponse")
+                    } else {
+                        Log.d("Failed to load items", "Error: ${response.message()}")
                     }
-                } else {
-                    Log.d("Failed to load items", "Error: ${response.message()}")
                 }
             }
 
@@ -304,89 +340,15 @@ class HomeFragment : Fragment() {
                 if (isAdded) {  // Check if fragment is attached before showing error
                     Log.e("API_ERROR", "Error: ${p1.message}")
                     Toast.makeText(
-                        requireContext(),
-                        "Error fetching restaurants",
-                        Toast.LENGTH_SHORT
+                        requireContext(), "Error fetching restaurants", Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         })
     }
 
-
-    private fun getStoredLocation(): Pair<Double, Double> {
-        val sharedPreferences =
-            requireContext().getSharedPreferences("LocationPrefs", Context.MODE_PRIVATE)
-        val latitude = sharedPreferences.getFloat("latitude", 0.0f).toDouble()
-        val longitude = sharedPreferences.getFloat("longitude", 0.0f).toDouble()
-        return Pair(latitude, longitude)
-    }
-
-
-    /*
-
-        private fun requestLocationPermission() {
-        when {
-            // Check if permission is already granted
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                getUserLocation() // Permission already granted, get location
-            }
-
-            // Request permission from the user
-            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Location permission is needed",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-        }
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            getUserLocation() // If granted, fetch location
-        } else {
-            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun getUserLocation() {
-        try {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-                    Log.d("HomeFragment", "Lat: $latitude, Lng: $longitude")
-
-                    // Send data to backend
-                    sendLocationToServer(latitude, longitude)
-                } else {
-                    Toast.makeText(requireContext(), "Failed to get location", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } catch (e: SecurityException) {
-            e.printStackTrace()
-        }
-    }*/
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        handler.removeCallbacksAndMessages(null)
-        _binding = null
-    }
-
     private val runnable = Runnable {
-        if (_binding != null) {
+        if (_binding != null || isAdded) {
             binding.viewpager2.currentItem += 1
         }
 
@@ -406,7 +368,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchCategory() {
-        //val apiService = RetrofitClient.getInstance()
         val call = RetrofitClient.apiService.getCategoriesItems(method = "fetch_categories")
 
         call.enqueue(object : Callback<CategoriesResponse> {
@@ -415,124 +376,45 @@ class HomeFragment : Fragment() {
                 call: Call<CategoriesResponse>,
                 response: Response<CategoriesResponse>,
             ) {
-                if (!isAdded) return
-                if (response.isSuccessful && response.body() != null) {
-                    val categoryResponse = response.body()!!
-                    Log.d("API_RESPONSE", "Response: $categoryResponse")
+                if (isAdded) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val categoryResponse = response.body()!!
+                        Log.d("API_RESPONSE", "Response: $categoryResponse")
 
-                    if (categoryResponse.status.toString() == "200" && categoryResponse.data.isNotEmpty()) {
-                        categoryList.clear()
-                        categoryList.addAll(categoryResponse.data)
-                        categoryAdapter.notifyDataSetChanged()
+                        if (categoryResponse.status.toString() == "200" && categoryResponse.data.isNotEmpty()) {
+                            categoryList.clear()
+                            categoryList.addAll(categoryResponse.data)
+                            categoryAdapter.notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "No Categories Found",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     } else {
-                        Toast.makeText(requireContext(), "No Categories Found", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(
+                            requireContext(), "Failed to load categories", Toast.LENGTH_SHORT
+                        ).show()
                     }
-                } else {
-                    Toast.makeText(
-                        requireContext(), "Failed to load categories", Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
-                if (!isAdded) return
-                Log.e("API_ERROR", "Error: ${t.message}")
-                Toast.makeText(requireContext(), "Error fetching categories", Toast.LENGTH_SHORT)
-                    .show()
+                when {
+                    isAdded -> {
+                        Log.e("API_ERROR", "Error: ${t.message}")
+                        Toast.makeText(
+                            requireContext(),
+                            "Error fetching categories",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+
             }
         })
     }
-
-    /*second time try*/
-
-//    private fun requestLocationPermission() {
-//        when {
-//            ContextCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) == PackageManager.PERMISSION_GRANTED -> {
-//                getLocation()
-//            }
-//
-//            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-//                showPermissionRationale()
-//            }
-//
-//            else -> {
-//                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//            }
-//        }
-//    }
-
-    /**
-     * Handles the result of the permission request.
-     */
-//    private val requestPermissionLauncher = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()
-//    ) { isGranted: Boolean ->
-//        if (isGranted) {
-//            getLocation()
-//        } else {
-//            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
-    /**
-     * Shows an alert dialog explaining why location permission is needed.
-     */
-//    private fun showPermissionRationale() {
-//        AlertDialog.Builder(requireContext())
-//            .setTitle("Location Permission Required")
-//            .setMessage("This app needs location access to show your current position.")
-//            .setPositiveButton("OK") { _, _ ->
-//                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//            }
-//            .setNegativeButton("Cancel", null)
-//            .show()
-//    }
-
-    /**
-     * Shows an alert dialog prompting the user to enable GPS.
-     */
-    private fun showEnableGPSDialog() {
-        AlertDialog.Builder(requireContext())
-            .setMessage("Enable GPS to get location")
-            .setCancelable(false)
-            .setPositiveButton("Yes") { _, _ ->
-                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
-            }
-            .show()
-    }
-
-    /**
-     * Retrieves the user's last known location.
-     */
-//    private fun getLocation() {
-//        if (ContextCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            requestLocationPermission()
-//            return
-//        }
-//
-//        val locationGPS: Location? =
-//            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-//        if (locationGPS != null) {
-//            val latitude = locationGPS.latitude
-//            val longitude = locationGPS.longitude
-//            Log.d("LocationFragment", "Lat: $latitude, Lng: $longitude")
-//
-//            binding.showLocation.text = "Your Location:\nLatitude: $latitude\nLongitude: $longitude"
-//        } else {
-//            Toast.makeText(requireContext(), "Unable to find location.", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
-
 }
