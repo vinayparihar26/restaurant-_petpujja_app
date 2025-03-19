@@ -43,8 +43,9 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <com.example.restaurant.utils.HeartView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgHeart"
+                android:src="@drawable/heartoutline"
                 android:layout_width="20dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true" />

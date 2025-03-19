@@ -69,4 +69,10 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.4.0") //jetp
 
+
+    // RxJava for Retrofit
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
 }

@@ -81,6 +81,9 @@ class MenuItemFragment : Fragment() {
                 .commit()
         }
 
+
+
+
         val sharedPreferences =
             requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", null)
@@ -93,7 +96,6 @@ class MenuItemFragment : Fragment() {
         menuItemAdapter = MenuItemAdapter(
             requireContext(),
             menuItemList,
-            userId.toString()
         )
         recyclerViewForMenuItems.adapter = menuItemAdapter
 

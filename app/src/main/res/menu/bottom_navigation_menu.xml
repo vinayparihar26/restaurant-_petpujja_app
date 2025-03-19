@@ -7,27 +7,27 @@
         android:icon="@drawable/ic_bottom_nav_home"
         android:title="Home"
         android:contentDescription="Food"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/bottom_fav"
         android:icon="@drawable/ic_bottom_nav_heart"
         android:title="Food"
         android:contentDescription="Instamart"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/bottom_cart"
         android:icon="@drawable/ic_bottom_nav_cart"
         android:title="Cart"
         android:contentDescription="Dineout"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/bottom_profile"
         android:icon="@drawable/ic_bottom_nav_profile"
         android:title="Profile"
         android:contentDescription="Genie"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
 </menu>

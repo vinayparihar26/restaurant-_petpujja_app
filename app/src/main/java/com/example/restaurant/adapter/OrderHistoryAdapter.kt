@@ -1,4 +1,5 @@
-package com.example.restaurant.adapters
+
+package com.example.restaurant.adapter
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,33 +1,101 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".fragments.HomeFragment">
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="always"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:id="@+id/llMain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_16sdp">
+
+            <!-- Search Bar Section -->
+            <LinearLayout
+                android:id="@+id/llSearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius_search"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/searchText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:hint="Search for restaurants, dishes..."
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:padding="@dimen/_8sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <!-- Search Icon -->
+                    <ImageView
+                        android:id="@+id/icSearch"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_search"
+                        android:visibility="visible"
+                        app:tint="@color/black" />
+
+                    <!-- Voice Search -->
+                    <ImageView
+                        android:id="@+id/microphone"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_search_mic" />
+
+                    <!-- Clear Search -->
+                    <ImageView
+                        android:id="@+id/icClose"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_search_close"
+                        android:visibility="gone"
+                        app:tint="@color/black" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_230sdp"
-                android:background="@color/lightestOrange"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_20sdp">
+                android:layout_height="@dimen/_200sdp"
+                android:paddingTop="@dimen/_10sdp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewpager2"
@@ -47,9 +115,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="What's on Your Mind?"
-                    android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/_17sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -57,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:padding="@dimen/_4sdp" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -70,10 +137,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Restaurants  delivering  to  you"
-                    android:textAllCaps="true"
+                    android:text="Restaurants  Delivering To You"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/_17sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -81,42 +147,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:padding="@dimen/_5sdp"/>
+                    android:padding="@dimen/_5sdp" />
             </LinearLayout>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imgShareDetails"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/ios_share_24dp_e8eaed_fill0_wght400_grad0_opsz24" />-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/imgShareDetails"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:src="@drawable/ios_share_24dp_e8eaed_fill0_wght400_grad0_opsz24" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvRequestLocationPermission"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="requestLocationPermission"-->
-<!--                android:textSize="@dimen/_20sdp"-->
-<!--                android:textStyle="bold" />-->
+            <TextView
+                android:id="@+id/tvRequestLocationPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="requestLocationPermission"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/showLocation"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Location"-->
-<!--                android:textSize="24sp" />-->
+            <TextView
+                android:id="@+id/showLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:textSize="24sp"
+                android:visibility="gone" />
 
-<!--            <Button-->
-<!--                android:id="@+id/btnGetLocation"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Get Location" />-->
+            <Button
+                android:id="@+id/btnGetLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Location"
+                android:visibility="gone" />
         </LinearLayout>
 
 
-
-    </ScrollView>
-
+    </LinearLayout>
 
 
-
-</LinearLayout>
+</ScrollView>

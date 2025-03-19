@@ -3,6 +3,7 @@ package com.example.restaurant.activities
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -23,7 +24,6 @@ import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.databinding.ActivityMenuItemsBinding
 import com.example.restaurant.model.MenuItem
 import com.example.restaurant.model.MenuResponse
-import com.example.restaurant.utils.HeartView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -63,13 +63,8 @@ class MenuItemsActivity : AppCompatActivity() {
          addToWishList()
         }*/
 
-        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        userId = sharedPreferences.getString("userId", null) ?: run {
-            Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
-            Log.e("MenuItemsActivity", "User ID not found")
-            return
-        }
-
+        val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getString("user_id", null) ?: ""
 
         try {
             Log.d("MenuItemsActivity", "onCreate called")
@@ -79,7 +74,6 @@ class MenuItemsActivity : AppCompatActivity() {
             recyclerViewForMenuItems.layoutManager = LinearLayoutManager(this)
             menuItemAdapter = MenuItemAdapter(
                 this, menuItemList,
-                userId = this.userId,
 
             )
             /* onFavoriteClick = { menuId ->
