@@ -109,7 +109,7 @@
                 android:background="@color/black"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="Remove From Cart"
-                android:textSize="@dimen/_10sdp"/>
+                android:textSize="@dimen/_14sdp"/>
 
         </LinearLayout>
     </LinearLayout>
