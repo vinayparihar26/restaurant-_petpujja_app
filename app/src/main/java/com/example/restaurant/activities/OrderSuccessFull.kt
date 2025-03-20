@@ -5,8 +5,6 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Bundle
-import android.view.LayoutInflater
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.restaurant.R
@@ -42,7 +40,7 @@ class OrderSuccessFull : AppCompatActivity() {
             .build()
 
         // Load sound file
-      //  soundId = soundPool.load(this, R.raw.sound, 1)
+       soundId = soundPool.load(this, R.raw.order, 1)
 
         // Play sound when animation starts
         lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
