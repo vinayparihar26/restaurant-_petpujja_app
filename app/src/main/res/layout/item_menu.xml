@@ -42,7 +42,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:src="@drawable/heartoutline"
-                android:tint="@color/white"/>
+                android:tint="@color/white" />
         </RelativeLayout>
 
         <LinearLayout
@@ -51,10 +51,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/tvMenuItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="item name"
                 android:textSize="@dimen/_18sp"
                 android:textStyle="bold" />
@@ -63,8 +63,8 @@
                 android:id="@+id/menu_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="item details"
                 android:maxLines="2"
+                android:text="item details"
                 android:textSize="@dimen/_14sp" />
 
             <TextView
@@ -87,8 +87,8 @@
                     android:layout_height="@dimen/_30sdp"
                     android:padding="@dimen/_5sdp"
                     android:text="Add To Cart"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:textSize="@dimen/_10sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/imgShareDetails"
                     android:layout_width="wrap_content"
@@ -96,10 +96,10 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textStyle="bold"
-                    android:textColor="@color/orange"
                     android:padding="@dimen/_5sdp"
-                    android:text="Share" />
+                    android:text="Share"
+                    android:textColor="@color/orange"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
