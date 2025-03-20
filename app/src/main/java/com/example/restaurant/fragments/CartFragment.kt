@@ -64,7 +64,7 @@ class CartFragment : Fragment() {
                         val cartResponse = response.body()
                         if (cartResponse?.status == 200 && cartResponse.data.isNotEmpty()) {
                             cartItems = cartResponse.data.toMutableList()
-                            cartAdapter = CartAdapter(cartItems, ::removeCartItem)
+                            cartAdapter = CartAdapter(requireContext(),cartItems, ::removeCartItem)
                             cartRecyclerView.adapter = cartAdapter
                             emptyCartTextView.visibility = View.GONE
                             cartRecyclerView.visibility = View.VISIBLE
@@ -100,7 +100,9 @@ class CartFragment : Fragment() {
                     if (response.isSuccessful) {
                         cartItems.removeAt(position)
                         cartAdapter.notifyItemRemoved(position)
-                        Toast.makeText(requireContext(), "Item removed", Toast.LENGTH_SHORT).show()
+                        if(position<1){
+                            emptyCartTextView.visibility = View.VISIBLE
+                        }
                     } else {
                         Toast.makeText(requireContext(), "Failed to remove item", Toast.LENGTH_SHORT).show()
                     }

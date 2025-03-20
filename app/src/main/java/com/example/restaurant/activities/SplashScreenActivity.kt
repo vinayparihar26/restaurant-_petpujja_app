@@ -32,6 +32,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
 
 
+
         splashImage.alpha = 0f
         Handler(Looper.getMainLooper()).postDelayed({
             splashImage.alpha = 1f
