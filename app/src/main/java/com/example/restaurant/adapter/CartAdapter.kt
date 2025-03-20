@@ -32,7 +32,6 @@ class CartAdapter(
     private val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
     private val userId: String = sharedPreferences.getString("user_id", null) ?: ""
 
-
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val menuImage: ImageView = itemView.findViewById(R.id.menuImage)
         val menuName: TextView = itemView.findViewById(R.id.menuName)
