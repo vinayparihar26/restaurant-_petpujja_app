@@ -21,6 +21,7 @@ class OrderSuccessFull : AppCompatActivity() {
         binding = ActivityOrderSuccessFullBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         lottieAnimationView = findViewById(R.id.lottieAnimationView)
 
         binding.btnContinueShopping.setOnClickListener {
