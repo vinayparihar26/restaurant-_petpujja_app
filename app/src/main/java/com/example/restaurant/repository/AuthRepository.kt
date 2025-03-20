@@ -46,7 +46,6 @@ class AuthRepository {
                         val apiResponse = Gson().fromJson(jsonResponse, ApiResponse::class.java)
                         callback(apiResponse)
 
-                        // Assuming apiResponse contains a field "userId"
                         if (apiResponse.success) {
                             val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
