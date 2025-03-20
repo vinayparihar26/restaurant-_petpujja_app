@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/lightYellow"
     android:orientation="vertical"
     tools:context=".fragments.HomeFragment">
 
@@ -23,69 +23,14 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/_16sdp">
 
-            <!-- Search Bar Section -->
-            <LinearLayout
-                android:id="@+id/llSearch"
+            <ImageView
+                android:id="@+id/noInternetImage"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:background="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_radius_search"
-                    android:padding="10dp">
-
-                    <EditText
-                        android:id="@+id/searchText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:hint="Search for restaurants, dishes..."
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:padding="@dimen/_8sdp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="@dimen/_15sdp" />
-
-                    <!-- Search Icon -->
-                    <ImageView
-                        android:id="@+id/icSearch"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_search"
-                        android:visibility="visible"
-                        app:tint="@color/black" />
-
-                    <!-- Voice Search -->
-                    <ImageView
-                        android:id="@+id/microphone"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_search_mic" />
-
-                    <!-- Clear Search -->
-                    <ImageView
-                        android:id="@+id/icClose"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="50dp"
-                        android:src="@drawable/ic_search_close"
-                        android:visibility="gone"
-                        app:tint="@color/black" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:src="@drawable/no_internet"
+                android:visibility="gone"
+                android:scaleType="fitCenter"/>
 
             <TextView
                 android:id="@+id/txtLocation"
@@ -168,7 +113,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewForCategoriesScroll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
 

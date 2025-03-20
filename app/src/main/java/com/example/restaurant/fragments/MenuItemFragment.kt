@@ -64,7 +64,6 @@ class MenuItemFragment : Fragment() {
             Toast.makeText(requireContext(), "Invalid category", Toast.LENGTH_SHORT).show()
             return
         }
-        Log.d("categoryId", categoryId.toString())
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -76,13 +75,10 @@ class MenuItemFragment : Fragment() {
         binding.btnBackToHome.setOnClickListener {
             val homeFragment = HomeFragment()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frame, homeFragment)  // Replace with HomeFragment
-                .addToBackStack(null)  // Add this transaction to the back stack if you want to navigate back to the current fragment later
+                .replace(R.id.frame, homeFragment)
+                .addToBackStack(null)
                 .commit()
         }
-
-
-
 
         val sharedPreferences =
             requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -101,7 +97,7 @@ class MenuItemFragment : Fragment() {
 
         toggleVegNonVeg.setOnCheckedChangeListener { _, isChecked ->
             selectedMenuType = if (isChecked) "1" else "0" // 1 = Veg, 2 = Non-Veg
-            val typeText = if (isChecked) "Veg" else "Non-Veg"
+            val typeText = if (isChecked) "Veg" else "All "
             Toast.makeText(requireContext(), "Showing $typeText items", Toast.LENGTH_SHORT).show()
             fetchMenuItems(selectedMenuType)
         }
@@ -109,8 +105,6 @@ class MenuItemFragment : Fragment() {
 
 
     private fun fetchMenuItems(menuType: String) {
-        Log.d("API_REQUEST", "Sending Request with: categoryId=$categoryId, menuType=$menuType, lat=$latitude, lng=$longitude")
-
         if (categoryId == null) {
             Toast.makeText(requireContext(), "Invalid category", Toast.LENGTH_SHORT).show()
             return
@@ -164,78 +158,6 @@ class MenuItemFragment : Fragment() {
             }
         })
     }
-
-
-    /*private fun fetchMenuItems(menuType: String) {
-        Log.d("API_REQUEST", "Sending Request with: categoryId=$categoryId, menuType=$menuType, lat=$latitude, lng=$longitude")
-
-        Log.d("menu", menuType.toString())
-        if (categoryId == null) {
-            Toast.makeText(requireContext(), "Invalid category", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val safeLatitude = if (latitude == 0.0) -1.0 else latitude
-        val safeLongitude = if (longitude == 0.0) -1.0 else longitude
-
-        Log.d("API Request", "Fetching items for category: $categoryId, type: $menuType")
-
-        try {
-            val call = RetrofitClient.apiService.getMenuItems(
-                method = "menu",
-                categoryId = categoryId!!,
-                latitude = safeLatitude.toString().toDouble(),
-                longitude = safeLongitude.toString().toDouble(),
-                menuType = menuType
-            )
-            call.enqueue(object : Callback<MenuResponse> {
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(
-                    call: Call<MenuResponse>,
-                    response: Response<MenuResponse>,
-                ) {
-
-                    Log.d("categoryId", categoryId.toString())
-                    if (response.isSuccessful && response.body() != null) {
-                        val menuResponse = response.body()!!
-                        if (menuResponse.status == 200 && menuResponse.data.isNotEmpty()) {
-                            menuItemAdapter.updateMenuList(menuResponse.data)
-                            Log.d("response2",menuResponse.toString())
-                            menuItemList.clear()
-                            menuItemList.addAll(menuResponse.data)
-                            menuItemAdapter.notifyDataSetChanged()
-                            Log.d("response3",menuResponse.toString())
-                            Log.d("MenuItemList", "Total items received from API: ${menuResponse.data.size.toString()}")
-
-                        } else {
-                            menuItemList.clear()
-                            menuItemAdapter.notifyDataSetChanged()
-                            if(isAdded){
-                                Toast.makeText(requireContext(), "No Items Found", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "Failed to load items", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-
-                override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Error fetching items", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(
-                requireContext(),
-                "Something went wrong: ${e.message}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-*/
     private fun requestLocationPermission() {
         when {
             ContextCompat.checkSelfPermission(

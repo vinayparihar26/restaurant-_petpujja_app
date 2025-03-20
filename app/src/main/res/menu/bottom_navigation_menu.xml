@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/bottom_home"
-        android:icon="@drawable/ic_bottom_nav_home"
+        android:icon="@drawable/icons8_home"
         android:title="Home"
         android:contentDescription="Food"
         app:showAsAction="never" />
@@ -12,7 +12,7 @@
     <item
         android:id="@+id/bottom_fav"
         android:icon="@drawable/ic_bottom_nav_heart"
-        android:title="Food"
+        android:title="Wish List"
         android:contentDescription="Instamart"
         app:showAsAction="never" />
 

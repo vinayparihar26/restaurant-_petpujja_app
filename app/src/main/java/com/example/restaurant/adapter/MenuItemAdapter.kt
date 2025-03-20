@@ -33,7 +33,6 @@ import retrofit2.Response
 class MenuItemAdapter(
     private val context: Context,
     private val menuList: MutableList<MenuItem>,
-    //private val onFavoriteClick: (String) -> Unit
 ) :
     RecyclerView.Adapter<MenuItemAdapter.MenuItemViewHolder>() {
     private val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -46,12 +45,8 @@ class MenuItemAdapter(
         val priceTextView: TextView = view.findViewById(R.id.tvMenuItemPrice)
         val addToCartButton: TextView = view.findViewById(R.id.btnAddToCart)
         val descriptionTextView: TextView = view.findViewById(R.id.menu_description)
-        val restaurantNameTextView: TextView = view.findViewById(R.id.restaurant_name)
-        val restaurantAddressTextView: TextView = view.findViewById(R.id.restaurant_address)
-        val restaurantImageView: ImageView = view.findViewById(R.id.restaurant_image)
         val imageHeart: ShapeableImageView = view.findViewById(R.id.imgHeart1)
-
-        //        val imgShareDetails:ImageView=view.findViewById(R.id.imgShareDetails)
+        val imgShareDetails: TextView = view.findViewById(R.id.imgShareDetails)
         val distance: TextView = view.findViewById(R.id.tvDistance)
     }
 
@@ -62,158 +57,203 @@ class MenuItemAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MenuItemViewHolder, position: Int) {
-        val menuItem = menuList[position]
-        holder.nameTextView.text = menuItem.menuName
-        holder.priceTextView.text = "₹${menuItem.menuPrice}"
-        holder.descriptionTextView.text = menuItem.menuDescription
-        holder.restaurantNameTextView.text = menuItem.restaurantName
-        holder.restaurantAddressTextView.text = menuItem.restaurantAddress
-        //  holder.distance.text=menuItem.distance
-        // holder.restaurantImageView.setImageResource(R.drawable.ic_launcher_background)
-        Glide.with(context)
-            .load(menuItem.menuImage)
-            .placeholder(R.drawable.notfound)
-            .into(holder.imageView)
-
-        /*  holder.imgShareDetails.setOnClickListener {
-            shareItemDetails(menuItem)
-        }*/
+        try {
+            val menuItem = menuList[position]
+            holder.nameTextView.text = menuItem.menuName
+            holder.priceTextView.text = "₹${menuItem.menuPrice}"
+            holder.descriptionTextView.text = menuItem.menuDescription
+            holder.distance.text = menuItem.distance
+            // holder.restaurantImageView.setImageResource(R.drawable.ic_launcher_background)
+            Glide.with(context)
+                .load(menuItem.menuImage)
+                .placeholder(R.drawable.notfound)
+                .into(holder.imageView)
 
 
-        var isItemAddedToCart = false  // Keep track of whether the item is in the cart
-
-        holder.addToCartButton.setOnClickListener {
-            // Toggle the cart state
-            if (isItemAddedToCart) {
-                // If the item is already in the cart, remove it from the cart
-                holder.addToCartButton.text = "Add To Cart"  // Change button text back to "Add To Cart"
-                holder.addToCartButton.setBackgroundColor(ContextCompat.getColor(context, R.color.black))  // Reset button color
-
-                addToCart(menuItem.menuId, false)  // Removed from cart
-            } else {
-                // If the item is not in the cart, add it to the cart
-                holder.addToCartButton.text = "Added To Cart"  // Change button text to "Added To Cart"
-                holder.addToCartButton.setBackgroundColor(ContextCompat.getColor(context, R.color.green))  // Change button color to green
-
-                addToCart(menuItem.menuId, true)  // Added to cart
+            holder.imgShareDetails.setOnClickListener {
+                shareItemDetails(menuItem)
             }
+            var isItemAddedToCart = false  // Keep track of whether the item is in the cart
 
-            // Toggle the cart state
-            isItemAddedToCart = !isItemAddedToCart
-        }
+            holder.addToCartButton.setOnClickListener {
+                // Toggle the cart state
+                if (isItemAddedToCart) {
+                    // If the item is already in the cart, remove it from the cart
+                    holder.addToCartButton.text =
+                        "Add To Cart"  // Change button text back to "Add To Cart"
+                    holder.addToCartButton.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorPrimary
+                        )
+                    )  // Reset button color
 
-
-        var isHeartRed = false  // Track if the heart is red (liked) or not
-
-        holder.imageHeart.setOnClickListener {
-            // Get the current drawable (VectorDrawable) from the ImageView
-            val currentDrawable = holder.imageHeart.drawable
-
-            // Check if the drawable is a VectorDrawable
-            if (currentDrawable is VectorDrawable) {
-                // Toggle the heart's color
-                if (isHeartRed) {
-                    // If it's red (liked), set it back to the default color
-                    DrawableCompat.setTint(
-                        currentDrawable,
-                        ContextCompat.getColor(context, R.color.green)
-                    ) // default color
-                    addToWishlist(menuItem.menuId.toString(), false)  // Removed from wishlist
+                    addToCart(menuItem.menuId, false)  // Removed from cart
                 } else {
-                    // If it's not red, set it to red (liked)
-                    DrawableCompat.setTint(currentDrawable, Color.RED)
-                    addToWishlist(menuItem.menuId.toString(), true)  // Added to wishlist
+                    // If the item is not in the cart, add it to the cart
+                    holder.addToCartButton.text =
+                        "Added To Cart"  // Change button text to "Added To Cart"
+                    holder.addToCartButton.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.orange
+                        )
+                    )  // Change button color to green
+
+                    addToCart(menuItem.menuId, true)  // Added to cart
                 }
 
-                // Set the modified drawable back to the ImageView
-                holder.imageHeart.setImageDrawable(currentDrawable)
-
-                // Toggle the heart state
-                isHeartRed = !isHeartRed
+                // Toggle the cart state
+                isItemAddedToCart = !isItemAddedToCart
             }
+            var isHeartRed = false  // Track if the heart is red (liked) or not
+
+            holder.imageHeart.setOnClickListener {
+                // Get the current drawable (VectorDrawable) from the ImageView
+                val currentDrawable = holder.imageHeart.drawable
+
+                // Check if the drawable is a VectorDrawable
+                if (currentDrawable is VectorDrawable) {
+                    // Toggle the heart's color
+                    if (isHeartRed) {
+                        // If it's red (liked), set it back to the default color
+                        DrawableCompat.setTint(
+                            currentDrawable,
+                            ContextCompat.getColor(context, R.color.colorPrimary)
+                        ) // default color
+                        addToWishlist(menuItem.menuId.toString(), false)  // Removed from wishlist
+                    } else {
+                        // If it's not red, set it to red (liked)
+                        DrawableCompat.setTint(currentDrawable, Color.RED)
+                        addToWishlist(menuItem.menuId.toString(), true)  // Added to wishlist
+                    }
+
+                    // Set the modified drawable back to the ImageView
+                    holder.imageHeart.setImageDrawable(currentDrawable)
+
+                    // Toggle the heart state
+                    isHeartRed = !isHeartRed
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     private fun addToCart(menuId: String?, addToCartButton: Boolean) {
-        val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "cart")
-        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
-        val menuIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), menuId.toString())
-        val quantityIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "1")
+        try {
+            val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "cart")
+            val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
+            val menuIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), menuId.toString())
+            val quantityIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "1")
 
-        val call = RetrofitClient.apiService.addToCart(
-            method = method,
-            userId = userIdBody,
-            menuId = menuIdBody,
-            quantity = quantityIdBody
-        )
-        call.enqueue(object : Callback<CartResponse> {
-            override fun onResponse(
-                call: Call<CartResponse>,
-                response: Response<CartResponse>
-            ) {
-                if (response.isSuccessful && response.body() != null) {
-                    val cartResponse = response.body()!!
-                    Log.d("wish", "$cartResponse")
-                    if (cartResponse.status == 200) {
-                        if (addToCartButton) {
-                            Toast.makeText(context, "Added to Wishlist!", Toast.LENGTH_SHORT).show()
+            val call = RetrofitClient.apiService.addToCart(
+                method = method,
+                userId = userIdBody,
+                menuId = menuIdBody,
+                quantity = quantityIdBody
+            )
+            call.enqueue(object : Callback<CartResponse> {
+                override fun onResponse(
+                    call: Call<CartResponse>,
+                    response: Response<CartResponse>,
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val cartResponse = response.body()!!
+                        Log.d("wish", "$cartResponse")
+                        if (cartResponse.status == 200) {
+                            if (addToCartButton) {
+                                Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(context, "Removed from Cart!", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         } else {
-                            Toast.makeText(context, "Removed from Wishlist!", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(context, cartResponse.message, Toast.LENGTH_SHORT).show()
                         }
-                        Log.d("userrr", "$userId, $menuId, $method")
                     } else {
-                        Toast.makeText(context, cartResponse.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Failed to update Wishlist!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else {
-                    Toast.makeText(context, "Failed to update Wishlist!", Toast.LENGTH_SHORT).show()
                 }
-            }
 
 
-            override fun onFailure(p0: Call<CartResponse>, p1: Throwable) {
+                override fun onFailure(p0: Call<CartResponse>, p1: Throwable) {
 
 
-            }
-        })
+                }
+            })
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Error While adding item into cart: ${e.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
     }
 
     private fun addToWishlist(menuId: String, heartButton: Boolean) {
-        val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "favorites")
-        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
-        val menuIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), menuId)
+        try {
+            val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "favorites")
+            val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
+            val menuIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), menuId)
 
-        val call = RetrofitClient.apiService.manageWishlist(method, userIdBody, menuIdBody)
+            val call = RetrofitClient.apiService.manageWishlist(method, userIdBody, menuIdBody)
 
-        call.enqueue(object : Callback<WishlistResponse> {
-            override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val wishlistResponse = response.body()!!
-                    Log.d("wish","$wishlistResponse")
-                    if (wishlistResponse.status == 200) {
-                        if (heartButton) {
-                            Toast.makeText(context, "Added to Wishlist!", Toast.LENGTH_SHORT).show()
+            call.enqueue(object : Callback<WishlistResponse> {
+                override fun onResponse(
+                    call: Call<WishlistResponse>,
+                    response: Response<WishlistResponse>,
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val wishlistResponse = response.body()!!
+                        Log.d("wish", "$wishlistResponse")
+                        if (wishlistResponse.status == 200) {
+                            if (heartButton) {
+                                Toast.makeText(context, "Added to Wishlist!", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Removed from Wishlist!",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+                            Log.d("userrr", "$userId, $menuId, $method")
                         } else {
-                            Toast.makeText(context, "Removed from Wishlist!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, wishlistResponse.message, Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        Log.d("userrr","$userId, $menuId, $method")
                     } else {
-                        Toast.makeText(context, wishlistResponse.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Failed to update Wishlist!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else {
-                    Toast.makeText(context, "Failed to update Wishlist!", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
-                Log.e("WISHLIST_ERROR", "Error: ${t.message}")
-                Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
+                    Log.e("WISHLIST_ERROR", "Error: ${t.message}")
+                    Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Error while adding item in wishlist: ${e.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
     }
 
     private fun shareItemDetails(menuItem: MenuItem) {
-        val shareText = """
+        try {
+            val shareText = """
             🍽️ *${menuItem.menuName}*
             💰 Price: ₹${menuItem.menuPrice}
             📍 *${menuItem.restaurantName}*
@@ -223,15 +263,21 @@ class MenuItemAdapter(
             🔗 Check it out now!
         """.trimIndent()
 
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, shareText)
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+            }
+
+            context.startActivity(Intent.createChooser(intent, "Share via"))
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Error while Sharing Details: ${e.message}", Toast.LENGTH_SHORT)
+                .show()
+
         }
-
-        context.startActivity(Intent.createChooser(intent, "Share via"))
     }
-
     override fun getItemCount(): Int = menuList.size
+
     @SuppressLint("NotifyDataSetChanged")
     fun updateMenuList(newList: List<MenuItem>) {
         menuList.clear()

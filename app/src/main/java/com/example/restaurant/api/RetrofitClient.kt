@@ -7,9 +7,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-//    private const val BASE_URL = "http://localhost/Mutli-Restaurant-Food-Order/"
     private const val BASE_URL = "http://192.168.37.31/Mutli-Restaurant-Food-Order/"
-   // private const val BASE_URL = "http://192.168.10.214/Mutli-Restaurant-Food-Order/"
+   //private const val BASE_URL = "http://192.168.10.214/Mutli-Restaurant-Food-Order/" //home
 
     private val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

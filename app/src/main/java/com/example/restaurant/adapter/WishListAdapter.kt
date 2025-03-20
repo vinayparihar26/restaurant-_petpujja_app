@@ -22,14 +22,16 @@ import retrofit2.Response
 
 class WishlistAdapter(
     private var wishlist: MutableList<WishlistItem>,
-    private val userId: String
+    private val userId: String,
 ) : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
     class WishlistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val menuName: TextView = view.findViewById(R.id.wishListMenuName)
         val menuPrice: TextView = view.findViewById(R.id.wishListMenuPrice)
         val menuImg: ImageView = view.findViewById(R.id.wishListMenuImg)
+        val menuQuantity: TextView = view.findViewById(R.id.wishListMenuQuantity)
         val removeIcon: ImageView = view.findViewById(R.id.wishListRemove)
+        val description: TextView = view.findViewById(R.id.wishListMenuDesc)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {
@@ -44,12 +46,13 @@ class WishlistAdapter(
 
         holder.menuName.text = item.menuName
         holder.menuPrice.text = "₹${item.menuPrice}"
+        holder.menuQuantity.text = "1"
+        holder.description.text = item.menuDescription
 
-        if (!item.menuImg.isNullOrEmpty()) {
-            Glide.with(holder.itemView.context).load(item.menuImg).into(holder.menuImg)
-        } else {
-            holder.menuImg.setImageResource(R.drawable.ic_launcher_foreground) // Default image
-        }
+        Glide.with(holder.menuImg.context)
+            .load(item.menuImg)
+            .placeholder(R.drawable.notfound)
+            .into(holder.menuImg)
 
         holder.removeIcon.setOnClickListener {
             removeFromWishlist(item.menuId, position, holder.itemView.context)
@@ -65,7 +68,10 @@ class WishlistAdapter(
 
         RetrofitClient.apiService.manageWishlist(methodBody, userIdBody, menuIdBody)
             .enqueue(object : Callback<WishlistResponse> {
-                override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
+                override fun onResponse(
+                    call: Call<WishlistResponse>,
+                    response: Response<WishlistResponse>,
+                ) {
                     if (response.isSuccessful && response.body()?.status == 200) {
                         wishlist.removeAt(position)
                         notifyItemRemoved(position)

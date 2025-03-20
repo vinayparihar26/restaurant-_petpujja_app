@@ -8,74 +8,25 @@
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/_10sdp">
 
-    <!-- Restaurant Information -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/_8sdp"
-        android:visibility="gone">
-
-        <!-- Restaurant Image -->
-
-        <ImageView
-            android:id="@+id/restaurant_image"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:contentDescription="Restaurant Image"
-            android:src="@drawable/ic_launcher_background" />
-
-
-        <!-- Restaurant Name & Address -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/restaurant_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="restaurant_name"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/restaurant_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="restaurant_address"
-                android:textColor="#666"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <!-- Menu Item Information -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Menu Image -->
-
         <RelativeLayout
             android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
+            android:layout_height="@dimen/_150sdp"
             android:layout_marginEnd="@dimen/_10sdp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_10sdp">
 
                 <ImageView
                     android:id="@+id/imgMenuItem"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:contentDescription="Menu Image"
                     android:scaleType="centerCrop"
                     android:src="@drawable/chicken" />
@@ -90,112 +41,79 @@
                 android:src="@drawable/heartoutline" />
         </RelativeLayout>
 
-
-        <!-- Menu Details -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/tvMenuItemName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="item name"
-                android:textColor="#333"
                 android:textSize="@dimen/_18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/menu_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
                 android:text="item details"
-                android:textSize="@dimen/_14sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14sp" />
 
             <TextView
                 android:id="@+id/tvMenuItemPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="price"
-                android:textSize="@dimen/_14sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14sp" />
 
             <TextView
                 android:id="@+id/tvRating"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rating"
-                android:textSize="@dimen/_14sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14sp" />
 
             <TextView
                 android:id="@+id/tvDistance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Distance"
-                android:textSize="@dimen/_14sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddToCart"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:background="@color/black"
-                android:text="Add To Cart"
-                android:textSize="@dimen/_8sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddToCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Add To Cart"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/imgShareDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Share" />
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>
 
-    <!--    <Button-->
-    <!--        android:id="@+id/btnWishlist"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Add to Wishlist" />-->
-
 </com.google.android.material.card.MaterialCardView>
-
-
-    <!--
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/imgMenuItem"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/chicken" />
-
-        <TextView
-            android:id="@+id/tvMenuItemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="ItemName"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvMenuItemPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="ItemPrice"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnWishlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add to Wishlist" />
-    </LinearLayout>
-    -->

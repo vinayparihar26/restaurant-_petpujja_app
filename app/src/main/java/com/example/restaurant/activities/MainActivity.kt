@@ -18,8 +18,6 @@ import com.example.restaurant.R
 import com.example.restaurant.adapter.DrawerAdapter
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.fragments.CartFragment
-import com.example.restaurant.fragments.FavoriteFragment
-import com.example.restaurant.fragments.FoodFragment
 import com.example.restaurant.fragments.HomeFragment
 import com.example.restaurant.fragments.ProfileFragment
 import com.example.restaurant.fragments.WishlistFragment
@@ -45,11 +43,15 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment(), false)
         }
-        replaceFragment(HomeFragment())
-
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.bottom_home -> replaceFragment(HomeFragment())
+                R.id.bottom_home ->
+                {
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.frame)
+                    if (currentFragment !is HomeFragment) {
+                        replaceFragment(HomeFragment())
+                    }
+                }
                 R.id.bottom_fav -> replaceFragment(WishlistFragment())
                 R.id.bottom_cart -> replaceFragment(CartFragment())
                 R.id.bottom_profile -> replaceFragment(ProfileFragment())

@@ -17,12 +17,10 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/categoryName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/swiggy_font_light"
         android:text="Item Name"
         android:textAlignment="center"
-        android:textSize="@dimen/_17sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/_15sp" />
 </LinearLayout>

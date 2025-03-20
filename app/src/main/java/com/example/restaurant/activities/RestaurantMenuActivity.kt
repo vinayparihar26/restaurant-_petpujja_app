@@ -41,8 +41,6 @@ class RestaurantMenuActivity : AppCompatActivity() {
 
         loadLocationFromSharedPreferences()
 
-        // Example: You can now use the global latitude and longitude variables
-        println("Latitude: $latitude, Longitude: $longitude")
         Log.d("Latitude", latitude.toString())
         Log.d("Longitude", longitude.toString())
 
@@ -72,7 +70,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
 
         toggleVegNonVeg.setOnCheckedChangeListener { _, isChecked ->
             selectedMenuType = if (isChecked) "1" else "0" // 1 = Veg, 2 = Non-Veg
-            val typeText = if (isChecked) "Veg" else "Non-Veg"
+            val typeText = if (isChecked) "Veg" else "All "
             Toast.makeText(this, "Showing $typeText items", Toast.LENGTH_SHORT).show()
             fetchMenuItems(selectedMenuType)
         }
@@ -82,64 +80,63 @@ class RestaurantMenuActivity : AppCompatActivity() {
     private fun loadLocationFromSharedPreferences() {
         // Access SharedPreferences
         val sharedPreferences = getSharedPreferences("LocationPrefs", MODE_PRIVATE)
-
         // Retrieve latitude and longitude from SharedPreferences
         latitude = sharedPreferences.getFloat("latitude", 0.0f).toDouble()
         longitude = sharedPreferences.getFloat("longitude", 0.0f).toDouble()
     }
 
     private fun fetchMenuItems(menuType: String) {
-        Log.d("API_REQUEST", "Sending Request with: categoryId=$categoryId, menuType=$menuType")
+        try {
+            // Make the API call
+            val call = RetrofitClient.apiService.getRestaurantMenuItems(
+                method = "menu",
+                categoryId = categoryId.toString(),
+                menuType = menuType,
+                restaurantId = restaurantId!!,
+            )
 
-        // Make the API call
-        val call = RetrofitClient.apiService.getRestaurantMenuItems(
-            method = "menu",
-            categoryId = categoryId.toString(),
-            menuType = menuType,
-            restaurantId = restaurantId!!,
-        )
+            // Make the API call
+            call.enqueue(object : Callback<MenuResponse> {
+                @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
+                override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
+                    Log.d("API_RESPONSE", "Response: ${response.body()}")
 
-        // Make the API call
-        call.enqueue(object : Callback<MenuResponse> {
-            @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
-            override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
-                Log.d("API_RESPONSE", "Response: ${response.body()}")
-
-                if (response.isSuccessful && response.body() != null) {
-                    val menuItems: List<MenuItem> = response.body()!!.data
-                    Log.d("menuitem", "$menuItems")
-                    val menuResponse = response.body()!!
-                    if (menuResponse.status == 200 && menuResponse.data.isNotEmpty()) {
-                        menuItemAdapter1.updateMenuList(menuItems)
-                        Log.d(
-                            "MenuItemList",
-                            "Total items received from API: ${menuResponse.data.size}"
-                        )
+                    if (response.isSuccessful && response.body() != null) {
+                        val menuItems: List<MenuItem> = response.body()!!.data
+                        val menuResponse = response.body()!!
+                        if (menuResponse.status == 200 && menuResponse.data.isNotEmpty()) {
+                            menuItemAdapter1.updateMenuList(menuItems)
+                        } else {
+                            menuItemAdapter1.updateMenuList(emptyList())
+                            Toast.makeText(
+                                this@RestaurantMenuActivity,
+                                "No Items Found",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     } else {
-                        menuItemAdapter1.updateMenuList(emptyList())
                         Toast.makeText(
                             this@RestaurantMenuActivity,
-                            "No Items Found",
+                            "Failed to load items",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                } else {
+                }
+
+                override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
                     Toast.makeText(
                         this@RestaurantMenuActivity,
-                        "Failed to load items",
+                        "Error fetching items",
                         Toast.LENGTH_SHORT
                     ).show()
+                    Log.e("API_ERROR", "Failed to fetch menu: ${t.message}")
                 }
-            }
-
-            override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@RestaurantMenuActivity,
-                    "Error fetching items",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Log.e("API_ERROR", "Failed to fetch menu: ${t.message}")
-            }
-        })
+            })
+        }catch (e : Exception){
+            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error while fetching menu: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
-}
+        }
+
+
