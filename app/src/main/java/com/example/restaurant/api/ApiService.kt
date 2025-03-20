@@ -156,7 +156,7 @@ interface ApiService {
     ): Call<OrderedMenuItemResponse>
 
     @Multipart
-    @POST("restaurant_regrastration.php")
+    @POST("api/restaurant_regrastration.php")
     fun registerRestaurant(
         @Part("method") method: RequestBody,
         @Part("restaurant_name") name: RequestBody,

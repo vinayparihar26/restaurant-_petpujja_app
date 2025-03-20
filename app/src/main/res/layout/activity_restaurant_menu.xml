@@ -24,45 +24,92 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/_16sdp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvRequestLocationPermission1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:visibility="invisible"
             android:text="Click For Nearby" />
-
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10 km from you place" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Non-VEG/Veg"
-            android:textSize="@dimen/_10sdp"
+            android:text="Non-Veg/Veg"
+            android:textSize="@dimen/_10sp"
             android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="0dp"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10 km from you place" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggleVegNonVeg"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:backgroundTint="@color/grey"
             android:checked="false"
             android:textOff="Non-Veg"
             android:textOn="Veg" />
+
+    </LinearLayout>
+
+    <!--    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
+
+            <TextView
+                android:id="@+id/tvRequestLocationPermission1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Click For Nearby" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 km from you place" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Non-VEG/Veg"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/toggleVegNonVeg"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/grey"
+                android:checked="false"
+                android:textOff="Non-Veg"
+                android:textOn="Veg" />
+                   </LinearLayout>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewForRestaurantMenuItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_menu" />
-    </LinearLayout>
+
 </LinearLayout>

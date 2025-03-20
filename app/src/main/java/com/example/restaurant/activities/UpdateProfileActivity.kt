@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.annotation.SuppressLint
 import android.media.Image
 import android.net.Uri
 import android.os.Bundle
@@ -90,11 +91,21 @@ class UpdateProfileActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun populateFields(userData: UserData?) {
         userData?.let {
             binding.etUpdateName.setText(it.userName)
             binding.etUpdateEmail.setText(it.userEmail)
             binding.etUpdatePhone.setText(it.userPhone.toString())
+            binding.etUpdateAddress.setText(it.userAddress)
+            binding.imgProfile.setImageURI(Uri.parse(it.userImg))
+
+            val genderOptions = resources.getStringArray(R.array.gender)
+            val genderIndex = genderOptions.indexOf(it.userGender)
+
+            if (genderIndex >= 0) {
+                binding.spinnerGender.setSelection(genderIndex)
+            }
         }
     }
 

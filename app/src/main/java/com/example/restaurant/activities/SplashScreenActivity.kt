@@ -14,14 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.restaurant.R
 import com.example.restaurant.databinding.ActivitySplashScreenBinding
 
+
+
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
     private lateinit var splashImage: ImageView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = Constants.SCREEN_ORIENTATION
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,9 +31,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val glowAnim = AnimationUtils.loadAnimation(this, R.anim.glow_animation)
         splashImage.startAnimation(glowAnim)
-
-
-
 
         splashImage.alpha = 0f
         Handler(Looper.getMainLooper()).postDelayed({

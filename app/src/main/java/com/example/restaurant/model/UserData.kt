@@ -16,5 +16,12 @@ data class UserData(
     val userPhone: Long,
 
     @SerializedName("user_img")
-    val userImg: String
-)
+    val userImg: String,
+
+    @SerializedName("user_address")
+    val userAddress: String,
+
+    @SerializedName("user_gender")
+    val userGender: String,
+
+    )

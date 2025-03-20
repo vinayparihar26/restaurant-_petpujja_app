@@ -48,7 +48,7 @@ class CartFragment : Fragment() {
             requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("user_id", null)
 
-        Log.d("useridd","$userId")
+        Log.d("useridd", "$userId")
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
         emptyCartTextView = view.findViewById(R.id.NoItemCart)
         btnPlaceOrder = view.findViewById(R.id.btnPlaceOrder)
@@ -61,7 +61,6 @@ class CartFragment : Fragment() {
 
         btnPlaceOrder.setOnClickListener {
             placeOrder()
-
 
 
         }
@@ -88,11 +87,15 @@ class CartFragment : Fragment() {
                         val grandTotal = orderResponse.grandTotal ?: 0
                         // Update UI with Grand Total
                         updateGrandTotal(grandTotal)
-                        Toast.makeText(requireContext(),"order place successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "order place successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         cartAdapter.notifyDataSetChanged()
                         cartAdapter.notifyItemRangeChanged(0, cartAdapter.itemCount)
                         Log.d("CartFragment", "Grand Total: $grandTotal")
-                            startActivity(Intent(activity, OrderSuccessFull::class.java))
+                        startActivity(Intent(activity, OrderSuccessFull::class.java))
                     } else {
                         cartItems.clear()
                         cartAdapter.notifyDataSetChanged()
@@ -165,33 +168,40 @@ class CartFragment : Fragment() {
 
 
     private fun removeCartItem(cartId: String, position: Int) {
-        val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "remove")
-        val cartIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), cartId)
+        if (position in 0 until cartItems.size) {
 
-        RetrofitClient.apiService.removeCart(methodBody, cartIdBody)
-            .enqueue(object : Callback<CartResponse> {
-                override fun onResponse(
-                    call: Call<CartResponse>,
-                    response: Response<CartResponse>,
-                ) {
-                    if (response.isSuccessful) {
-                        cartItems.removeAt(position)
-                        cartAdapter.notifyItemRemoved(position)
-                        if (position < 1) {
-                            emptyCartTextView.visibility = View.VISIBLE
+            val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "remove")
+            val cartIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), cartId)
+
+            RetrofitClient.apiService.removeCart(methodBody, cartIdBody)
+                .enqueue(object : Callback<CartResponse> {
+                    override fun onResponse(
+                        call: Call<CartResponse>,
+                        response: Response<CartResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            cartItems.removeAt(position)
+                            cartAdapter.notifyItemRemoved(position)
+                            if (position < 1) {
+                                emptyCartTextView.visibility = View.VISIBLE
+                            }
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to remove item",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Failed to remove item",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
-                }
-                override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                    Log.e("CartRemoveError", t.message.toString())
-                }
-            })
+
+                    override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+                        Log.e("CartRemoveError", t.message.toString())
+                    }
+                })
+        } else{
+            Toast.makeText(requireContext(), "Invalid position", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
 

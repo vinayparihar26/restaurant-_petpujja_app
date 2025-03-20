@@ -134,8 +134,6 @@ class HomeFragment : Fragment() {
         recyclerViewForCategoriesScroll.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         categoryAdapterScroll = CategoryAdapter(requireContext(), categoryList) { category ->
-            Toast.makeText(requireContext(), "Category clicked: $category", Toast.LENGTH_SHORT)
-                .show()
             val fragment = MenuItemFragment().apply {
                 arguments = Bundle().apply {
                     putString("categoryId", category.categoryId)
@@ -158,7 +156,6 @@ class HomeFragment : Fragment() {
         recyclerViewForCategories.layoutManager = gridLayoutManager
 
         categoryAdapter = CategoryAdapter(requireContext(), categoryList) { category ->
-            Log.d("categoryClick", "category clicked: $category")
             val fragment = MenuItemFragment().apply {
                 arguments = Bundle().apply {
                     putString("categoryId", category.categoryId)

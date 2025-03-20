@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -28,7 +29,6 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
         val etEmail = binding.etEmail
         val etEmailL = binding.etEmailL
-
 
         binding.btnSetPassword.setOnClickListener {
             val isEmailValid = validateEmail(etEmailL, etEmail)
@@ -70,44 +70,49 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("ShowToast")
     private fun sendForgotPasswordRequest(email: String) {
-        val url = "http://192.168.37.31/Mutli-Restaurant-Food-Order/api/forgot.php"
+        try {
+            val url = "http://192.168.37.31/Mutli-Restaurant-Food-Order/api/forgot.php"
 
-        val requestBody = FormBody.Builder()
-            .add("email", email)
-            .build()
+            val requestBody = FormBody.Builder()
+                .add("email", email)
+                .build()
 
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
+            val request = Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                runOnUiThread {
-                    Toast.makeText(this@ForgetPasswordActivity, "Network Error! Try again.", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                runOnUiThread {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body?.string()
-                        val jsonResponse = JSONObject(responseBody ?: "")
-
-                        val status = jsonResponse.optInt("status", 0)
-                        val message = jsonResponse.optString("message", "Unknown response")
-
-                        if (status == 200) {
-                            Toast.makeText(this@ForgetPasswordActivity, "Password sent to your email!", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this@ForgetPasswordActivity, "Email not found!", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this@ForgetPasswordActivity, "Server Error! Try again.", Toast.LENGTH_SHORT).show()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    runOnUiThread {
+                        Toast.makeText(this@ForgetPasswordActivity, "Network Error! Try again.", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-        })
-    }
+
+                override fun onResponse(call: Call, response: Response) {
+                    runOnUiThread {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body?.string()
+                            val jsonResponse = JSONObject(responseBody ?: "")
+
+                            val status = jsonResponse.optInt("status", 0)
+                            val message = jsonResponse.optString("message", "Unknown response")
+
+                            if (status == 200) {
+                                Toast.makeText(this@ForgetPasswordActivity, "Password sent to your email!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@ForgetPasswordActivity, "Email not found!", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this@ForgetPasswordActivity, "Server Error! Try again.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
+        }catch (e :Exception){
+            Toast.makeText(this@ForgetPasswordActivity,"Facing Error While Send Forgot Password!!! ",Toast.LENGTH_SHORT).show()
+        }
+        }
 }
