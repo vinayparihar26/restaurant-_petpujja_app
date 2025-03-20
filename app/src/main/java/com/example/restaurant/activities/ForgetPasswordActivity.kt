@@ -22,10 +22,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityForgetPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         binding.ivBack.setOnClickListener {
-
             startActivity(Intent(this,LoginActivity::class.java))
         }
 
