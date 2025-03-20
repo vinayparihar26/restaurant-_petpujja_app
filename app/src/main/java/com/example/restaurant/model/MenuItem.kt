@@ -20,3 +20,4 @@ data class MenuItem(
     val distance: String?,
 
     )
+
