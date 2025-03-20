@@ -47,7 +47,6 @@ class MenuItemAdapter(
         val descriptionTextView: TextView = view.findViewById(R.id.menu_description)
         val imageHeart: ShapeableImageView = view.findViewById(R.id.imgHeart1)
         val imgShareDetails: TextView = view.findViewById(R.id.imgShareDetails)
-        val distance: TextView = view.findViewById(R.id.tvDistance)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {
@@ -62,7 +61,6 @@ class MenuItemAdapter(
             holder.nameTextView.text = menuItem.menuName
             holder.priceTextView.text = "₹${menuItem.menuPrice}"
             holder.descriptionTextView.text = menuItem.menuDescription
-            holder.distance.text = menuItem.distance
             // holder.restaurantImageView.setImageResource(R.drawable.ic_launcher_background)
             Glide.with(context)
                 .load(menuItem.menuImage)
@@ -73,10 +71,10 @@ class MenuItemAdapter(
             holder.imgShareDetails.setOnClickListener {
                 shareItemDetails(menuItem)
             }
-            var isItemAddedToCart = false  // Keep track of whether the item is in the cart
+            var isItemAddedToCart = false
 
             holder.addToCartButton.setOnClickListener {
-                // Toggle the cart state
+
                 if (isItemAddedToCart) {
                     // If the item is already in the cart, remove it from the cart
                     holder.addToCartButton.text =
