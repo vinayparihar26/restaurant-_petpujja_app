@@ -37,28 +37,20 @@ class WishlistFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_wishlist, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         emptyWishTextView = view.findViewById(R.id.NoItemWish)
-
         val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("user_id", null)
         recyclerView = view.findViewById(R.id.recyclerViewWishlist)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
-
-
         adapter = WishlistAdapter(
             wishlistItems, userId.toString(),
         )
         recyclerView.adapter = adapter
-
         fetchWishlistItems()
     }
-
     private fun fetchWishlistItems() {
         val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "favorites_fetch")
         val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId!!)
@@ -70,29 +62,26 @@ class WishlistFragment : Fragment() {
             override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val wishlistResponse = response.body()!!
-
                     emptyWishTextView.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
-                    
                     if (wishlistResponse.status == 200 && wishlistResponse.data!!.isNotEmpty()) {
                         wishlistItems.clear()
                         wishlistItems.addAll(wishlistResponse.data)
-                        emptyWishTextView.visibility = View.GONE
-                        recyclerView.visibility = View.VISIBLE
                         Log.d("WishlistFragment", "Wishlist Items: $wishlistItems")
                         adapter.notifyDataSetChanged()
-                        
+                        emptyWishTextView.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
                     } else {
-
                         emptyWishTextView.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
                     }
                 }
             }
-
             override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
-                Toast.makeText(requireContext(), "Error fetching wishlist", Toast.LENGTH_SHORT).show()
+                Log.d("wishListError", "onFailure: ${t.message}")
             }
         })
     }
+
+
 }
