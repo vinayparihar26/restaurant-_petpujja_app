@@ -27,7 +27,7 @@ class CartFragment : Fragment() {
 
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
-    private lateinit var emptyCartTextView: View  // Added TextView
+    private lateinit var emptyCartTextView: View
     private var cartItems: MutableList<CartItem> = mutableListOf()
 
     @SuppressLint("MissingInflatedId")
@@ -43,7 +43,6 @@ class CartFragment : Fragment() {
         fetchCartItems()
         return view
     }
-
 
     private fun fetchCartItems() {
         val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
