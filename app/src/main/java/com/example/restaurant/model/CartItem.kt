@@ -15,5 +15,6 @@ data class CartItem(
     @SerializedName("menu_status") val menuStatus: String,
     @SerializedName("menu_type") val menuType: String,
     @SerializedName("total_price") val totalPrice: String,
-    @SerializedName("menu_img") val menuImg: String
+    @SerializedName("menu_img") val menuImg: String,
+    @SerializedName("total_amount") val totalAmount: String
 )

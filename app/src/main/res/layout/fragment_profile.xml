@@ -27,10 +27,14 @@
             android:gravity="center_vertical">
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivUserProfile"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_profile"
+                app:contentPadding="@dimen/_5sdp"
+                app:shapeAppearanceOverlay="@drawable/circular_profile"
+                app:strokeWidth="@dimen/_2sdp"
+
                 />
 
             <LinearLayout
@@ -44,7 +48,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="Kajal Maurya"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
@@ -54,10 +57,17 @@
                     android:id="@+id/tvUserEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="kajalmaurya3366@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
+
+                <TextView
+                    android:id="@+id/tvUserAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"/>
 
 
             </LinearLayout>
@@ -83,7 +93,7 @@
             android:id="@+id/updateProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your Profile"
+            android:text="Update Profile"
             android:textColor="@color/black"
             android:textAllCaps="true"
             android:layout_marginBottom="@dimen/_20sdp"

@@ -1,5 +1,6 @@
 package com.example.restaurant.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import com.example.restaurant.R
 import com.example.restaurant.api.RetrofitClient
 import com.example.restaurant.model.CartItem
 import com.example.restaurant.model.CartResponse
-import com.example.restaurant.model.MenuItem
+import com.example.restaurant.model.OrdersItem
 import com.google.android.material.button.MaterialButton
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -23,10 +24,11 @@ import retrofit2.Response
 
 class CartAdapter(
     private val context: Context,
-    private val cartItems: List<CartItem>,
-    private val removeCartItem: (String, Int) -> Unit
+    private val cartItems: MutableList<CartItem>,
+    private val removeCartItem: (String, Int) -> Unit,
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
+    private var grandTotal: Int = 0
     private val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
     private val userId: String = sharedPreferences.getString("user_id", null) ?: ""
 
@@ -40,10 +42,14 @@ class CartAdapter(
         val totalPrice: TextView = itemView.findViewById(R.id.totalMenuPrice)
         val menuQuantity: TextView = itemView.findViewById(R.id.menuQuantity)
         val deleteCart: MaterialButton = itemView.findViewById(R.id.deleteCart)
+       // val tvTotalPayment: TextView = itemView.findViewById(R.id.tvTotalPayment)
+        //val btnPlaceOrder: MaterialButton = itemView.findViewById(R.id.btnPlaceOrder)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_cart, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_view_cart, parent, false)
         return CartViewHolder(view)
     }
 
@@ -53,9 +59,10 @@ class CartAdapter(
         val itemPrice = item.menuPrice
 
         holder.menuName.text = item.menuName
-        holder.menuDescription.text=item.menuDescription
+        holder.menuDescription.text = item.menuDescription
         holder.menuQuantity.text = currentQuantity.toString()
         holder.totalPrice.text = (currentQuantity * itemPrice).toString()
+       // holder.tvTotalPayment.text = item.totalAmount
 
         Glide.with(holder.itemView.context)
             .load(item.menuImg)
@@ -73,9 +80,8 @@ class CartAdapter(
             holder.menuQuantity.text = currentQuantity.toString()
             holder.totalPrice.text = updatedPrice.toString()
 
-            updateCartItem(userId, item.menuId.toInt() ,currentQuantity)
+            updateCartItem(userId, item.menuId.toInt(), currentQuantity)
         }
-
 
         holder.decrement.setOnClickListener {
             if (currentQuantity > 1) {
@@ -83,12 +89,10 @@ class CartAdapter(
                 val updatedPrice = currentQuantity * itemPrice
                 holder.menuQuantity.text = currentQuantity.toString()
                 holder.totalPrice.text = updatedPrice.toString()
-
-                updateCartItem(userId, item.menuId.toInt() ,currentQuantity)
+                updateCartItem(userId, item.menuId.toInt(), currentQuantity)
 
             }
         }
-
 
 
     }
@@ -97,15 +101,22 @@ class CartAdapter(
         val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "cart")
         val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
         val menuIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), menuId.toString())
-        val quantityBody = RequestBody.create("text/plain".toMediaTypeOrNull(), newQuantity.toString())
+        val quantityBody =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), newQuantity.toString())
 
         RetrofitClient.apiService.addToCart(methodBody, userIdBody, menuIdBody, quantityBody)
             .enqueue(object : Callback<CartResponse> {
-                override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>) {
+                override fun onResponse(
+                    call: Call<CartResponse>,
+                    response: Response<CartResponse>,
+                ) {
                     if (response.isSuccessful) {
                         Log.d("CartUpdate", "Cart updated successfully")
                     } else {
-                        Log.e("CartUpdate", "Failed to update cart: ${response.errorBody()?.string()}")
+                        Log.e(
+                            "CartUpdate",
+                            "Failed to update cart: ${response.errorBody()?.string()}"
+                        )
                     }
                 }
 
@@ -116,6 +127,26 @@ class CartAdapter(
     }
 
     override fun getItemCount(): Int = cartItems.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateMenuList(newList: List<CartItem>) {
+        cartItems.clear()
+        cartItems.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    /* @SuppressLint("NotifyDataSetChanged")
+     fun updateMenuList(newList: List<CartItem?>, totalAmount: Int) {
+         cartItems.clear()
+         cartItems.addAll(newList)
+         totalBillingAmount = totalAmount  // Store the total billing amount
+         notifyDataSetChanged()
+     }
+
+     fun updateGrandTotal(total: Int) {
+         grandTotal = total
+         notifyDataSetChanged() // Refresh the RecyclerView
+     }*/
 }
 
 

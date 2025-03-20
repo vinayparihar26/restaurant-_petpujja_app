@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".fragments.CartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_600sdp"
+        android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:background="@color/lightOrange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_20sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/cartRecyclerView">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTotalPayment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="Rs. 0"
             android:textColor="@color/black"
             android:textSize="@dimen/_17sdp"
-            android:textStyle="bold"
-            android:text="Rs. 45555"/>
+            android:textStyle="bold" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPlaceOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Placed"
-            android:backgroundTint="@color/lightestOrange"
-            android:textColor="@color/orange"/>
+            android:text="Order Place"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/NoItemCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="gone"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-            android:src="@drawable/ic_no_cart_item"/>
+            android:src="@drawable/ic_no_cart_item" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Your cart is Empty"
             android:textAlignment="center"
-            android:textSize="20sp"
             android:textColor="@color/orange"
-            android:text="Your cart is Empty"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 

@@ -4,6 +4,7 @@ import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.CategoriesResponse
 import com.example.restaurant.model.LoginResponse
 import com.example.restaurant.model.MenuResponse
+import com.example.restaurant.model.OrderResponse
 import com.example.restaurant.model.OrderedMenuItemResponse
 import com.example.restaurant.model.RestaurantResponse
 import com.example.restaurant.model.UpdatePasswordResponse
@@ -180,4 +181,10 @@ interface ApiService {
         @Field("longitude") longitude: Double?,
     ): Call<RestaurantResponse>
 
+    @FormUrlEncoded
+    @POST("api/order_api.php")
+    fun placeOrder(
+        @Field("method") method: String,
+        @Field("user_id") userId: String
+    ): Call<OrderResponse>
 }
