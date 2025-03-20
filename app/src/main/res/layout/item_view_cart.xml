@@ -57,14 +57,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
+
                     <ImageView
-                        android:id="@+id/increment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add"
+                        android:id="@+id/decrement"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/ic_minus"
                         app:tint="@color/lightOrange"
                         android:layout_marginEnd="@dimen/_10sdp"/>
-
                     <TextView
                         android:id="@+id/menuQuantity"
                         android:layout_width="wrap_content"
@@ -73,24 +73,18 @@
                         android:text="4"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
-
                     <ImageView
-                        android:id="@+id/decrement"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/ic_minus"
+                        android:id="@+id/increment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add"
                         app:tint="@color/lightOrange"
                         android:layout_marginStart="@dimen/_10sdp"/>
-
                 </LinearLayout>
-
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:gravity="end"
                     android:layout_height="wrap_content">
-
                     <TextView
                         android:id="@+id/totalMenuPrice"
                         android:layout_width="wrap_content"
@@ -99,10 +93,7 @@
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp"/>
                 </LinearLayout>
-
             </LinearLayout>
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteCart"
                 android:layout_width="match_parent"
