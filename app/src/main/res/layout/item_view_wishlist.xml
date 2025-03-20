@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:padding="@dimen/_10sdp"
-    app:cardCornerRadius="@dimen/_20sdp">
+    android:layout_height="@dimen/_140sdp"
+    android:background="@color/white">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/_8sdp">
-
-        <ImageView
-            android:id="@+id/wishListMenuImg"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_burger" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/border_gender">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="8dp">
-
-            <TextView
-                android:id="@+id/wishListMenuName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="item name"
-                android:textSize="@dimen/_16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/wishListMenuDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="@dimen/_16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/wishListMenuPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="item price"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/_16sp" />
-
-            <TextView
-                android:id="@+id/wishListMenuQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="item quantity"
-                android:textSize="@dimen/_16sp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp">
 
             <ImageView
-                android:id="@+id/wishListRemove"
-                android:layout_width="wrap_content"
+                android:id="@+id/wishListMenuImg"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:scaleType="centerCrop"
+                android:layout_margin="@dimen/_10sdp"
+                android:src="@drawable/img_burger" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:src="@drawable/ic_delete" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="10dp">
+
+                <TextView
+                    android:id="@+id/wishListMenuName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="item name"
+                    android:textSize="@dimen/_16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/wishListMenuDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_14sp" />
+
+                <TextView
+                    android:id="@+id/wishListMenuPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="item price"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="@dimen/_16sp" />
+
+                +
+                <ImageView
+                    android:id="@+id/wishListRemove"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_bottom_nav_heart"
+                    app:tint="@color/red" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

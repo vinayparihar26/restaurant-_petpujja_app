@@ -29,6 +29,7 @@ class WishlistFragment : Fragment() {
     private lateinit var adapter: WishlistAdapter
     private val wishlistItems = mutableListOf<WishlistItem>()
     private var userId: String? = null
+    private lateinit var emptyWishTextView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +41,15 @@ class WishlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        userId = sharedPreferences.getString("user_id", null) // Retrieve the user_id or return null if not found
+        emptyWishTextView = view.findViewById(R.id.NoItemWish)
 
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        userId = sharedPreferences.getString("user_id", null)
         recyclerView = view.findViewById(R.id.recyclerViewWishlist)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+
+
 
         adapter = WishlistAdapter(
             wishlistItems, userId.toString(),
@@ -66,14 +71,21 @@ class WishlistFragment : Fragment() {
                 if (response.isSuccessful && response.body() != null) {
                     val wishlistResponse = response.body()!!
 
+                    emptyWishTextView.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    
                     if (wishlistResponse.status == 200 && wishlistResponse.data!!.isNotEmpty()) {
                         wishlistItems.clear()
-                       wishlistItems.addAll(wishlistResponse.data)
+                        wishlistItems.addAll(wishlistResponse.data)
+                        emptyWishTextView.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
                         Log.d("WishlistFragment", "Wishlist Items: $wishlistItems")
                         adapter.notifyDataSetChanged()
                         
                     } else {
-                        Toast.makeText(requireContext(), "No Items in Wishlist", Toast.LENGTH_SHORT).show()
+
+                        emptyWishTextView.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
                     }
                 }
             }

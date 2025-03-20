@@ -29,7 +29,6 @@ class WishlistAdapter(
         val menuName: TextView = view.findViewById(R.id.wishListMenuName)
         val menuPrice: TextView = view.findViewById(R.id.wishListMenuPrice)
         val menuImg: ImageView = view.findViewById(R.id.wishListMenuImg)
-        val menuQuantity: TextView = view.findViewById(R.id.wishListMenuQuantity)
         val removeIcon: ImageView = view.findViewById(R.id.wishListRemove)
         val description: TextView = view.findViewById(R.id.wishListMenuDesc)
     }
@@ -46,7 +45,6 @@ class WishlistAdapter(
 
         holder.menuName.text = item.menuName
         holder.menuPrice.text = "₹${item.menuPrice}"
-        holder.menuQuantity.text = "1"
         holder.description.text = item.menuDescription
 
         Glide.with(holder.menuImg.context)
@@ -75,17 +73,7 @@ class WishlistAdapter(
                     if (response.isSuccessful && response.body()?.status == 200) {
                         wishlist.removeAt(position)
                         notifyItemRemoved(position)
-                        Toast.makeText(
-                            context,
-                            "Item removed from wishlist",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     } else {
-                        Toast.makeText(
-                            context,
-                            "Failed to remove item",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
 
