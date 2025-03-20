@@ -28,4 +28,6 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/_20sp"
         android:textStyle="bold" />
+
+
 </LinearLayout>
