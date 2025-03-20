@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_15sdp"
+    android:background="@color/white"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/_10sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -38,7 +41,8 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:src="@drawable/heartoutline" />
+                android:src="@drawable/heartoutline"
+                android:tint="@color/white"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -60,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="item details"
+                android:maxLines="2"
                 android:textSize="@dimen/_14sp" />
 
             <TextView
@@ -67,25 +72,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="price"
+                android:textColor="@color/orange"
                 android:textSize="@dimen/_14sp" />
 
-            <TextView
-                android:id="@+id/tvRating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rating"
-                android:textSize="@dimen/_14sp" />
-
-            <TextView
-                android:id="@+id/tvDistance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Distance"
-                android:textSize="@dimen/_14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddToCart"
@@ -95,7 +89,6 @@
                     android:text="Add To Cart"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:textSize="@dimen/_10sp" />
-
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/imgShareDetails"
                     android:layout_width="wrap_content"
