@@ -188,7 +188,6 @@ class CartFragment : Fragment() {
                         ).show()
                     }
                 }
-
                 override fun onFailure(call: Call<CartResponse>, t: Throwable) {
                     Log.e("CartRemoveError", t.message.toString())
                 }
