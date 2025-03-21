@@ -26,6 +26,7 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
         holder.menuPrice.text = "₹${item.menuPrice}"
         holder.orderDateTime.text = "Ordered on: ${item.orderCreatedAt}"
 
+
         val imageUrl = if (!item.menuImg.isNullOrEmpty() && item.menuImg.startsWith("http")) {
             item.menuImg
         } else {

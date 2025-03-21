@@ -83,6 +83,7 @@ class OrderHistoryActivity : AppCompatActivity() {
                             orderHistoryRecyclerView.visibility = View.VISIBLE
                             orderHistoryAdapter.updateData(orderedItems)
                         }
+
                     } else {
                         Toast.makeText(
                             this@OrderHistoryActivity,
