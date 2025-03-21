@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".fragments.ProfileFragment">
 
-
     <LinearLayout
         android:id="@+id/llProfileShow"
         android:layout_width="match_parent"
@@ -50,7 +49,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -58,15 +57,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_16sp" />
 
 
                 <TextView
                     android:id="@+id/tvUserAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_14sp"
+                    android:layout_marginTop="@dimen/_10sp"
                     android:textColor="@color/black"/>
 
 

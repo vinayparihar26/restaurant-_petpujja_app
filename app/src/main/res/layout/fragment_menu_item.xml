@@ -34,16 +34,15 @@
             <TextView
                 android:id="@+id/tvRequestLocationPermission1"
                 android:layout_width="0dp"
-                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Click For Nearby" />
+                android:text="@string/click_for_nearby" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Non-Veg/Veg"
-                android:textSize="@dimen/_10sp"
+                android:text="@string/veg"
+                android:textSize="@dimen/_14sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -55,10 +54,9 @@
             <TextView
                 android:id="@+id/tvLocation"
                 android:layout_width="0dp"
-                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="10 km from you place" />
+                android:text="@string/_10_km_from_you_place" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/toggleVegNonVeg"
@@ -66,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:checked="false"
-                android:textOff="Non-Veg"
+                android:textOff="@string/non_veg"
                 android:textOn="Veg" />
 
         </LinearLayout>

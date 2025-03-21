@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:background="@color/lightOrange"
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_20sdp"
@@ -30,16 +30,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Rs. 0"
+            android:text="@string/rs_0"
             android:textColor="@color/black"
-            android:textSize="@dimen/_17sdp"
+            android:textSize="@dimen/_17sp"
             android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPlaceOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Place"
+            android:text="@string/order_place"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -63,10 +63,10 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your cart is Empty"
+            android:text="@string/your_cart_is_empty"
             android:textAlignment="center"
             android:textColor="@color/orange"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_20sp" />
 
     </LinearLayout>
 

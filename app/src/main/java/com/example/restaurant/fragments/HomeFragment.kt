@@ -5,6 +5,7 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import com.facebook.shimmer.ShimmerFrameLayout
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
@@ -59,6 +60,7 @@ class HomeFragment : Fragment() {
     private lateinit var imageList: ArrayList<Int>
     private lateinit var slideAdapter: ImageSlideAdapter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var shimmerViewContainer: ShimmerFrameLayout
     private lateinit var textSwitcher: TextSwitcher
     private val hintStrings = arrayOf("dishes & foods", "favourite restaurants", "home groceries")
     private lateinit var categoryAdapter: CategoryAdapter
@@ -86,8 +88,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Initialize Location Client
-        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
-        recyclerViewForCategoriesScroll = view.findViewById(R.id.recyclerViewForCategoriesScroll)
+        recyclerViewForCategories = binding.recyclerViewForCategories
+        recyclerViewForCategoriesScroll = binding.recyclerViewForCategoriesScroll
+        shimmerViewContainer = binding.shimmerViewContainer
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -175,7 +178,7 @@ class HomeFragment : Fragment() {
 
         recyclerViewForCategories.adapter = categoryAdapter
 
-        recyclerViewForRestaurant = view.findViewById(R.id.restaurantRecycleView)
+        recyclerViewForRestaurant = binding.restaurantRecycleView
         recyclerViewForRestaurant.layoutManager = LinearLayoutManager(requireContext())
         restaurantAdapter = RestaurantAdapter(
             restaurantList = restaurantList,
@@ -277,6 +280,9 @@ class HomeFragment : Fragment() {
 
 
     private fun fetchResturantItems() {
+        shimmerViewContainer.visibility = View.VISIBLE
+        shimmerViewContainer.startShimmer()
+        recyclerViewForRestaurant.visibility = View.GONE
         //    val (latitude, longitude) = getStoredLocation()
 
         val call = if (latitude == 0.0 && longitude == 0.0) {
@@ -299,6 +305,10 @@ class HomeFragment : Fragment() {
                 response: Response<RestaurantResponse>,
             ) {
                 if (isAdded) {
+                    shimmerViewContainer.stopShimmer()
+                    shimmerViewContainer.visibility = View.GONE
+                    recyclerViewForRestaurant.visibility = View.VISIBLE
+
                     if (response.isSuccessful && response.body() != null) {
                         val restaurantResponse = response.body()!!
                         if (restaurantResponse.status == 200 && restaurantResponse.data.isNotEmpty()) {
@@ -320,6 +330,9 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<RestaurantResponse>, p1: Throwable) {
                 if (isAdded) {  // Check if fragment is attached before showing error
+                    shimmerViewContainer.stopShimmer()
+                    shimmerViewContainer.visibility = View.GONE
+                    recyclerViewForRestaurant.visibility = View.VISIBLE
                     Toast.makeText(
                         requireContext(), "Error fetching restaurants", Toast.LENGTH_SHORT
                     ).show()

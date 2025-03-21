@@ -51,11 +51,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_4_5"
-                        android:textSize="@dimen/_15sp"
+                        android:textSize="@dimen/_14sp"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="@dimen/_18sdp"
+                        android:layout_width="@dimen/_15sdp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/_4sdp"
                         android:src="@drawable/star_green" />
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/drive_in_road_ahmedabad"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sp" />
+                    android:textSize="@dimen/_14sp" />
 
             </LinearLayout>
 
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/review"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sp" />
+                    android:textSize="@dimen/_14sp" />
 
                 <TextView
                     android:id="@+id/restaurant_desc"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/description"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sp" />
+                    android:textSize="@dimen/_14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,9 +120,9 @@
                         android:id="@+id/number_restaurant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7898073810"
+                        android:text="@string/_7898073810"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/_15sp" />
+                        android:textSize="@dimen/_14sp" />
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -132,7 +132,7 @@
                     android:text="@string/share"
                     android:paddingEnd="@dimen/_5sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sp" />
+                    android:textSize="@dimen/_14sp" />
             </LinearLayout>
 
         </LinearLayout>

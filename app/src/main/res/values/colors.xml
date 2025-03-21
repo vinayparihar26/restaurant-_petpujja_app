@@ -14,4 +14,6 @@
     <color name="btnSkipOrange">#DD4A01</color>
     <color name="lightYellow">#FFFBF0</color>
     <color name="darkYellow">#FFD25C</color>
+    <color name="shimmer_bg">#E0E0E0</color>
+
 </resources>

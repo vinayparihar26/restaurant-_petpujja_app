@@ -158,7 +158,6 @@ class MenuItemsActivity : AppCompatActivity() {
             return
         }
         try {
-            Log.d("MenuItemsActivity", "Fetching items for category: $categoryId")
             val call = RetrofitClient.apiService.getMenuItems(
                 method = "menu",
                 categoryId = categoryId!!,
@@ -174,8 +173,6 @@ class MenuItemsActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         val menuResponse = response.body()!!
-
-                        Log.d("MenuItemsActivity", "Response: $menuResponse")
 
                         if (menuResponse.status == 200 && menuResponse.data.isNotEmpty()) {
                             menuItemList.clear()
@@ -216,57 +213,7 @@ class MenuItemsActivity : AppCompatActivity() {
         }
     }
 
-   /* private fun toggleFavorite(menuId: String) {
-        Log.d("menuId", menuId)
-        val userId = getSharedPreferences(
-            "UserPrefs",
-            MODE_PRIVATE
-        )
-        try {
-            val call = RetrofitClient.apiService.manageFavorites(
-                method = "favorites",
-                userId = userId.toString(),
-                menuId = menuId
-            )
 
-            call.enqueue(object : Callback<FavoriteResponse> {
-                override fun onResponse(
-                    call: Call<FavoriteResponse>,
-                    response: Response<FavoriteResponse>,
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        val favoriteResponse = response.body()!!
-                        if (favoriteResponse.status == 200) {
-                            Toast.makeText(
-                                this@MenuItemsActivity,
-                                favoriteResponse.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                this@MenuItemsActivity,
-                                "Failed to update favorite",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                    Log.e("MenuItemsActivity", "Error updating favorite: ${t.message}", t)
-                    Toast.makeText(
-                        this@MenuItemsActivity,
-                        "Error updating favorite",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-        } catch (e: Exception) {
-            Log.e("MenuItemsActivity", "Exception in toggleFavorite: ${e.message}", e)
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-        }
-    }
-*/
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,

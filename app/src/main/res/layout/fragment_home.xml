@@ -50,6 +50,33 @@
                     android:padding="@dimen/_10sdp" />
             </LinearLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:background="@color/shimmer_bg"
+                        android:layout_marginBottom="@dimen/_8sdp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:background="@color/shimmer_bg"/>
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <LinearLayout
                 android:id="@+id/llMenu"
                 android:layout_width="match_parent"
@@ -69,7 +96,7 @@
                     android:id="@+id/recyclerViewForCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="@dimen/_10sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,13 +143,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
-
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/imgShareDetails"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:src="@drawable/ios_share_24dp_e8eaed_fill0_wght400_grad0_opsz24" />-->
 
             <TextView
                 android:id="@+id/tvRequestLocationPermission"

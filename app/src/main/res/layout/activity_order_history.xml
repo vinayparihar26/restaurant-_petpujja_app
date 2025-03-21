@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sp"
             android:textColor="@color/orange"
-            android:text="No Order Placed"/>
+            android:text="@string/no_order_placed"/>
 
     </LinearLayout>
 

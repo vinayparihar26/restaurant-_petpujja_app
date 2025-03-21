@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center"
             android:padding="@dimen/_30sdp"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    android:layout_marginLeft="65dp"
+                    android:layout_marginStart="65dp"
                     android:layout_alignTop="@id/imgProfile"
                     app:tint="#890031" />
             </RelativeLayout>
@@ -52,7 +52,7 @@
                 android:id="@+id/etUpdateNameL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="@string/username"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -63,14 +63,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUpdateEmailL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -81,14 +81,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUpdatePhoneL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="phone"
+                android:hint="@string/phone"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -100,23 +100,23 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinnerGender"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/border_gender"
-                android:padding="10dp" />
+                android:padding="@dimen/_10sdp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUpdateAddressL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -127,22 +127,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnUpdateProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="15dp"
                 android:background="@color/orange"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="Update"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
+                android:text="@string/update"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="17sp" />
+                android:textSize="@dimen/_17sp" />
 
 
         </LinearLayout>

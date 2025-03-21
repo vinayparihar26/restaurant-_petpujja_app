@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="SIGN IN "
+                android:text="@string/sign_in"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:id="@+id/etNameL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Name "
+                android:hint="@string/enter_name"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -64,14 +64,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etEmailL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email "
+                android:hint="@string/enter_email"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -82,14 +82,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etPhoneL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Phone Number "
+                android:hint="@string/enter_phone_number"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:errorEnabled="true"
@@ -101,14 +101,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etPasswordL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Password"
+                android:hint="@string/enter_password"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/black"
                 app:endIconMode="password_toggle"
@@ -121,22 +121,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@color/orange"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="Register"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
+                android:text="@string/register"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="17sp"
+                android:textSize="@dimen/_17sp"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
 

@@ -54,10 +54,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PetPuja ,"
+                    android:text="@string/petpuja"
                     android:textStyle="bold"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_30sdp"
+                    android:textSize="@dimen/_30sp"
                     android:textColor="@color/white"
                     android:textAlignment="center"/>
 
@@ -76,7 +76,7 @@
                     android:text="फिर"
                     android:textStyle="bold"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="@dimen/_20sp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/white"
                     android:textAlignment="center"/>
@@ -84,10 +84,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kaam"
+                    android:text="@string/kaam"
                     android:textStyle="bold"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_23sdp"
+                    android:textSize="@dimen/_23sp"
                     android:textColor="@color/white"
                     android:textAlignment="center"/>
 
@@ -98,7 +98,7 @@
                     android:text="दूजा!"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="@dimen/_20sp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:textColor="@color/white"
                     android:textAlignment="center"/>

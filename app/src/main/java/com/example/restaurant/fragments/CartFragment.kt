@@ -48,8 +48,7 @@ class CartFragment : Fragment() {
             requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("user_id", null)
 
-        Log.d("useridd", "$userId")
-        cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
+         cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
         emptyCartTextView = view.findViewById(R.id.NoItemCart)
         btnPlaceOrder = view.findViewById(R.id.btnPlaceOrder)
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -61,16 +60,15 @@ class CartFragment : Fragment() {
 
         btnPlaceOrder.setOnClickListener {
             placeOrder()
-
-
         }
 
         return view
     }
 
+   /* @SuppressLint("SetTextI18n")
     private fun updateGrandTotal(grandTotal: Int) {
         view?.findViewById<TextView>(R.id.tvTotalPayment)?.text = "Total: ₹$grandTotal"
-    }
+    }*/
 
 
     private fun placeOrder() {
@@ -84,9 +82,10 @@ class CartFragment : Fragment() {
                 if (response.isSuccessful && response.body() != null) {
                     val orderResponse = response.body()!!
                     if (orderResponse.status == 200 && orderResponse.orders!!.isNotEmpty()) {
-                        val grandTotal = orderResponse.grandTotal ?: 0
+                        val grandTotal = orderResponse.grandTotal
                         // Update UI with Grand Total
-                        updateGrandTotal(grandTotal)
+                        //updateGrandTotal(grandTotal)
+                       // view?.findViewById<TextView>(R.id.tvTotalPayment)?.text = "Total: ₹$grandTotal"
                         Toast.makeText(
                             requireContext(),
                             "order place successfully",
@@ -140,8 +139,12 @@ class CartFragment : Fragment() {
                     if (response.isSuccessful) {
                         val cartResponse = response.body()
                         if (cartResponse?.status == 200 && cartResponse.data.isNotEmpty()) {
+                            val grandTotal = cartResponse.data.sumOf { it.totalPrice.toInt() }
                             cartItems = cartResponse.data.toMutableList()
+                            updateTotalPayment(cartItems)
                             cartAdapter = CartAdapter(requireContext(), cartItems, ::removeCartItem)
+                            //view?.findViewById<TextView>(R.id.tvTotalPayment)?.text = "Total: ₹$grandTotal"
+                            cartAdapter.notifyDataSetChanged()
                             cartRecyclerView.adapter = cartAdapter
                             emptyCartTextView.visibility = View.GONE
                             cartRecyclerView.visibility = View.VISIBLE
@@ -182,6 +185,8 @@ class CartFragment : Fragment() {
                         if (response.isSuccessful) {
                             cartItems.removeAt(position)
                             cartAdapter.notifyItemRemoved(position)
+                            updateTotalPayment(cartItems)
+
                             if (position < 1) {
                                 emptyCartTextView.visibility = View.VISIBLE
                             }
@@ -202,6 +207,11 @@ class CartFragment : Fragment() {
             Toast.makeText(requireContext(), "Invalid position", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun updateTotalPayment(cartItems: MutableList<CartItem>) {
+        val grandTotal = cartItems.sumOf { it.totalPrice.toInt() }
+        view?.findViewById<TextView>(R.id.tvTotalPayment)?.text = "Total: ₹$grandTotal"
     }
 }
 

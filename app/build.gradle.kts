@@ -72,6 +72,7 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.4.0") //jetp
 
+    implementation ("com.facebook.shimmer:shimmer:0.5.0") //loader
 
     // RxJava for Retrofit
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")

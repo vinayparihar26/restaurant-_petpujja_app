@@ -24,25 +24,25 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_18sp" />
 
         <ImageView
             android:id="@+id/slideMenu"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="end"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/_10sdp"
             android:src="@drawable/ic_three_line" />
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/right_drawer"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="0dp"
         android:background="@android:color/white"
-        android:elevation="10dp"
+        android:elevation="@dimen/_10sdp"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/_16sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,20 +53,20 @@
             android:layout_width="@dimen/_45sdp"
             android:layout_height="@dimen/_45sdp"
             android:layout_gravity="end"
-            android:padding="8dp"
+            android:padding="@dimen/_8sdp"
             android:src="@drawable/ic_cross" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/_10sdp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/drawerRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:scrollbars="none"
                 tools:listitem="@layout/item_view_drawer" />
         </LinearLayout>

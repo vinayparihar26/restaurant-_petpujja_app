@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/_20sp"
             android:textColor="@color/orange"
-            android:text="Your WishList is Empty"/>
+            android:text="@string/your_wishlist_is_empty"/>
 
     </LinearLayout>
 
