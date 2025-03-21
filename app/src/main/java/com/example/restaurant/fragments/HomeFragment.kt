@@ -88,9 +88,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Initialize Location Client
-        recyclerViewForCategories = binding.recyclerViewForCategories
-        recyclerViewForCategoriesScroll = binding.recyclerViewForCategoriesScroll
-        shimmerViewContainer = binding.shimmerViewContainer
+        recyclerViewForCategories = view.findViewById(R.id.recyclerViewForCategories)
+        recyclerViewForCategoriesScroll = view.findViewById(R.id.recyclerViewForCategoriesScroll)
+        recyclerViewForRestaurant = view.findViewById(R.id.restaurantRecycleView)
+        shimmerViewContainer = view.findViewById(R.id.shimmer_view_container)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -178,7 +179,7 @@ class HomeFragment : Fragment() {
 
         recyclerViewForCategories.adapter = categoryAdapter
 
-        recyclerViewForRestaurant = binding.restaurantRecycleView
+        //  recyclerViewForRestaurant = binding.restaurantRecycleView
         recyclerViewForRestaurant.layoutManager = LinearLayoutManager(requireContext())
         restaurantAdapter = RestaurantAdapter(
             restaurantList = restaurantList,
