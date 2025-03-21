@@ -117,7 +117,7 @@ class MenuItemAdapter(
                         // If it's red (liked), set it back to the default color
                         DrawableCompat.setTint(
                             currentDrawable,
-                            ContextCompat.getColor(context, R.color.colorPrimary)
+                            ContextCompat.getColor(context, R.color.white)
                         ) // default color
                         addToWishlist(menuItem.menuId.toString(), false)  // Removed from wishlist
                     } else {

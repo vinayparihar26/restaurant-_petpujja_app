@@ -32,7 +32,6 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>, val contex
         val restaurantDesc: TextView = view.findViewById(R.id.restaurant_desc)
         val share: TextView = view.findViewById(R.id.share)
         val call: ImageView = view.findViewById(R.id.imgBtnCall)
-
         val context: Context = view.context
 
     }

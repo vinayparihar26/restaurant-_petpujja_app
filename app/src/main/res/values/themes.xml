@@ -6,7 +6,7 @@
         <!--<item name="android:navigationBarColor">@color/navigationBarColor</item>-->
         <item name="fontFamily">@font/font1</item>
         <item name="bottomNavigationStyle">@style/Widget.Material3.BottomNavigationView</item>
-        <item name="android:statusBarColor">@color/orangev</item>
+        <item name="android:statusBarColor">@color/orange</item>
     </style>
 
     <style name="Theme.Restaurant" parent="Base.Theme.Restaurant" />

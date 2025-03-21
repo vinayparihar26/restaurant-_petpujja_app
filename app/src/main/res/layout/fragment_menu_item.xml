@@ -34,6 +34,7 @@
             <TextView
                 android:id="@+id/tvRequestLocationPermission1"
                 android:layout_width="0dp"
+                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Click For Nearby" />
@@ -54,6 +55,7 @@
             <TextView
                 android:id="@+id/tvLocation"
                 android:layout_width="0dp"
+                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="10 km from you place" />

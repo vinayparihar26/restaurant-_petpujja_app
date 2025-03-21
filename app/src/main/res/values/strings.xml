@@ -9,4 +9,21 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="what_s_on_your_mind">What\'s on Your Mind?</string>
+    <string name="restaurants_delivering_to_you">Restaurants Delivering To You</string>
+    <string name="Trending_food_items">Trending Food Items</string>
+    <string name="requestlocationpermission">requestLocationPermission</string>
+    <string name="location">Location</string>
+    <string name="get_location">Get Location</string>
+    <string name="share">Share</string>
+    <string name="description">Description</string>
+    <string name="review">Review:  </string>
+    <string name="drive_in_road_ahmedabad">Drive in Road, Ahmedabad</string>
+    <string name="_4_5">4.5</string>
+    <string name="hotel_moti_mahal">Hotel Moti Mahal</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="price">price</string>
+    <string name="item_details">item details</string>
+    <string name="item_name">item name</string>
+    <string name="menu_image">Menu Image</string>
 </resources>

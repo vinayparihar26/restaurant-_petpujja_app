@@ -53,7 +53,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
             Toast.makeText(this, "Invalid category", Toast.LENGTH_SHORT).show()
         }
         binding.btnBackToHome.setOnClickListener {
-            val homeIntent = Intent(this, HomeFragment::class.java)
+            val homeIntent = Intent(this, MainActivity::class.java)
             startActivity(homeIntent)
         }
 

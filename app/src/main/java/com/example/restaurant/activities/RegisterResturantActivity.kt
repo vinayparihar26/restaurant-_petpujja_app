@@ -146,10 +146,10 @@ class RegisterResturantActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@RegisterResturantActivity, "Successful", Toast.LENGTH_SHORT).show()
-                    Log.d("register success", "onResponse: ${response.message()}")
+                    startActivity(Intent(this@RegisterResturantActivity, MainActivity::class.java))
 
                 } else {
-                    Log.d("register failed1", "onResponse: ${response.message()}")
+                    Toast.makeText(this@RegisterResturantActivity, "Register Failed",Toast.LENGTH_SHORT).show()
                     Log.d("register failed", "onResponse: ${response.errorBody()?.string()}")
                 }
             }

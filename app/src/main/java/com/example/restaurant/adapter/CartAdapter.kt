@@ -41,7 +41,7 @@ class CartAdapter(
         val totalPrice: TextView = itemView.findViewById(R.id.totalMenuPrice)
         val menuQuantity: TextView = itemView.findViewById(R.id.menuQuantity)
         val deleteCart: MaterialButton = itemView.findViewById(R.id.deleteCart)
-       // val tvTotalPayment: TextView = itemView.findViewById(R.id.tvTotalPayment)
+        // val tvTotalPayment: TextView = itemView.findViewById(R.id.tvTotalPayment)
         //val btnPlaceOrder: MaterialButton = itemView.findViewById(R.id.btnPlaceOrder)
 
     }
@@ -61,7 +61,7 @@ class CartAdapter(
         holder.menuDescription.text = item.menuDescription
         holder.menuQuantity.text = currentQuantity.toString()
         holder.totalPrice.text = (currentQuantity * itemPrice).toString()
-       // holder.tvTotalPayment.text = item.totalAmount
+        // holder.tvTotalPayment.text = item.totalAmount
 
         Glide.with(holder.itemView.context)
             .load(item.menuImg)
@@ -74,6 +74,7 @@ class CartAdapter(
         }
 
         holder.increment.setOnClickListener {
+
             currentQuantity++
             val updatedPrice = currentQuantity * itemPrice
             holder.menuQuantity.text = currentQuantity.toString()

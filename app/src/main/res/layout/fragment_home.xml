@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="What's on Your Mind?"
+                    android:text="@string/what_s_on_your_mind"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_17sp"
                     android:textStyle="bold" />
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Restaurants  Delivering To You"
+                    android:text="@string/restaurants_delivering_to_you"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_17sp"
                     android:textStyle="bold" />
@@ -105,7 +105,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Food Items"
+                    android:text="@string/Trending_food_items"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_17sp"
                     android:textStyle="bold" />
@@ -128,8 +128,8 @@
                 android:id="@+id/tvRequestLocationPermission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="requestLocationPermission"
-                android:textSize="@dimen/_20sdp"
+                android:text="@string/requestlocationpermission"
+                android:textSize="@dimen/_20sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
@@ -137,15 +137,15 @@
                 android:id="@+id/showLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Location"
-                android:textSize="24sp"
+                android:hint="@string/location"
+                android:textSize="@dimen/_24sp"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnGetLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Get Location"
+                android:text="@string/get_location"
                 android:visibility="gone" />
         </LinearLayout>
 
