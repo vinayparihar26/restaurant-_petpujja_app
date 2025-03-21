@@ -65,11 +65,6 @@ class CartFragment : Fragment() {
         return view
     }
 
-   /* @SuppressLint("SetTextI18n")
-    private fun updateGrandTotal(grandTotal: Int) {
-        view?.findViewById<TextView>(R.id.tvTotalPayment)?.text = "Total: ₹$grandTotal"
-    }*/
-
 
     private fun placeOrder() {
         val call = RetrofitClient.apiService.placeOrder(
