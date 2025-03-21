@@ -28,6 +28,7 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
 
 
 
+
         val imageUrl = if (!item.menuImg.isNullOrEmpty() && item.menuImg.startsWith("http")) {
             item.menuImg
         } else {

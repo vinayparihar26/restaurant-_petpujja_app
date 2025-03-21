@@ -94,6 +94,7 @@ class OrderHistoryActivity : AppCompatActivity() {
                 }
 
 
+
                 override fun onFailure(call: Call<OrderedMenuItemResponse>, t: Throwable) {
                     Toast.makeText(this@OrderHistoryActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                     Log.e("OrderHistory", "API Error", t)
