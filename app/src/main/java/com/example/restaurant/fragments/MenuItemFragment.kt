@@ -110,16 +110,14 @@ class MenuItemFragment : Fragment() {
             return
         }
 
-        // Check if latitude and longitude are available
         val call = if (latitude == 0.0 || longitude == 0.0) {
-            // ✅ If location is not provided, fetch all menu items
             RetrofitClient.apiService.getMenuItems(
                 method = "menu",
                 categoryId = categoryId!!,
                 menuType = menuType
             )
         } else {
-            // ✅ If location is provided, fetch based on latitude/longitude
+
             RetrofitClient.apiService.getMenuItems(
                 method = "menu",
                 categoryId = categoryId!!,
