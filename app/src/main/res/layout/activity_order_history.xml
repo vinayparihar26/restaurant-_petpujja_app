@@ -8,6 +8,15 @@
     android:background="@color/white"
     tools:context=".activities.OrderHistoryActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:background="@color/orangev"
+        android:text="@string/your_order_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/emptyOrderHistoryTextView"
@@ -37,12 +46,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderHistoryRecycleView"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
