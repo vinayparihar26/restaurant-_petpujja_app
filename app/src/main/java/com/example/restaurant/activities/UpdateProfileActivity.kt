@@ -98,7 +98,7 @@ class UpdateProfileActivity : AppCompatActivity() {
             binding.etUpdateEmail.setText(it.userEmail)
             binding.etUpdatePhone.setText(it.userPhone.toString())
             binding.etUpdateAddress.setText(it.userAddress)
-            binding.imgProfile.setImageURI(Uri.parse(it.userImg))
+           // binding.imgProfile.setImageURI(Uri.parse(it.userImg))
 
             val genderOptions = resources.getStringArray(R.array.gender)
             val genderIndex = genderOptions.indexOf(it.userGender)
