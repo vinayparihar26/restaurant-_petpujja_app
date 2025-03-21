@@ -1,6 +1,7 @@
 
 package com.example.restaurant.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
         holder.menuPrice.text = "₹${item.menuPrice}"
         holder.orderDateTime.text = "Ordered on: ${item.orderCreatedAt}"
 
-        // Ensure the image URL is valid
         val imageUrl = if (!item.menuImg.isNullOrEmpty() && item.menuImg.startsWith("http")) {
             item.menuImg
         } else {
@@ -42,17 +42,18 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
 
     override fun getItemCount(): Int = orderedItems.size
 
-    // Update data method
     fun updateData(newItems: List<OrderedMenuItem>) {
         orderedItems.clear()
         orderedItems.addAll(newItems)
+        Log.d("OrderHistoryAdapter", "Updating adapter with ${newItems.size} items")
         notifyDataSetChanged()
     }
 
+
     class OrderHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val menuName: TextView = itemView.findViewById(R.id.menuNameTextView)
-        val menuPrice: TextView = itemView.findViewById(R.id.menuPriceTextView)
-        val menuImage: ImageView = itemView.findViewById(R.id.menuImageView)
-        val orderDateTime: TextView = itemView.findViewById(R.id.orderDateTimeTextView)
+        val menuName: TextView = itemView.findViewById(R.id.orderMenuName)
+        val menuPrice: TextView = itemView.findViewById(R.id.orderMenuPrice)
+        val menuImage: ImageView = itemView.findViewById(R.id.orderMenuImage)
+        val orderDateTime: TextView = itemView.findViewById(R.id.orderPlaceDateTime)
     }
 }
