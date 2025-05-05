@@ -41,13 +41,8 @@ class RestaurantMenuActivity : AppCompatActivity() {
 
         loadLocationFromSharedPreferences()
 
-        Log.d("Latitude", latitude.toString())
-        Log.d("Longitude", longitude.toString())
-
         categoryId = intent.getStringExtra("categoryId")
         restaurantId = intent.getStringExtra("restaurantId")
-        Log.d("restaurantId", restaurantId.toString())
-        Log.d("categoryId", categoryId.toString())
 
         if (categoryId == null) {
             Toast.makeText(this, "Invalid category", Toast.LENGTH_SHORT).show()
@@ -98,7 +93,10 @@ class RestaurantMenuActivity : AppCompatActivity() {
             // Make the API call
             call.enqueue(object : Callback<MenuResponse> {
                 @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
-                override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
+                override fun onResponse(
+                    call: Call<MenuResponse>,
+                    response: Response<MenuResponse>,
+                ) {
                     Log.d("API_RESPONSE", "Response: ${response.body()}")
 
                     if (response.isSuccessful && response.body() != null) {
@@ -132,11 +130,12 @@ class RestaurantMenuActivity : AppCompatActivity() {
                     Log.e("API_ERROR", "Failed to fetch menu: ${t.message}")
                 }
             })
-        }catch (e : Exception){
+        } catch (e: Exception) {
             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Error while fetching menu: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error while fetching menu: ${e.message}", Toast.LENGTH_SHORT)
+                .show()
         }
     }
-        }
+}
 
 

@@ -25,12 +25,12 @@ object NetworkUtils {
         builder.setView(view)
 
         val dialog = builder.create()
-        dialog.setCancelable(false)  // User ko force karega retry karne ke liye
+        dialog.setCancelable(false)
 
         val btnRetry = view.findViewById<Button>(R.id.btnRetry)
         btnRetry.setOnClickListener {
             dialog.dismiss()
-            onRetry()  // Retry function call karega
+            onRetry()
         }
 
         dialog.show()

@@ -51,6 +51,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
     val lottieVersion = "6.0.0"
     implementation("com.airbnb.android:lottie-compose:$lottieVersion")
 
@@ -78,5 +80,8 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
+    implementation ("androidx.media3:media3-exoplayer:1.3.1")  // Latest ExoPlayer
+    implementation ("androidx.media3:media3-ui:1.3.1") // UI controls (optional)
 
 }

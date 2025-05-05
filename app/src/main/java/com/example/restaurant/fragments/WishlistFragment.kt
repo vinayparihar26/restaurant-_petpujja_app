@@ -1,4 +1,3 @@
-
 package com.example.restaurant.fragments
 
 import android.annotation.SuppressLint
@@ -33,14 +32,16 @@ class WishlistFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_wishlist, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         emptyWishTextView = view.findViewById(R.id.NoItemWish)
-        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("user_id", null)
         recyclerView = view.findViewById(R.id.recyclerViewWishlist)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -51,36 +52,48 @@ class WishlistFragment : Fragment() {
         recyclerView.adapter = adapter
         fetchWishlistItems()
     }
+
     private fun fetchWishlistItems() {
-        val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "favorites_fetch")
-        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId!!)
+        try {
+            val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "favorites_fetch")
+            val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId!!)
 
-        val call = RetrofitClient.apiService.getWishlist(methodBody, userIdBody)
+            val call = RetrofitClient.apiService.getWishlist(methodBody, userIdBody)
 
-        call.enqueue(object : Callback<WishlistResponse> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val wishlistResponse = response.body()!!
-                    emptyWishTextView.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                    if (wishlistResponse.status == 200 && wishlistResponse.data!!.isNotEmpty()) {
-                        wishlistItems.clear()
-                        wishlistItems.addAll(wishlistResponse.data)
-                        Log.d("WishlistFragment", "Wishlist Items: $wishlistItems")
-                        adapter.notifyDataSetChanged()
-                        emptyWishTextView.visibility = View.GONE
-                        recyclerView.visibility = View.VISIBLE
-                    } else {
+            call.enqueue(object : Callback<WishlistResponse> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(
+                    call: Call<WishlistResponse>,
+                    response: Response<WishlistResponse>,
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val wishlistResponse = response.body()!!
                         emptyWishTextView.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
+                        if (wishlistResponse.status == 200 && wishlistResponse.data!!.isNotEmpty()) {
+                            wishlistItems.clear()
+                            wishlistItems.addAll(wishlistResponse.data)
+                            Log.d("WishlistFragment", "Wishlist Items: $wishlistItems")
+                            adapter.notifyDataSetChanged()
+                            emptyWishTextView.visibility = View.GONE
+                            recyclerView.visibility = View.VISIBLE
+                        } else {
+                            emptyWishTextView.visibility = View.VISIBLE
+                            recyclerView.visibility = View.GONE
+                        }
                     }
                 }
-            }
-            override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
-                Log.d("wishListError", "onFailure: ${t.message}")
-            }
-        })
+
+                override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
+                    Log.d("wishListError", "onFailure: ${t.message}")
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error fetching wishlist", Toast.LENGTH_SHORT).show()
+
+
+        }
     }
 
 

@@ -42,8 +42,6 @@ class OrderHistoryActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         userId = sharedPreferences.getString("user_id", null)
-        Log.d("OrderHistory", "Retrieved User ID: $userId")
-
         if (userId.isNullOrEmpty()) {
             Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show()
         } else {
@@ -52,53 +50,53 @@ class OrderHistoryActivity : AppCompatActivity() {
     }
 
     private fun fetchOrderHistory() {
-        val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "order_history")
-        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId ?: "")
+        try {
+            val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "order_history")
+            val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId ?: "")
 
-        RetrofitClient.apiService.getOrderHistory(method, userIdBody)
-            .enqueue(object : Callback<OrderedMenuItemResponse> {
-                override fun onResponse(
-                    call: Call<OrderedMenuItemResponse>,
-                    response: Response<OrderedMenuItemResponse>
-                ) {
-                    Log.d("OrderHistory", "Response Code: ${response.code()}")
+            RetrofitClient.apiService.getOrderHistory(method, userIdBody)
+                .enqueue(object : Callback<OrderedMenuItemResponse> {
+                    override fun onResponse(
+                        call: Call<OrderedMenuItemResponse>,
+                        response: Response<OrderedMenuItemResponse>,
+                    ) {
 
-                    val responseBody = response.body()
-                    val errorBody = response.errorBody()?.string()
+                        val responseBody = response.body()
+                        val errorBody = response.errorBody()?.string()
 
-                    Log.d("OrderHistory", "Response Body: $responseBody")
-                    Log.d("OrderHistory", "Error Body: $errorBody")
+                        if (response.isSuccessful && responseBody != null && responseBody.status == 200) {
+                            orderedItems.clear()
+                            responseBody.menuItems?.let { orderedItems.addAll(it) }
 
-                    if (response.isSuccessful && responseBody != null && responseBody.status==200) {
-                        orderedItems.clear()
-                        responseBody.menuItems?.let { orderedItems.addAll(it) }
+                            if (orderedItems.isEmpty()) {
+                                emptyOrderHistoryTextView.visibility = View.VISIBLE
+                                orderHistoryRecyclerView.visibility = View.GONE
+                            } else {
+                                emptyOrderHistoryTextView.visibility = View.GONE
+                                orderHistoryRecyclerView.visibility = View.VISIBLE
+                                orderHistoryAdapter.updateData(orderedItems)
+                            }
 
-                        Log.d("OrderHistory", "Items count: ${orderedItems.size}")
-
-                        if (orderedItems.isEmpty()) {
-                            emptyOrderHistoryTextView.visibility = View.VISIBLE
-                            orderHistoryRecyclerView.visibility = View.GONE
                         } else {
-                            emptyOrderHistoryTextView.visibility = View.GONE
-                            orderHistoryRecyclerView.visibility = View.VISIBLE
-                            orderHistoryAdapter.updateData(orderedItems)
+                            Toast.makeText(
+                                this@OrderHistoryActivity,
+                                "Failed to load order history",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    }
 
-                    } else {
+                    override fun onFailure(call: Call<OrderedMenuItemResponse>, t: Throwable) {
                         Toast.makeText(
                             this@OrderHistoryActivity,
-                            "Failed to load order history",
+                            "Error: ${t.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }
-
-
-
-                override fun onFailure(call: Call<OrderedMenuItemResponse>, t: Throwable) {
-                    Toast.makeText(this@OrderHistoryActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                    Log.e("OrderHistory", "API Error", t)
-                }
-            })
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Something went wrong: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.restaurant.activities
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ import com.example.restaurant.databinding.ActivitySplashScreenBinding
 
 
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding

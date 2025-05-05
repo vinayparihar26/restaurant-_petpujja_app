@@ -31,13 +31,13 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding?=null
-    private val binding get()= _binding!!
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
     private lateinit var ivUserProfile: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var updateProfile: MaterialButton
-    private lateinit var updatePassword:MaterialButton
+    private lateinit var updatePassword: MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +60,7 @@ class ProfileFragment : Fragment() {
         loadUserData()
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,7 +78,6 @@ class ProfileFragment : Fragment() {
         val sharedPreferences =
             requireContext().getSharedPreferences("login_prefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        Log.d("logout", "logout: ")
 
         val sharedPreferences1 =
             requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -100,8 +100,6 @@ class ProfileFragment : Fragment() {
         val userId = sharedPreferences.getString("user_id", null)
         val token = sharedPreferences.getString("token", null)
 
-        Log.d("ProfileFragment", "User ID: $userId")
-
         if (userId != null) {
             fetchUserProfile(userId, token)
         } else {
@@ -111,52 +109,62 @@ class ProfileFragment : Fragment() {
 
 
     private fun fetchUserProfile(userId: String, token: String?) {
-        val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "profile")
-        val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
+        try {
+            val methodBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "profile")
+            val userIdBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
 
-        RetrofitClient.apiService.getProfile(methodBody, userIdBody)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>,
-                ) {
-                    if (response.isSuccessful) {
-                        val profileResponse = response.body()
-                        Log.d("profileResponse", "onResponse: $profileResponse")
+            RetrofitClient.apiService.getProfile(methodBody, userIdBody)
+                .enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            val profileResponse = response.body()
+                            Log.d("profileResponse", "onResponse: $profileResponse")
 
-                        if (profileResponse?.status == 200) {
-                            updateUI(profileResponse.userData)
-                            updateProfile.setOnClickListener {
-                                val intent =
-                                    Intent(requireContext(), UpdateProfileActivity::class.java)
-                                intent.putExtra("user_id", userId)
-                                startActivity(intent)
+                            if (profileResponse?.status == 200) {
+                                updateUI(profileResponse.userData)
+                                updateProfile.setOnClickListener {
+                                    val intent =
+                                        Intent(requireContext(), UpdateProfileActivity::class.java)
+                                    intent.putExtra("user_id", userId)
+                                    startActivity(intent)
+                                }
+
+
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to fetch profile",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-
-
                         } else {
+                            Log.d("error", "onResponse: ${response.errorBody()?.string()}")
                             Toast.makeText(
                                 requireContext(),
-                                "Failed to fetch profile",
+                                "Error: ${response.errorBody()?.string()}",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    } else {
-                        Log.d("error", "onResponse: ${response.errorBody()?.string()}")
+                    }
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.e("ProfileFetchError", t.message.toString())
                         Toast.makeText(
                             requireContext(),
-                            "Error: ${response.errorBody()?.string()}",
+                            "Error fetching profile",
                             Toast.LENGTH_SHORT
-                        ).show()
+                        )
+                            .show()
                     }
-                }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error fetching profile", Toast.LENGTH_SHORT).show()
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.e("ProfileFetchError", t.message.toString())
-                    Toast.makeText(requireContext(), "Error fetching profile", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -171,7 +179,6 @@ class ProfileFragment : Fragment() {
             val editor = sharedPreferences.edit()
             editor.putString("user_name", it.userName)
             editor.apply()
-
 
             Glide.with(this)
                 .load(it.userImg)

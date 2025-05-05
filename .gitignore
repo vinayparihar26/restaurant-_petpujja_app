@@ -13,3 +13,42 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Ignore Kotlin files
+app/src/main/java/com/example/restaurant/MyApplication.kt
+app/src/main/java/com/example/restaurant/fragments/MenuItemFragment.kt
+app/src/main/java/com/example/restaurant/fragments/WishlistFragment.kt
+app/src/main/java/com/example/restaurant/repository/Repository.kt
+app/src/main/java/com/example/restaurant/utils/Constants.kt
+app/src/main/java/com/example/restaurant/utils/Validator.kt
+app/src/main/java/com/example/restaurant/viewModel/CategoryViewModel.kt
+app/src/main/java/com/example/restaurant/viewModel/ItemViewModel.kt
+app/src/main/java/com/example/restaurant/viewModel/TrendingItemViewModel.kt
+
+# Ignore Drawable images
+app/src/main/res/drawable/d1.jpg
+app/src/main/res/drawable/d2.jpg
+app/src/main/res/drawable/delicious.jpg
+app/src/main/res/drawable/group_86.xml
+app/src/main/res/drawable/heartoutline.xml
+app/src/main/res/drawable/heartredcolor.xml
+app/src/main/res/drawable/icons8_home.xml
+app/src/main/res/drawable/logo.png
+app/src/main/res/drawable/smiley_1635449.xml
+app/src/main/res/drawable/star_green.xml
+
+# Ignore Fonts
+app/src/main/res/font/inter_bold.xml
+app/src/main/res/font/irish_grover.xml
+
+# Ignore Layout files
+app/src/main/res/layout/fragment_menu_item.xml
+app/src/main/res/layout/fragment_wishlist.xml
+app/src/main/res/layout/item_view_order_history.xml
+app/src/main/res/layout/item_view_wishlist.xml
+
+# Ignore Values
+app/src/main/res/values/font_certs.xml
+app/src/main/res/values/preloaded_fonts.xml
+
+

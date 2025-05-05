@@ -57,28 +57,18 @@ class MenuItemsActivity : AppCompatActivity() {
             requestLocationPermission()
         }
 
-//        val imgHeart: HeartView = findViewById(R.id.imgHeart)
-
-       /* imgHeart.setOnClickListener {
-         addToWishList()
-        }*/
-
         val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val userId = sharedPreferences.getString("user_id", null) ?: ""
 
         try {
-            Log.d("MenuItemsActivity", "onCreate called")
             recyclerViewForMenuItems = findViewById(R.id.recyclerViewForMenuItems)
             toggleVegNonVeg = binding.toggleVegNonVeg
-
             recyclerViewForMenuItems.layoutManager = LinearLayoutManager(this)
             menuItemAdapter = MenuItemAdapter(
                 this, menuItemList,
 
             )
-            /* onFavoriteClick = { menuId ->
-                    toggleFavorite(menuId)
-                }*/
+
             recyclerViewForMenuItems.adapter = menuItemAdapter
 
             categoryId = intent.getStringExtra("categoryId")

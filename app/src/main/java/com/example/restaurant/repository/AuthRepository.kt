@@ -27,97 +27,130 @@ class AuthRepository {
         email: String,
         phone: String,
         password: String,
-        callback: (ApiResponse?) -> Unit
+        callback: (ApiResponse?) -> Unit,
     ) {
+        try {
+            val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "register")
+            val nameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
+            val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
+            val phoneBody = RequestBody.create("text/plain".toMediaTypeOrNull(), phone)
+            val passwordBody = RequestBody.create("text/plain".toMediaTypeOrNull(), password)
 
-        val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "register")
-        val nameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
-        val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
-        val phoneBody = RequestBody.create("text/plain".toMediaTypeOrNull(), phone)
-        val passwordBody = RequestBody.create("text/plain".toMediaTypeOrNull(), password)
+            RetrofitClient.apiService.registerUser(
+                method,
+                nameBody,
+                emailBody,
+                phoneBody,
+                passwordBody
+            )
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>,
+                    ) {
+                        val jsonResponse = response.body()?.string()
 
-        RetrofitClient.apiService.registerUser(method, nameBody, emailBody, phoneBody, passwordBody)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    val jsonResponse = response.body()?.string()
-                    Log.d("RegisterResponse", "Response: $jsonResponse")
+                        if (response.isSuccessful && jsonResponse != null) {
+                            val apiResponse = Gson().fromJson(jsonResponse, ApiResponse::class.java)
+                            callback(apiResponse)
 
-                    if (response.isSuccessful && jsonResponse != null) {
-                        val apiResponse = Gson().fromJson(jsonResponse, ApiResponse::class.java)
-                        callback(apiResponse)
+                            if (apiResponse.success) {
+                                val sharedPreferences =
+                                    context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
-                        if (apiResponse.success) {
-                            val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.putString(
+                                    "user_id",
+                                    apiResponse.userData?.userId.toString()
+                                ) // Update this based on actual response field
+                                editor.apply()
+                            }
 
-                            val editor = sharedPreferences.edit()
-                            editor.putString("user_id", apiResponse.userData?.userId.toString()) // Update this based on actual response field
-                            editor.apply()
-                        }
-
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        context.startActivity(intent)
-                    }
-                }
-
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e("RegisterError", "onFailure: ${t.message}")
-                    callback(ApiResponse(false, "Error: ${t.message}"))
-                }
-            })
-    }
-
-
-
-
-
-    fun loginUser(context: Context,email: String, password: String,  callback: (ApiResponse?) -> Unit) {
-        val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "login")
-        val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
-        val passwordBody = RequestBody.create("text/plain".toMediaTypeOrNull(), password)
-
-        RetrofitClient.apiService.loginUser(method, emailBody, passwordBody)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                    if (response.isSuccessful) {
-                        val loginResponse = response.body()
-
-                        if (loginResponse?.status == 200) {
-
-                            // Assuming apiResponse contains a field "userId"
-                            val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-                            val editor = sharedPreferences.edit()
-                            editor.putString("user_id", loginResponse.userData?.userId.toString())
-                            editor.apply()
-
-                            // Successful login
-                            callback(ApiResponse(true, loginResponse.message))
-                            Log.d("LOGIN_SUCCESS", "User logged in: ${loginResponse.userData}")
-
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            val intent = Intent(context, LoginActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             context.startActivity(intent)
-
-                        } else {
-                            // Login failed
-                            callback(ApiResponse(false, "Login failed: ${loginResponse?.message}"))
-                            Log.d("LOGIN_FAILED", "Response: ${response.body()}")
                         }
-                    } else {
-                        val errorResponse = response.errorBody()?.string()
-                        callback(ApiResponse(false, "Login failed: $errorResponse"))
-                        Log.d("LOGIN_ERROR", "Error body: $errorResponse")
                     }
-                }
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    callback(ApiResponse(false, "Error: ${t.message}"))
-                    Log.d("LOGIN_FAILURE", "Error: ${t.message}")
-                }
-            })
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        callback(ApiResponse(false, "Error: ${t.message}"))
+                    }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+
+        }
     }
 
 
+    fun loginUser(
+        context: Context,
+        email: String,
+        password: String,
+        callback: (ApiResponse?) -> Unit,
+    ) {
+        try {
+            val method = RequestBody.create("text/plain".toMediaTypeOrNull(), "login")
+            val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull(), email)
+            val passwordBody = RequestBody.create("text/plain".toMediaTypeOrNull(), password)
+
+            RetrofitClient.apiService.loginUser(method, emailBody, passwordBody)
+                .enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            val loginResponse = response.body()
+
+                            if (loginResponse?.status == 200) {
+
+                                // Assuming apiResponse contains a field "userId"
+                                val sharedPreferences =
+                                    context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.putString(
+                                    "user_id",
+                                    loginResponse.userData?.userId.toString()
+                                )
+                                editor.apply()
+
+                                // Successful login
+                                callback(ApiResponse(true, loginResponse.message))
+                                val intent = Intent(context, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                context.startActivity(intent)
+
+                            } else {
+                                // Login failed
+                                callback(
+                                    ApiResponse(
+                                        false,
+                                        "Login failed: ${loginResponse?.message}"
+                                    )
+                                )
+                                Log.d("LOGIN_FAILED", "Response: ${response.body()}")
+                            }
+                        } else {
+                            val errorResponse = response.errorBody()?.string()
+                            callback(ApiResponse(false, "Login failed: $errorResponse"))
+                        }
+                    }
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        callback(ApiResponse(false, "Error: ${t.message}"))
+                      Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+
+        }
+    }
 
 
 }

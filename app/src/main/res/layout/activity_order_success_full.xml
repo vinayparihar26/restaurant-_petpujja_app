@@ -7,8 +7,8 @@
     tools:context=".activities.OrderSuccessFull">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
         android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_300sdp"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
@@ -24,29 +24,41 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/congratulations"
+        android:textColor="@color/black"
         android:textSize="@dimen/_25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.452"
         tools:layout_editor_absoluteX="-16dp" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/your_order_have_been_taken"
+        android:textColor="@color/black"
         android:textSize="@dimen/_25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.14"
         tools:layout_editor_absoluteX="0dp" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/thanks_for_your_order"
+        android:textColor="@color/ordersuces"
+        android:textSize="@dimen/_25sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinueShopping"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_150sdp"
-        android:id="@+id/btnContinueShopping"
         android:text="@string/continue_shopping"
         android:textSize="@dimen/_20sp"
         app:layout_constraintBottom_toBottomOf="parent"

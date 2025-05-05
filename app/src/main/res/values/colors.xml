@@ -4,16 +4,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#A6A6A6</color>
+    <color name="ordersuces">#CC1515</color>
     <color name="green">#20CE17</color>
     <color name="orange">#D9510D</color>
     <color name="orangev">#FF9A43</color>
     <color name="lightOrange">#FFB174</color>
     <color name="lightestOrange">#FFCA96</color>
     <color name="red">#FF1200</color>
+    <color name="transparent">#00000000</color>
     <color name="yellow">#FFEB3B</color>
     <color name="btnSkipOrange">#DD4A01</color>
     <color name="lightYellow">#FFFBF0</color>
     <color name="darkYellow">#FFD25C</color>
     <color name="shimmer_bg">#E0E0E0</color>
+    <color name="orangeBg">#FFE8D5</color>
 
 </resources>

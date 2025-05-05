@@ -1,6 +1,7 @@
 
 package com.example.restaurant.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,21 +21,18 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
         return OrderHistoryViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderHistoryViewHolder, position: Int) {
         val item = orderedItems[position]
         holder.menuName.text = item.menuName
         holder.menuPrice.text = "₹${item.menuPrice}"
         holder.orderDateTime.text = "Ordered on: ${item.orderCreatedAt}"
 
-
-
-
         val imageUrl = if (!item.menuImg.isNullOrEmpty() && item.menuImg.startsWith("http")) {
             item.menuImg
         } else {
             "https://yourserver.com/${item.menuImg ?: "default_image.jpg"}"
         }
-
 
 
         Glide.with(holder.itemView.context)
@@ -45,6 +43,7 @@ class OrderHistoryAdapter(private var orderedItems: MutableList<OrderedMenuItem>
 
     override fun getItemCount(): Int = orderedItems.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newItems: List<OrderedMenuItem>) {
         orderedItems.clear()
         orderedItems.addAll(newItems)

@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".activities.RegisterResturantActivity">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,130 +16,130 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="@dimen/_25sdp"
-            android:gravity="center_horizontal">
+            android:padding="@dimen/_25sdp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:text="@string/register_restaurant"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_22sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/restaurant_name"
-                android:textColor="@color/black"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_16sp"
-                android:background="@drawable/border_gender"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:inputType="text" />
+                android:background="@drawable/border_gender"
+                android:hint="@string/restaurant_name"
+                android:inputType="text"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/border_gender"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sp"
-                android:inputType="textEmailAddress" />
+                android:textSize="@dimen/_16sp" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone_number"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/border_gender"
-                android:inputType="phone" />
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:hint="@string/owner_name"
-                android:textSize="@dimen/_16sp"
-                android:background="@drawable/border_gender"
                 android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/border_gender"
+                android:hint="@string/owner_name"
+                android:inputType="text"
                 android:padding="@dimen/_10sdp"
-                android:inputType="text" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_16sp"
-                android:padding="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:textColor="@color/black"
                 android:background="@drawable/border_gender"
                 android:hint="@string/restaurant_description"
                 android:inputType="textMultiLine"
-                />
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/address"
-                android:textSize="@dimen/_16sp"
-                android:padding="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:textColor="@color/black"
                 android:background="@drawable/border_gender"
-                android:inputType="text" />
+                android:hint="@string/address"
+                android:inputType="text"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantLatitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/latitude"
-                android:textSize="@dimen/_16sp"
-                android:padding="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:textColor="@color/black"
                 android:background="@drawable/border_gender"
-                android:inputType="numberDecimal" />
+                android:hint="@string/latitude"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/restaurantLongitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/longitude"
-                android:textSize="@dimen/_16sp"
-                android:padding="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:textColor="@color/black"
                 android:background="@drawable/border_gender"
-                android:inputType="numberDecimal" />
+                android:hint="@string/longitude"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/openTimeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:backgroundTint="@color/lightestOrange"
                 android:text="@string/select_opening_time"
                 android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/_5sdp"
                 app:cornerRadius="0dp" />
 
 
@@ -148,19 +147,19 @@
                 android:id="@+id/closeTimeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:backgroundTint="@color/lightestOrange"
                 android:text="@string/select_closing_time"
                 android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/_5sdp"
                 app:cornerRadius="0dp" />
 
             <ImageView
                 android:id="@+id/imagePreview1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:background="@android:color/darker_gray"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-                android:background="@android:color/darker_gray" />
+                android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/imagePicker1"
@@ -175,9 +174,9 @@
                 android:id="@+id/imagePreview2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
+                android:background="@android:color/darker_gray"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-                android:background="@android:color/darker_gray" />
+                android:visibility="gone" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -190,12 +189,12 @@
                 app:cornerRadius="0dp" />
 
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:background="@color/orange"
+                app:cornerRadius="@dimen/_10sdp"
                 android:text="@string/register_restaurant"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -204,7 +203,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

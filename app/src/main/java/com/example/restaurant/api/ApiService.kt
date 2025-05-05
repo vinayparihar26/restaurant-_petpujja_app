@@ -3,10 +3,12 @@ package com.example.restaurant.api
 import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.CategoriesResponse
 import com.example.restaurant.model.LoginResponse
+import com.example.restaurant.model.MenuItem
 import com.example.restaurant.model.MenuResponse
 import com.example.restaurant.model.OrderResponse
 import com.example.restaurant.model.OrderedMenuItemResponse
 import com.example.restaurant.model.RestaurantResponse
+import com.example.restaurant.model.SearchResponse
 import com.example.restaurant.model.UpdatePasswordResponse
 import com.example.restaurant.model.WishlistResponse
 import com.example.restaurant.model.WishlistResponseFavourite
@@ -21,6 +23,14 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface ApiService {
+
+    @Multipart
+    @POST("api/search.php")
+    fun searchMenu(
+        @Part("method") method: RequestBody,
+        @Part("search_query") searchQuery: RequestBody
+    ): Call<SearchResponse>
+
 
     @Multipart
     @POST("api/user_regrastration_api.php")
@@ -43,7 +53,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/change_password_api.php")
     fun updatePassword(
-        @Field("method") method: String,  // This replaces token-based authentication
+        @Field("method") method: String,
         @Field("user_id") userId: Int,
         @Field("old_password") oldPassword: String,
         @Field("new_password") newPassword: String,
@@ -51,7 +61,7 @@ interface ApiService {
     ): Call<UpdatePasswordResponse>
 
     @FormUrlEncoded
-    @POST("api/fetch_category.php") // Replace with your actual API endpoint
+    @POST("api/fetch_category.php")
     fun getCategoriesItems(
         @Field("method") method: String,
     ): Call<CategoriesResponse>

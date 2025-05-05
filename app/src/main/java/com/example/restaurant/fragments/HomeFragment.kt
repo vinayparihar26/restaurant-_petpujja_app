@@ -1,16 +1,12 @@
 package com.example.restaurant.fragments
 
-import android.Manifest
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.Context
 import com.facebook.shimmer.ShimmerFrameLayout
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
@@ -281,65 +277,78 @@ class HomeFragment : Fragment() {
 
 
     private fun fetchResturantItems() {
-        shimmerViewContainer.visibility = View.VISIBLE
-        shimmerViewContainer.startShimmer()
-        recyclerViewForRestaurant.visibility = View.GONE
-        //    val (latitude, longitude) = getStoredLocation()
+        try {
+            //    val (latitude, longitude) = getStoredLocation()
 
-        val call = if (latitude == 0.0 && longitude == 0.0) {
-            RetrofitClient.apiService.getRestaurants(
-                method = "restaurants",
-                latitude = null,
-                longitude = null
-            )
-        } else {
-            RetrofitClient.apiService.getRestaurants(
-                method = "restaurants",
-                latitude = latitude,
-                longitude = longitude,
-            )
-        }
-        call.enqueue(object : Callback<RestaurantResponse> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(
-                call: Call<RestaurantResponse>,
-                response: Response<RestaurantResponse>,
-            ) {
-                if (isAdded) {
-                    shimmerViewContainer.stopShimmer()
-                    shimmerViewContainer.visibility = View.GONE
-                    recyclerViewForRestaurant.visibility = View.VISIBLE
-
-                    if (response.isSuccessful && response.body() != null) {
-                        val restaurantResponse = response.body()!!
-                        if (restaurantResponse.status == 200 && restaurantResponse.data.isNotEmpty()) {
-                            restaurantList.clear()
-                            restaurantList.addAll(restaurantResponse.data)
-                            restaurantAdapter.notifyDataSetChanged()
-                        } else {
-                            restaurantList.clear()
-                            restaurantAdapter.notifyDataSetChanged()
-                            Toast.makeText(
-                                requireContext(), "No Restaurants Found", Toast.LENGTH_SHORT
-                            ).show()
+            val call = if (latitude == 0.0 && longitude == 0.0) {
+                RetrofitClient.apiService.getRestaurants(
+                    method = "restaurants",
+                    latitude = null,
+                    longitude = null
+                )
+            } else {
+                RetrofitClient.apiService.getRestaurants(
+                    method = "restaurants",
+                    latitude = latitude,
+                    longitude = longitude,
+                )
+            }
+            call.enqueue(object : Callback<RestaurantResponse> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(
+                    call: Call<RestaurantResponse>,
+                    response: Response<RestaurantResponse>,
+                ) {
+                    if (isAdded) {
+                        activity?.runOnUiThread {
+                            shimmerViewContainer.stopShimmer()
+                            shimmerViewContainer.visibility = View.GONE
+                            recyclerViewForRestaurant.visibility = View.VISIBLE
                         }
-                    } else {
-                        Log.d("Failed to load items", "Error: ${response.message()}")
+
+                        if (response.isSuccessful && response.body() != null) {
+                            val restaurantResponse = response.body()!!
+                            if (restaurantResponse.status == 200 && restaurantResponse.data.isNotEmpty()) {
+                                shimmerViewContainer.stopShimmer()
+                                shimmerViewContainer.visibility = View.GONE
+                                recyclerViewForRestaurant.visibility = View.VISIBLE
+                                restaurantList.clear()
+                                restaurantList.addAll(restaurantResponse.data)
+                                restaurantAdapter.notifyDataSetChanged()
+                            } else {
+                                binding.shimmerViewContainer.stopShimmer()
+                                binding.shimmerViewContainer.visibility = View.GONE
+                                restaurantList.clear()
+                                restaurantAdapter.notifyDataSetChanged()
+                                Toast.makeText(
+                                    requireContext(), "No Restaurants Found", Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            Log.d("Failed to load items", "Error: ${response.message()}")
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<RestaurantResponse>, p1: Throwable) {
-                if (isAdded) {  // Check if fragment is attached before showing error
-                    shimmerViewContainer.stopShimmer()
-                    shimmerViewContainer.visibility = View.GONE
-                    recyclerViewForRestaurant.visibility = View.VISIBLE
-                    Toast.makeText(
-                        requireContext(), "Error fetching restaurants", Toast.LENGTH_SHORT
-                    ).show()
+                override fun onFailure(call: Call<RestaurantResponse>, p1: Throwable) {
+                    if (isAdded) {  // Check if fragment is attached before showing error
+                        activity?.runOnUiThread {
+                            shimmerViewContainer.stopShimmer()
+                            shimmerViewContainer.visibility = View.GONE
+                            recyclerViewForRestaurant.visibility = View.VISIBLE
+                        }
+                        Toast.makeText(
+                            requireContext(), "Error fetching restaurants", Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
-        })
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error fetching restaurants Items", Toast.LENGTH_SHORT)
+                .show()
+
+        }
     }
 
     private val runnable = Runnable {
@@ -363,57 +372,76 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchCategory() {
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            NetworkUtils.showNoInternetDialog(requireContext()) {
-                fetchCategory()
+        try {
+            if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+                NetworkUtils.showNoInternetDialog(requireContext()) {
+                    fetchCategory()
+                }
+                return
             }
-            return
-        }
-        val call = RetrofitClient.apiService.getCategoriesItems(method = "fetch_categories")
 
-        call.enqueue(object : Callback<CategoriesResponse> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(
-                call: Call<CategoriesResponse>,
-                response: Response<CategoriesResponse>,
-            ) {
-                if (isAdded) {
-                    if (response.isSuccessful && response.body() != null) {
-                        val categoryResponse = response.body()!!
-                        if (categoryResponse.status.toString() == "200" && categoryResponse.data.isNotEmpty()) {
-                            categoryList.clear()
-                            categoryList.addAll(categoryResponse.data)
-                            categoryAdapter.notifyDataSetChanged()
-                            categoryAdapterScroll.notifyDataSetChanged()
+            shimmerViewContainer.visibility = View.VISIBLE
+            shimmerViewContainer.startShimmer()
+            recyclerViewForCategories.visibility = View.GONE
+
+            val call = RetrofitClient.apiService.getCategoriesItems(method = "fetch_categories")
+
+            call.enqueue(object : Callback<CategoriesResponse> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(
+                    call: Call<CategoriesResponse>,
+                    response: Response<CategoriesResponse>,
+                ) {
+                    if (isAdded) {
+                        shimmerViewContainer.stopShimmer()
+                        shimmerViewContainer.visibility = View.GONE
+                        recyclerViewForCategories.visibility = View.VISIBLE
+                        if (response.isSuccessful && response.body() != null) {
+                            val categoryResponse = response.body()!!
+                            if (categoryResponse.status.toString() == "200" && categoryResponse.data.isNotEmpty()) {
+                                categoryList.clear()
+                                categoryList.addAll(categoryResponse.data)
+                                categoryAdapter.notifyDataSetChanged()
+                                categoryAdapterScroll.notifyDataSetChanged()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No Categories Found",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
                         } else {
                             Toast.makeText(
+                                requireContext(), "Failed to load categories", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
+                    when {
+                        isAdded -> {
+                            Toast.makeText(
                                 requireContext(),
-                                "No Categories Found",
+                                "Error fetching categories",
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
+
+                            shimmerViewContainer.stopShimmer()
+                            shimmerViewContainer.visibility = View.GONE
+                            recyclerViewForCategories.visibility = View.VISIBLE
                         }
-                    } else {
-                        Toast.makeText(
-                            requireContext(), "Failed to load categories", Toast.LENGTH_SHORT
-                        ).show()
                     }
-                }
-            }
 
-            override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
-                when {
-                    isAdded -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "Error fetching categories",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
                 }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error fetching categories Items", Toast.LENGTH_SHORT)
+                .show()
 
-            }
-        })
+        }
     }
 }

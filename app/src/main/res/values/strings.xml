@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Restaurant</string>
+    <string name="app_name">PetPuja</string>
 
     <string-array name="gender">
         <item>Select</item>
@@ -73,9 +73,29 @@
     <string name="owner_name">Owner Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="congratulations">Congratulations!!!</string>
-    <string name="your_order_have_been_taken">Your order have been taken</string>
+    <string name="your_order_have_been_taken">Your order is Confirmed</string>
     <string name="continue_shopping">Continue shopping</string>
     <string name="no_order_placed">No Order Placed</string>
     <string name="enter_email_or_phone_number">Enter Email or Phone Number</string>
     <string name="your_order_history">Your Order History</string>
+    <string name="thanks_for_your_order">Thanks for Your order :)</string>
+    <string name="login">LOGIN</string>
+    <string name="distance">Distance</string>
+    <string name="close_button">Close Button</string>
+    <string name="reset_password">Reset password</string>
+    <string name="enter_your_registered_email_and_we_ll_send_you_a_new_password">Enter your registered email, and we’ll send you a new password.</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="send">Send</string>
+    <string name="create_account">Create Account</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register_now">Register Now</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="hi">Hi,</string>
+    <string name="create">Create</string>
+    <string name="account">Account</string>
+    <string name="where_every_meal_is_a_celebration_n_just_celebrate_it">Where Every Meal is a Celebration! \n Just Celebrate It</string>
+    <string name="logout">logout</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="petpujaL">PetPuja</string>
+    <string name="items_fetched">Items Fetched</string>
 </resources>

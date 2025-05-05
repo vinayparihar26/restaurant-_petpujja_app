@@ -14,11 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_560sdp"
         android:background="@drawable/splash_bg"
-        app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/splash_img"
@@ -37,29 +37,29 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="पहले"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
+                    android:text="पहले"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/petpuja"
-                    android:textStyle="bold"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_30sp"
                     android:textColor="@color/white"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/_30sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -67,41 +67,42 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="फिर"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/_20sp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="फिर"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/kaam"
-                    android:textStyle="bold"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_23sp"
                     android:textColor="@color/white"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/_23sp"
+                    android:textStyle="bold" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="दूजा!"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_20sp"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:text="दूजा!"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/_20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -109,29 +110,26 @@
         </LinearLayout>
 
 
-
-
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_7sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="@dimen/_7sdp"
         app:layout_constraintTop_toBottomOf="@+id/ll1">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lineHeight="@dimen/_25sdp"
+            android:text="@string/where_every_meal_is_a_celebration_n_just_celebrate_it"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:lineHeight="@dimen/_25sdp"
-            android:text="Where Every Meal is a Celebration! \n Just Celebrate It "
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_16sp" />
 
     </LinearLayout>
 

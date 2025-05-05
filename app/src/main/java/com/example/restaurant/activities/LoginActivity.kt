@@ -2,6 +2,8 @@ package com.example.restaurant.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +12,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import com.example.restaurant.R
 import com.example.restaurant.databinding.ActivityLoginBinding
 
 import com.example.restaurant.viewmodel.AuthViewModel
@@ -42,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
         val etEmailL = binding.etEmailL
         val etPassword = binding.etPassword
         val etPasswordL = binding.etPasswordL
-
 
         binding.tvForgetPwd.setOnClickListener {
             startActivity(Intent(this, ForgetPasswordActivity::class.java))
@@ -96,10 +101,8 @@ class LoginActivity : AppCompatActivity() {
                 editor.apply()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
-                Log.d("logins", "onCreate: ${response.message}")
 
             } else {
-                Log.d("k", "onCreate: ${response.message}")
                 // Show an AlertDialog for failed login
                 AlertDialog.Builder(this)
                     .setTitle("Login Failed")
@@ -110,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //    for fun email
+      //    for fun email
     private fun validateEmail(etEmailL: TextInputLayout, etEmail: TextInputEditText): Boolean {
         val emailPattern = Regex("[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+")
         return when {
@@ -160,5 +163,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 }

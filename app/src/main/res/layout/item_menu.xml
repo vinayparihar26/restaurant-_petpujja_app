@@ -10,6 +10,7 @@
     app:cardCornerRadius="@dimen/_10sdp">
 
     <LinearLayout
+        android:id="@+id/llMenuItemBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -41,8 +42,7 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:src="@drawable/heartoutline"
-                android:tint="@color/white" />
+                android:src="@drawable/heartoutline" />
         </RelativeLayout>
 
         <LinearLayout
@@ -50,14 +50,44 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvMenuItemName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/item_name"
-                android:textSize="@dimen/_18sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvMenuItemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@string/item_name"
+                    android:textSize="@dimen/_18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <ImageView
+                        android:id="@+id/imgMenuType"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:src="@drawable/veg_icon" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRestaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="@string/restaurant_name"
+                android:textSize="@dimen/_14sp" />
 
             <TextView
                 android:id="@+id/menu_description"
@@ -73,6 +103,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/price"
                 android:textColor="@color/orange"
+                android:textSize="@dimen/_14sp" />
+
+            <TextView
+                android:id="@+id/tvDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distance"
                 android:textSize="@dimen/_14sp" />
 
 
@@ -100,7 +137,6 @@
                     android:text="@string/share"
                     android:textColor="@color/orange"
                     android:textStyle="bold" />
-
 
             </LinearLayout>
 

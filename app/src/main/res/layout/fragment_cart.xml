@@ -11,21 +11,59 @@
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="@dimen/_200sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+        <LinearLayout
+            android:id="@+id/NoItemCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:src="@drawable/ic_no_cart_item" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:text="@string/your_cart_is_empty"
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_20sp" />
+
+        </LinearLayout>
 
     <LinearLayout
-        android:background="@color/grey"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="123dp"
+        android:background="@color/grey"
         android:padding="@dimen/_20sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTotalPayment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,33 +79,6 @@
             android:layout_height="wrap_content"
             android:text="@string/order_place"
             android:textColor="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/NoItemCart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:src="@drawable/ic_no_cart_item" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/your_cart_is_empty"
-            android:textAlignment="center"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/_20sp" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

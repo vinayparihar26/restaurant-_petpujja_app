@@ -10,16 +10,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.restaurant.R
 import com.example.restaurant.api.RetrofitClient
+import com.example.restaurant.databinding.ItemMenuBinding
+import com.example.restaurant.fragments.CustomBottomSheetFragment
 import com.example.restaurant.model.CartResponse
 import com.example.restaurant.model.MenuItem
 import com.example.restaurant.model.WishlistResponse
@@ -37,64 +40,75 @@ class MenuItemAdapter(
     RecyclerView.Adapter<MenuItemAdapter.MenuItemViewHolder>() {
     private val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
     private val userId: String = sharedPreferences.getString("user_id", null) ?: ""
+    private var filteredlist: MutableList<MenuItem> = ArrayList(menuList)
 
-
-    class MenuItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.imgMenuItem)
-        val nameTextView: TextView = view.findViewById(R.id.tvMenuItemName)
-        val priceTextView: TextView = view.findViewById(R.id.tvMenuItemPrice)
-        val addToCartButton: TextView = view.findViewById(R.id.btnAddToCart)
-        val descriptionTextView: TextView = view.findViewById(R.id.menu_description)
-        val imageHeart: ShapeableImageView = view.findViewById(R.id.imgHeart1)
-        val imgShareDetails: TextView = view.findViewById(R.id.imgShareDetails)
+    class MenuItemViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)
-        return MenuItemViewHolder(view)
+        val binding = ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MenuItemViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MenuItemViewHolder, position: Int) {
         try {
-            val menuItem = menuList[position]
-            holder.nameTextView.text = menuItem.menuName
-            holder.priceTextView.text = "₹${menuItem.menuPrice}"
-            holder.descriptionTextView.text = menuItem.menuDescription
+            // val menuItem = menuList[position]
+            val menuItem = filteredlist[position]
+            with(holder.binding) {
+                tvMenuItemName.text = menuItem.menuName
+                tvMenuItemPrice.text = "₹${menuItem.menuPrice}"
+                menuDescription.text = menuItem.menuDescription
+                tvRestaurantName.text = menuItem.restaurantName
+                tvDistance.text = menuItem.distance
+
+                Glide.with(context)
+                    .load(menuItem.menuImage)
+                    .placeholder(R.drawable.notfound)
+                    .into(holder.binding.imgMenuItem)
+
+            }
+
             // holder.restaurantImageView.setImageResource(R.drawable.ic_launcher_background)
-            Glide.with(context)
-                .load(menuItem.menuImage)
-                .placeholder(R.drawable.notfound)
-                .into(holder.imageView)
+            when (menuItem.menuType) {
+                "1" -> holder.binding.imgMenuType.setImageResource(R.drawable.veg_icon)      // Veg
+                "2" -> holder.binding.imgMenuType.setImageResource(R.drawable.non_veg_icon)  // Non-Veg
+                else -> holder.binding.imgMenuType.setImageResource(R.drawable.veg_icon)     // All Type
+            }
 
+            holder.binding.llMenuItemBottom.setOnClickListener {
+                if (context is AppCompatActivity) {
+                    val bottomSheet = CustomBottomSheetFragment(menuItem)
+                    bottomSheet.show(context.supportFragmentManager, bottomSheet.tag)
+                }
 
-            holder.imgShareDetails.setOnClickListener {
+            }
+            holder.binding.imgShareDetails.setOnClickListener {
                 shareItemDetails(menuItem)
             }
             var isItemAddedToCart = false
 
-            holder.addToCartButton.setOnClickListener {
-
+            holder.binding.btnAddToCart.setOnClickListener {
                 if (isItemAddedToCart) {
                     // If the item is already in the cart, remove it from the cart
-                    holder.addToCartButton.text =
+                    holder.binding.btnAddToCart.text =
                         "Add To Cart"  // Change button text back to "Add To Cart"
-                    holder.addToCartButton.setBackgroundColor(
+                    holder.binding.btnAddToCart.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.colorPrimary
+                            R.color.orange
                         )
                     )  // Reset button color
 
                     addToCart(menuItem.menuId, false)  // Removed from cart
                 } else {
                     // If the item is not in the cart, add it to the cart
-                    holder.addToCartButton.text =
-                        "Added To Cart"  // Change button text to "Added To Cart"
-                    holder.addToCartButton.setBackgroundColor(
+                    holder.binding.btnAddToCart.text =
+                        "Remove To Cart"  // Change button text to "Added To Cart"
+                    holder.binding.btnAddToCart.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.orange
+                            R.color.green
                         )
                     )  // Change button color to green
 
@@ -106,9 +120,9 @@ class MenuItemAdapter(
             }
             var isHeartRed = false  // Track if the heart is red (liked) or not
 
-            holder.imageHeart.setOnClickListener {
+            holder.binding.imgHeart1.setOnClickListener {
                 // Get the current drawable (VectorDrawable) from the ImageView
-                val currentDrawable = holder.imageHeart.drawable
+                val currentDrawable = holder.binding.imgHeart1.drawable
 
                 // Check if the drawable is a VectorDrawable
                 if (currentDrawable is VectorDrawable) {
@@ -127,7 +141,7 @@ class MenuItemAdapter(
                     }
 
                     // Set the modified drawable back to the ImageView
-                    holder.imageHeart.setImageDrawable(currentDrawable)
+                    holder.binding.imgHeart1.setImageDrawable(currentDrawable)
 
                     // Toggle the heart state
                     isHeartRed = !isHeartRed
@@ -136,7 +150,6 @@ class MenuItemAdapter(
         } catch (e: Exception) {
             Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun addToCart(menuId: String?, addToCartButton: Boolean) {
@@ -159,7 +172,7 @@ class MenuItemAdapter(
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         val cartResponse = response.body()!!
-                        Log.d("wish", "$cartResponse")
+
                         if (cartResponse.status == 200) {
                             if (addToCartButton) {
                                 Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
@@ -175,7 +188,6 @@ class MenuItemAdapter(
                             .show()
                     }
                 }
-
 
                 override fun onFailure(p0: Call<CartResponse>, p1: Throwable) {
 
@@ -222,7 +234,6 @@ class MenuItemAdapter(
                                 )
                                     .show()
                             }
-                            Log.d("userrr", "$userId, $menuId, $method")
                         } else {
                             Toast.makeText(context, wishlistResponse.message, Toast.LENGTH_SHORT)
                                 .show()
@@ -234,7 +245,6 @@ class MenuItemAdapter(
                 }
 
                 override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
-                    Log.e("WISHLIST_ERROR", "Error: ${t.message}")
                     Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -274,12 +284,32 @@ class MenuItemAdapter(
 
         }
     }
-    override fun getItemCount(): Int = menuList.size
+
+    override fun getItemCount(): Int = filteredlist.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(query: String) {
+        filteredlist.clear()
+        if (query.isEmpty()) {
+            filteredlist.addAll(menuList)
+        } else {
+            val lowerCaseQuery = query.lowercase()
+            for (item in menuList) {
+                if (item.menuName?.lowercase()?.contains(lowerCaseQuery) == true) {
+                    filteredlist.add(item)
+                }
+            }
+        }
+        notifyDataSetChanged()
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateMenuList(newList: List<MenuItem>) {
         menuList.clear()
         menuList.addAll(newList)
+        filteredlist.clear()
+        filteredlist.addAll(newList)
+        //filterList("")//added
         notifyDataSetChanged()
     }
 }

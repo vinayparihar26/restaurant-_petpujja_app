@@ -3,15 +3,13 @@ package com.example.restaurant.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.restaurant.R
 import com.example.restaurant.api.RetrofitClient
+import com.example.restaurant.databinding.ItemViewWishlistBinding
 import com.example.restaurant.model.WishlistItem
 import com.example.restaurant.model.WishlistResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -25,36 +23,39 @@ class WishlistAdapter(
     private val userId: String,
 ) : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
-    class WishlistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val menuName: TextView = view.findViewById(R.id.wishListMenuName)
-        val menuPrice: TextView = view.findViewById(R.id.wishListMenuPrice)
-        val menuImg: ImageView = view.findViewById(R.id.wishListMenuImg)
-        val removeIcon: ImageView = view.findViewById(R.id.wishListRemove)
-        val description: TextView = view.findViewById(R.id.wishListMenuDesc)
+    class WishlistViewHolder(val binding: ItemViewWishlistBinding) :
+        RecyclerView.ViewHolder(binding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_view_wishlist, parent, false)
-        return WishlistViewHolder(view)
+        val binding = ItemViewWishlistBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return WishlistViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
         val item = wishlist[position]
 
-        holder.menuName.text = item.menuName
-        holder.menuPrice.text = "₹${item.menuPrice}"
-        holder.description.text = item.menuDescription
+        with(holder.binding){
+            wishListMenuName.text = item.menuName
+            wishListMenuPrice.text = "₹${item.menuPrice}"
+            wishListMenuDesc.text = item.menuDescription
 
-        Glide.with(holder.menuImg.context)
-            .load(item.menuImg)
-            .placeholder(R.drawable.notfound)
-            .into(holder.menuImg)
+            wishListRemove.setOnClickListener {
+                removeFromWishlist(item.menuId, position, holder.itemView.context)
+            }
 
-        holder.removeIcon.setOnClickListener {
-            removeFromWishlist(item.menuId, position, holder.itemView.context)
+            Glide.with(holder.binding.wishListMenuImg.context)
+                .load(item.menuImg)
+                .placeholder(R.drawable.notfound)
+                .into(holder.binding.wishListMenuImg)
+
         }
+
+
+
     }
 
     override fun getItemCount(): Int = wishlist.size

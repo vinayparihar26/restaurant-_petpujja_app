@@ -2,12 +2,19 @@ package com.example.restaurant.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
+import com.example.restaurant.R
 import com.example.restaurant.databinding.ActivityForgetPasswordBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -23,6 +30,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityForgetPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.ivBack.setOnClickListener {
             startActivity(Intent(this,LoginActivity::class.java))
         }
@@ -47,7 +55,6 @@ class ForgetPasswordActivity : AppCompatActivity() {
             }
         })
     }
-
 
     private fun validateEmail(etEmailL: TextInputLayout, etEmail: TextInputEditText): Boolean {
         val emailPattern = Regex("[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+")

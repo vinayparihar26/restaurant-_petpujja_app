@@ -1,5 +1,6 @@
 package com.example.restaurant.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -37,7 +38,7 @@ import retrofit2.Response
 import java.util.Calendar
 
 class RegisterResturantActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityRegisterResturantBinding
+    private lateinit var binding: ActivityRegisterResturantBinding
     private lateinit var restaurantName: EditText
     private lateinit var restaurantEmail: EditText
     private lateinit var restaurantPhone: EditText
@@ -51,7 +52,6 @@ class RegisterResturantActivity : AppCompatActivity() {
     private lateinit var imagePicker1: MaterialButton
     private lateinit var imagePicker2: MaterialButton
     private lateinit var registerButton: AppCompatButton
-
     private lateinit var imagePreview1: ImageView
     private lateinit var imagePreview2: ImageView
 
@@ -62,9 +62,8 @@ class RegisterResturantActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityRegisterResturantBinding.inflate(layoutInflater)
+        binding = ActivityRegisterResturantBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         restaurantName = findViewById(R.id.restaurantName)
         restaurantEmail = findViewById(R.id.restaurantEmail)
@@ -86,8 +85,8 @@ class RegisterResturantActivity : AppCompatActivity() {
         restaurantOpenTime.setOnClickListener { showTimePickerDialog(restaurantOpenTime) }
         restaurantCloseTime.setOnClickListener { showTimePickerDialog(restaurantCloseTime) }
 
-        imagePicker1.setOnClickListener{pickImage(101)}
-        imagePicker2.setOnClickListener{pickImage(102)}
+        imagePicker1.setOnClickListener { pickImage(101) }
+        imagePicker2.setOnClickListener { pickImage(102) }
 
         registerButton.setOnClickListener { registerRestaurant() }
     }
@@ -124,39 +123,60 @@ class RegisterResturantActivity : AppCompatActivity() {
     }
 
     private fun registerRestaurant() {
-        val method = createPartFromString("restaurant_register")
-        val name = createPartFromString(restaurantName.text.toString())
-        val email = createPartFromString(restaurantEmail.text.toString())
-        val phone = createPartFromString(restaurantPhone.text.toString())
-        val owner = createPartFromString(restaurantOwner.text.toString())
-        val description = createPartFromString(restaurantDescription.text.toString())
-        val address = createPartFromString(restaurantAddress.text.toString())
-        val latitude = createPartFromString(restaurantLatitude.text.toString())
-        val longitude = createPartFromString(restaurantLongitude.text.toString())
-        val openTime = createPartFromString(restaurantOpenTime.text.toString())
-        val closeTime = createPartFromString(restaurantCloseTime.text.toString())
+        try {
+            val method = createPartFromString("restaurant_register")
+            val name = createPartFromString(restaurantName.text.toString())
+            val email = createPartFromString(restaurantEmail.text.toString())
+            val phone = createPartFromString(restaurantPhone.text.toString())
+            val owner = createPartFromString(restaurantOwner.text.toString())
+            val description = createPartFromString(restaurantDescription.text.toString())
+            val address = createPartFromString(restaurantAddress.text.toString())
+            val latitude = createPartFromString(restaurantLatitude.text.toString())
+            val longitude = createPartFromString(restaurantLongitude.text.toString())
+            val openTime = createPartFromString(restaurantOpenTime.text.toString())
+            val closeTime = createPartFromString(restaurantCloseTime.text.toString())
 
-        val imagePart1 = imageFile1?.let { createImagePart("restaurant_img", it) }
-        val imagePart2 = imageFile2?.let { createImagePart("restaurant_img2", it) }
+            val imagePart1 = imageFile1?.let { createImagePart("restaurant_img", it) }
+            val imagePart2 = imageFile2?.let { createImagePart("restaurant_img2", it) }
 
-        RetrofitClient.apiService.registerRestaurant(
-            method, name, email, phone, owner, description, address, latitude, longitude,
-            openTime, closeTime, imagePart1, imagePart2
-        ).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@RegisterResturantActivity, "Successful", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@RegisterResturantActivity, MainActivity::class.java))
+            RetrofitClient.apiService.registerRestaurant(
+                method, name, email, phone, owner, description, address, latitude, longitude,
+                openTime, closeTime, imagePart1, imagePart2
+            ).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(
+                            this@RegisterResturantActivity,
+                            "Successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(
+                            Intent(
+                                this@RegisterResturantActivity,
+                                MainActivity::class.java
+                            )
+                        )
 
-                } else {
-                    Toast.makeText(this@RegisterResturantActivity, "Register Failed",Toast.LENGTH_SHORT).show()
-                    Log.d("register failed", "onResponse: ${response.errorBody()?.string()}")
+                    } else {
+                        Toast.makeText(
+                            this@RegisterResturantActivity,
+                            "Register Failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("register failed", "onResponse: ${response.errorBody()?.string()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-            }
-        })
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        } catch (e: Exception) {
+            Toast.makeText(this, "Something went wrong: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Unable to Register Restaurant", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun createPartFromString(value: String): RequestBody {
@@ -169,14 +189,15 @@ class RegisterResturantActivity : AppCompatActivity() {
     }
 
     private fun getFileFromUri(uri: Uri): File? {
-        val inputStream = contentResolver.openInputStream(uri) ?: return null
-        val file = File(cacheDir, getFileName(uri))
-        val outputStream = FileOutputStream(file)
-        inputStream.copyTo(outputStream)
-        inputStream.close()
-        outputStream.close()
-        return file
-    }
+
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val file = File(cacheDir, getFileName(uri))
+            val outputStream = FileOutputStream(file)
+            inputStream.copyTo(outputStream)
+            inputStream.close()
+            outputStream.close()
+            return file
+        }
 
     private fun getFileName(uri: Uri): String {
         var name = "temp_file"
@@ -189,6 +210,7 @@ class RegisterResturantActivity : AppCompatActivity() {
         return name
     }
 
+    @SuppressLint("DefaultLocale")
     private fun showTimePickerDialog(editText: Button) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -196,7 +218,7 @@ class RegisterResturantActivity : AppCompatActivity() {
 
         val timePickerDialog = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
             val time = String.format("%02d:%02d", selectedHour, selectedMinute)
-            editText.setText(time)
+            editText.text = time
         }, hour, minute, true)
 
         timePickerDialog.show()

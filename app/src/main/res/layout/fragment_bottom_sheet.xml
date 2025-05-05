@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/grey"
     android:orientation="vertical"
     android:padding="16dp">
-
 
     <ImageView
         android:id="@+id/closeButton"
@@ -12,18 +13,161 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:contentDescription="Close Button"
+        android:contentDescription="@string/close_button"
         android:src="@drawable/ic_search_close" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imgMenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:padding="8dp" />
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgMenuItem"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:contentDescription="@string/menu_image"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/chicken" />-->
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgHeart1"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:src="@drawable/heartoutline"
+            android:tint="@color/white" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_sheet_background"
-        android:backgroundTint="@color/black"
-        android:orientation="vertical"
-        android:padding="10dp">
-        <include layout="@layout/bottom_layout" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvMenuItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/item_name"
+            android:textSize="@dimen/_18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <ImageView
+                android:id="@+id/imgMenuType"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/veg_icon" />
+        </LinearLayout>
+
     </LinearLayout>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRestaurantName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/restaurant_name"
+        android:textSize="@dimen/_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRestaurantAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        android:textSize="@dimen/_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRestaurantPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_number"
+        android:textSize="@dimen/_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/menu_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="@string/item_details"
+        android:textSize="@dimen/_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cakeQuantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="1 Piece"
+
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.9"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/ratingCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="(605)"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvMenuItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹55"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/distance"
+        android:textSize="@dimen/_14sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddToCart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/add_to_cart"
+        android:textSize="@dimen/_12sp" />
 
 </LinearLayout>

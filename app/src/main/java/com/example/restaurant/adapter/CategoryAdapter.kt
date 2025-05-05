@@ -45,7 +45,7 @@ class CategoryAdapter(
 
         Glide.with(context).load(category.categoryImg)
             .placeholder(R.drawable.ic_launcher_background) // Use a placeholder image
-            .error(R.drawable.ic_launcher_background) // Use an error image in case of failure
+            .error(R.drawable.notfound) // Use an error image in case of failure
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache for performance
             .into(holder.imageView)
 
